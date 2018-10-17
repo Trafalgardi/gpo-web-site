@@ -71,6 +71,8 @@
                 </div>
               </div>
             </div>
+            
+            <h4 class="mb-3">Меняли ли вы...</h4>
 
             <div class="row">
               <div class="col-md-5 mb-3">
@@ -231,23 +233,147 @@
                 </div>
               </div>
             </div>
-
-            <h4 class="mb-3">Семейное положение</h4>
-
-            <div class="d-block my-3">
-              <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                <label class="custom-control-label" for="credit">Credit card</label>
+            <div class="row">
+              <div class="col-md-9 mb-3">
+                  <label for="sp">Семейное положение</label>
+                  <select class="form-control" name="sp" id="sp">
+                      <option value="замужем/женат" selected="selected">замужем/женат</option>
+                      <option value="вдова/вдовец">вдова/вдовец</option>
+                      <option value="не замужем/ холост">не замужем/ холост</option>
+                      <option value="в разводе">в разводе</option>
+                      <option value="сожительство">сожительство</option>
+                  </select>
               </div>
-              <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                <label class="custom-control-label" for="debit">Debit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                <label class="custom-control-label" for="paypal">PayPal</label>
+              <div class="col-md-9 mb-3">
+                <label for="children">Дети (Пример заполнения М:9;Ж:2;)</label>
+                <input type="text" class="form-control" id="children" placeholder="Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;">
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
               </div>
             </div>
+            <h4 class="mb-3">Водительское удостоверение</h4>
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <label for="drive_0">Имеете ли вы водительское удостоверение?</label>
+                <select class="custom-select d-block w-100" id="drive_0" required>
+                  <option value="Да">Да</option>
+                  <option selected="" value="Нет">Нет</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid country.
+                </div>
+              </div>
+              <div class="col-md-9 mb-3">
+                <label for="drive_2">Какой у вас стаж?</label>
+                <input type="number" class="form-control" id="drive_2" placeholder="2">
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
+              <div class="col-md-9 mb-3">
+                <label for="drive_3">Укажите катигорию вашего водительского удостоверения</label>
+                <input type="text" class="form-control" id="drive_3" placeholder="А – мотоциклы">
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
+              <div class="col-md-9 mb-3">
+                <label for="drive_4">Укажите катигорию вашего автомобиля</label>
+                <input type="text" class="form-control" id="drive_4" placeholder="легковой автомобиль">
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
+            </div>
+            <h4 class="mb-3">Образование</h4>
+            <div class="d-block my-3">
+              <div class="custom-control">
+                <input id="checkbox_1" name="checkbox_name_1" type="checkbox" value="Без образования" class="custom-control-input" required>
+                <label class="custom-control-label" for="checkbox_1">Без образования</label>                
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_2" name="checkbox_name_2" type="checkbox" value="Полное среднее образование" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_2">Полное среднее образование</label>
+                  <div id="checkbox_at_2" style="display: none;">
+                      <label> Средний балл</label>
+                      <input class="form-control" type="text" id="check_2" name="check_2">
+                  </div>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_3" name="checkbox_name_3" type="checkbox" value="Магистратура" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_3">Магистратура</label>
+                  <div id="checkbox_at_3" style="display: none;">
+                      <label> Средний балл</label>
+                      <input class="form-control" type="text" id="check_3" name="check_3">
+                  </div>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_4" name="checkbox_name_4" type="checkbox" value="Специалитет" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_4">Специалитет</label>
+                  <div id="checkbox_at_4" style="display: none;">
+                      <label> Средний балл</label>
+                      <input class="form-control" type="text" id="check_4" name="check_4">
+                  </div>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_5" name="checkbox_name_5" type="checkbox" value="Кандидат наук" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_5">Кандидат наук</label>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_6" name="checkbox_name_6" type="checkbox" value="Доктор наук" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_6">Доктор наук</label>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_7" name="checkbox_name_7" type="checkbox" value="PhD" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_7">PhD</label>
+              </div>
+              <div class="custom-control">
+                <input id="checkbox_8" name="checkbox_name_8" type="checkbox" value="Профессиональная переподготовка" class="custom-control-input" required>
+                <label class="custom-control-label" for="checkbox_8">Профессиональная переподготовка</label>
+                <div id="checkbox_at_8" style="display: none;">
+                    <label> Средний балл</label>
+                    <input class="form-control" type="text" id="check_8" name="check_8">
+                </div>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_9" name="checkbox_name_9" type="checkbox" value="Профессиональная переподготовка в области управления" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_9">Профессиональная переподготовка в области управления</label>
+                  <div id="checkbox_at_9" style="display: none;">
+                      <label> Средний балл</label>
+                      <input class="form-control" type="text" id="check_9" name="check_9">
+                  </div>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_10" name="checkbox_name_10" type="checkbox" value="Высшее образования + учёная степень" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_10">Высшее образования + учёная степень</label>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_11" name="checkbox_name_11" type="checkbox" value="Высшее образование + профессиональная переподготовка" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_11">Высшее образование + профессиональная переподготовка</label>
+              </div>
+              <div class="custom-control">
+                  <input id="checkbox_12" name="checkbox_name_12" type="checkbox" value="Высшее образование + учёная степень + профессиональная переподготовка в области управления" class="custom-control-input" required>
+                  <label class="custom-control-label" for="checkbox_12">Высшее образование + учёная степень + профессиональная переподготовка в области управления</label>
+              </div>
+
+              <script>
+              $( "input" ).change(function() {
+              for( var $i = 2; $i < 10; $i++){
+                  if($i != 5 && $i != 6){
+                      var $input = $("#checkbox_" + $i);
+                      if($input.is( ":checked" ))
+                      {
+                          $("#checkbox_at_" + $i).show()
+                      }else {
+                          $("#checkbox_at_" + $i).hide()
+                      } 
+                  }
+              }
+              }).change();
+              </script>
+            </div>
+            <h4 class="mb-3">Образование</h4>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="cc-name">Name on card</label>
