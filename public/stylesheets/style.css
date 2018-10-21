@@ -1,8 +1,12 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.label-inline label {
+  color: #999;
+  font-weight: normal;
+  padding: 7px 7px 7px 13px;
+  position: absolute;
+  z-index: 10;
 }
-
-a {
-  color: #00B7FF;
+.resume-block h3{
+  margin: 0 0 20px 0;
+  padding: 0 10px 10px 10px;
+  border-bottom: 1px solid #CCC;
 }
