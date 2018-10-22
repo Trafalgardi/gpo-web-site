@@ -4,258 +4,262 @@
     <meta charset="utf-8">
     <title>Checkout</title>
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../public/stylesheets/bootstrap.min.css">
-    <script src="../public/javascripts/bootstrap.min.js"></script>
-    <script src="../public/javascripts/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../stylesheets/bootstrap.min.css">
+    <script src="../javascripts/bootstrap.min.js"></script>
+    <script src="../javascripts/jquery-3.3.1.js"></script>
     <!-- Custom styles for this template -->
-    <link href="../public/stylesheets/form-validation.css" rel="stylesheet">
-    <link href="../public/stylesheets/style.css" rel="stylesheet">
+    <link href="../stylesheets/form-validation.css" rel="stylesheet">
+    <link href="../stylesheets/style.css" rel="stylesheet">
   </head>
 
   <body class="bg-light">
 
     <div class="container">
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <img class="d-block mx-auto mb-4" src="../survey.svg" alt="" width="72" height="72">
         <h2>Анкетирование</h2>
-        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        <!-- <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p> -->
       </div>
 
       <div class="row">
         <div class="col-md-12 order-md-1">
           <form class="needs-validation" novalidate>
             <div class="resume-block">
-              <h3 class="mb-3">Основная часть</h3>
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label for="firstName">Имя</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid first name is required.
+              <h3>Основная часть</h3>
+              <div class="basis-block block">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="firstName">Имя</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="" value="DDDD" required>
+                    <div class="invalid-feedback">
+                      Valid first name is required.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="lastName">Фамилия</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                      Valid last name is required.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="secondName">Отчество</label>
+                    <input type="text" class="form-control" id="secondName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                      Valid last name is required.
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label for="lastName">Фамилия</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid last name is required.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="secondName">Отчество</label>
-                  <input type="text" class="form-control" id="secondName" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid last name is required.
-                  </div>
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label for="gender">Пол</label>
-                  <input type="text" class="form-control" id="gender" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid first name is required.
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="gender">Пол</label>
+                    <input type="text" class="form-control" id="gender" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                      Valid first name is required.
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="age">Возраст</label>
-                  <input type="text" class="form-control" id="age" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid last name is required.
+                  <div class="col-md-4 mb-3">
+                    <label for="age">Возраст</label>
+                    <input type="text" class="form-control" id="age" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                      Valid last name is required.
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="registration">Гражданство</label>
-                  <input type="text" class="form-control" id="registration" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid last name is required.
-                  </div>
-                </div>
-              </div>
-              
-              <h3 class="mb-3">Меняли ли вы...</h3>
-
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_1">Вы меняли имя?</label>
-                  <select class="custom-select d-block w-100" id="change_1" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_2">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_2" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
+                  <div class="col-md-4 mb-3">
+                    <label for="registration">Гражданство</label>
+                    <input type="text" class="form-control" id="registration" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                      Valid last name is required.
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_3">Вы меняли фамилию?</label>
-                  <select class="custom-select d-block w-100" id="change_3" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_4">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_4" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_5">Вы меняли отчество?</label>
-                  <select class="custom-select d-block w-100" id="change_5" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_6">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_6" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_7">Вы меняли дату рождения?</label>
-                  <select class="custom-select d-block w-100" id="change_7" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_8">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_8" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_9">Вы меняли место регистрации?</label>
-                  <select class="custom-select d-block w-100" id="change_9" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_10">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_10" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_11">Вы меняли место жительства?</label>
-                  <select class="custom-select d-block w-100" id="change_11" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_12">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_12" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_13">Вы меняли мобильный телефон?</label>
-                  <select class="custom-select d-block w-100" id="change_13" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_14">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_14" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="change_15">Вы меняли почту?</label>
-                  <select class="custom-select d-block w-100" id="change_15" required>
-                    <option value="Да">Да</option>
-                    <option selected="" value="Нет">Нет</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="change_16">Сколько раз?</label>
-                  <input type="text" class="form-control" id="change_16" placeholder="0">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-9 mb-3">
-                    <label for="sp">Семейное положение</label>
-                    <select class="form-control" name="sp" id="sp">
-                        <option value="замужем/женат" selected="selected">замужем/женат</option>
-                        <option value="вдова/вдовец">вдова/вдовец</option>
-                        <option value="не замужем/ холост">не замужем/ холост</option>
-                        <option value="в разводе">в разводе</option>
-                        <option value="сожительство">сожительство</option>
+              <!-- Конец блока основная часть -->
+              <h3>Меняли ли вы...</h3>
+              <div class="change-block block">
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_1">Вы меняли имя?</label>
+                    <select class="custom-select d-block w-100" id="change_1" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
                     </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_2">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_2" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-9 mb-3">
-                  <label for="children">Дети (Пример заполнения М:9;Ж:2;)</label>
-                  <input type="text" class="form-control" id="children" placeholder="Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;">
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
+
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_3">Вы меняли фамилию?</label>
+                    <select class="custom-select d-block w-100" id="change_3" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_4">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_4" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_5">Вы меняли отчество?</label>
+                    <select class="custom-select d-block w-100" id="change_5" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_6">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_6" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_7">Вы меняли дату рождения?</label>
+                    <select class="custom-select d-block w-100" id="change_7" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_8">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_8" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_9">Вы меняли место регистрации?</label>
+                    <select class="custom-select d-block w-100" id="change_9" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_10">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_10" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_11">Вы меняли место жительства?</label>
+                    <select class="custom-select d-block w-100" id="change_11" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_12">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_12" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_13">Вы меняли мобильный телефон?</label>
+                    <select class="custom-select d-block w-100" id="change_13" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_14">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_14" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="change_15">Вы меняли почту?</label>
+                    <select class="custom-select d-block w-100" id="change_15" required>
+                      <option value="Да">Да</option>
+                      <option selected="" value="Нет">Нет</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="change_16">Сколько раз?</label>
+                    <input type="text" class="form-control" id="change_16" placeholder="0">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-9 mb-3">
+                      <label for="sp">Семейное положение</label>
+                      <select class="form-control" name="sp" id="sp">
+                          <option value="замужем/женат" selected="selected">замужем/женат</option>
+                          <option value="вдова/вдовец">вдова/вдовец</option>
+                          <option value="не замужем/ холост">не замужем/ холост</option>
+                          <option value="в разводе">в разводе</option>
+                          <option value="сожительство">сожительство</option>
+                      </select>
+                  </div>
+                  <div class="col-md-9 mb-3">
+                    <label for="children">Дети (Пример заполнения М:9;Ж:2;)</label>
+                    <input type="text" class="form-control" id="children" placeholder="Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;">
+                    <div class="invalid-feedback">
+                      Please provide a valid state.
+                    </div>
                   </div>
                 </div>
               </div>
-              <h3 class="mb-3">Водительское удостоверение</h3>
-              <div class="row">
+              <!-- Конец блока меняли ли вы... -->
+              <h3>Водительское удостоверение</h3>
+              <div class="row driver-block block">
                 <div class="col-md-5 mb-3">
                   <label for="drive_0">Имеете ли вы водительское удостоверение?</label>
                   <select class="custom-select d-block w-100" id="drive_0" required>
@@ -288,14 +292,15 @@
                   </div>
                 </div>
               </div>
-              <h3 class="mb-3">Образование</h3>
-              <div class="d-block my-3">
+              <!-- Конец блока про водительское удостоверение -->
+              <h3>Образование</h3>
+              <div class="education-block block">
                 <div class="custom-control">
-                  <input id="checkbox_1" name="checkbox_name_1" type="checkbox" value="Без образования" class="custom-control-input" required>
+                  <input id="checkbox_1" name="checkbox_name_1" type="checkbox" value="Без образования" class="custom-control-input">
                   <label class="custom-control-label" for="checkbox_1">Без образования</label>                
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_2" name="checkbox_name_2" type="checkbox" value="Полное среднее образование" class="custom-control-input" required>
+                    <input id="checkbox_2" name="checkbox_name_2" type="checkbox" value="Полное среднее образование" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_2">Полное среднее образование</label>
                     <div id="checkbox_at_2" style="display: none;">
                         <label> Средний балл</label>
@@ -303,7 +308,7 @@
                     </div>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_3" name="checkbox_name_3" type="checkbox" value="Магистратура" class="custom-control-input" required>
+                    <input id="checkbox_3" name="checkbox_name_3" type="checkbox" value="Магистратура" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_3">Магистратура</label>
                     <div id="checkbox_at_3" style="display: none;">
                         <label> Средний балл</label>
@@ -311,7 +316,7 @@
                     </div>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_4" name="checkbox_name_4" type="checkbox" value="Специалитет" class="custom-control-input" required>
+                    <input id="checkbox_4" name="checkbox_name_4" type="checkbox" value="Специалитет" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_4">Специалитет</label>
                     <div id="checkbox_at_4" style="display: none;">
                         <label> Средний балл</label>
@@ -319,19 +324,19 @@
                     </div>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_5" name="checkbox_name_5" type="checkbox" value="Кандидат наук" class="custom-control-input" required>
+                    <input id="checkbox_5" name="checkbox_name_5" type="checkbox" value="Кандидат наук" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_5">Кандидат наук</label>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_6" name="checkbox_name_6" type="checkbox" value="Доктор наук" class="custom-control-input" required>
+                    <input id="checkbox_6" name="checkbox_name_6" type="checkbox" value="Доктор наук" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_6">Доктор наук</label>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_7" name="checkbox_name_7" type="checkbox" value="PhD" class="custom-control-input" required>
+                    <input id="checkbox_7" name="checkbox_name_7" type="checkbox" value="PhD" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_7">PhD</label>
                 </div>
                 <div class="custom-control">
-                  <input id="checkbox_8" name="checkbox_name_8" type="checkbox" value="Профессиональная переподготовка" class="custom-control-input" required>
+                  <input id="checkbox_8" name="checkbox_name_8" type="checkbox" value="Профессиональная переподготовка" class="custom-control-input">
                   <label class="custom-control-label" for="checkbox_8">Профессиональная переподготовка</label>
                   <div id="checkbox_at_8" style="display: none;">
                       <label> Средний балл</label>
@@ -339,7 +344,7 @@
                   </div>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_9" name="checkbox_name_9" type="checkbox" value="Профессиональная переподготовка в области управления" class="custom-control-input" required>
+                    <input id="checkbox_9" name="checkbox_name_9" type="checkbox" value="Профессиональная переподготовка в области управления" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_9">Профессиональная переподготовка в области управления</label>
                     <div id="checkbox_at_9" style="display: none;">
                         <label> Средний балл</label>
@@ -347,15 +352,15 @@
                     </div>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_10" name="checkbox_name_10" type="checkbox" value="Высшее образования + учёная степень" class="custom-control-input" required>
+                    <input id="checkbox_10" name="checkbox_name_10" type="checkbox" value="Высшее образования + учёная степень" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_10">Высшее образования + учёная степень</label>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_11" name="checkbox_name_11" type="checkbox" value="Высшее образование + профессиональная переподготовка" class="custom-control-input" required>
+                    <input id="checkbox_11" name="checkbox_name_11" type="checkbox" value="Высшее образование + профессиональная переподготовка" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_11">Высшее образование + профессиональная переподготовка</label>
                 </div>
                 <div class="custom-control">
-                    <input id="checkbox_12" name="checkbox_name_12" type="checkbox" value="Высшее образование + учёная степень + профессиональная переподготовка в области управления" class="custom-control-input" required>
+                    <input id="checkbox_12" name="checkbox_name_12" type="checkbox" value="Высшее образование + учёная степень + профессиональная переподготовка в области управления" class="custom-control-input">
                     <label class="custom-control-label" for="checkbox_12">Высшее образование + учёная степень + профессиональная переподготовка в области управления</label>
                 </div>
 
@@ -375,8 +380,9 @@
                 }).change();
                 </script>
               </div>
+              <!-- Конец блока про образование -->
               <h3>Отношение к военнской обязанности</h3>
-              <div class="row military-block">
+              <div class="row military-block block">
                     <div class="col-md-6 mb-3">
                         <label for="militarySelectId">Отношение к воинской обязанности</label>
                         <select class="custom-select d-block w-100" name="militarySelect" id="militarySelectId">
@@ -435,10 +441,11 @@
                     });
                     </script>
               </div>
+              <!-- Конец военного блока -->
               <h3>Иностранные языки</h3>
-              <div class="row languages-block">
+              <div class="row languages-block block">
                     <div class="col-md-12">
-                    <a href="#" class="btn btn-primary add-language-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                    <!-- <a href="#" class="btn btn-primary add-language-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a> -->
                       <div id="language_items">
                           <div class="language-item" id="language_item_1">
                               <div class="row">
@@ -470,6 +477,20 @@
                                       </select>
                                   </div>
                               </div>
+                              <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="language_level_id_2">Шкала уровней владения иностранными языками по системе CEFR</label>
+                                    <select name="languages_level_2" class="form-control action-change error-item" id="languages_level_id_2" style="padding-left: 220px;">
+                                        <option value="">---</option>
+                                        <option value="С2">С2</option>
+                                        <option value="С1">С1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="B1">B1</option>
+                                        <option value="A2">A2</option>
+                                        <option value="A1">A1</option>
+                                    </select>
+                                </div>
+                            </div>
                               <script>
                               $(document).on('change', '.language_name', function(){
                                   if($(this).val() == 'other'){
@@ -480,11 +501,210 @@
                                   }
                               });
                               </script>
-                              <a class="language-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                              <!-- <a class="language-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a> -->
                           </div>
                       </div>
                     </div>
               </div>
+              <!-- Конец языкового блока -->
+              <h3>Учёная степень</h3>
+              <div class="row academic-degree-block block">
+                <div class="col-md-12">
+                  <!-- <a href="#" class="btn btn-primary academic-degree-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a> -->
+                  <div id="academic_degree_items">
+                      <div class="academic-degree-item" id="academic_degree_item_1">
+                          <div class="row">
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="academic_degree_doc_id_1">Доктор наук</label>
+                                  <select name="academic_degree_doc_1" class="form-control action-change academic_degree_doc" id="academic_degree_doc_id_1" style="padding-left: 220px;">
+                                      <option value="" disabled selected>---</option>
+                                      <option value="архитектурных наук">архитектурных наук</option>
+                                      <option value="технических наук">технических наук</option>
+                                      <option value="физико-математических">физико-математических</option>
+                                      <option value="ветеринарных наук">ветеринарных наук</option>
+                                      <option value="медицинских наук">медицинских наук</option>
+                                      <option value="биологических наук">биологических наук</option>
+                                      <option value="географических наук">географических наук</option>
+                                      <option value="геолого – минералогических наук">геолого – минералогических наук</option>
+                                      <option value="сельскохозяйственные науки">сельскохозяйственные науки</option>
+                                      <option value="химических наук">химических наук</option>
+                                      <option value="военных наук">военных наук</option>
+                                      <option value="искусствоведения">искусствоведения</option>
+                                      <option value="исторических наук">исторических наук</option>
+                                      <option value="культурологии">культурологии</option>
+                                      <option value="политологических наук">политологических наук</option>
+                                      <option value="психологических наук">психологических наук</option>
+                                      <option value="социологических наук">социологических наук</option>
+                                      <option value="филологических наук">филологических наук</option>
+                                      <option value="философских наук">философских наук</option>
+                                      <option value="экономических наук">экономических наук</option>
+                                      <option value="юридических наук">юридических наук</option>
+                                      <option value="педагогических наук">педагогических наук</option>
+                                  </select>
+                              </div>
+                          
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="academic_degree_candidate_id_1">Кандидат наук</label>
+                                  <select name="academic_degree_candidate_1" class="form-control action-change" id="academic_degree_candidate_id_1" style="padding-left: 220px;">
+                                      <option value="" disabled selected>---</option>
+                                      <option value="архитектурных наук">архитектурных наук</option>
+                                      <option value="технических наук">технических наук</option>
+                                      <option value="физико-математических">физико-математических</option>
+                                      <option value="ветеринарных наук">ветеринарных наук</option>
+                                      <option value="медицинских наук">медицинских наук</option>
+                                      <option value="биологических наук">биологических наук</option>
+                                      <option value="географических наук">географических наук</option>
+                                      <option value="геолого – минералогических наук">геолого – минералогических наук</option>
+                                      <option value="сельскохозяйственные науки">сельскохозяйственные науки</option>
+                                      <option value="химических наук">химических наук</option>
+                                      <option value="военных наук">военных наук</option>
+                                      <option value="искусствоведения">искусствоведения</option>
+                                      <option value="исторических наук">исторических наук</option>
+                                      <option value="культурологии">культурологии</option>
+                                      <option value="политологических наук">политологических наук</option>
+                                      <option value="психологических наук">психологических наук</option>
+                                      <option value="социологических наук">социологических наук</option>
+                                      <option value="филологических наук">филологических наук</option>
+                                      <option value="философских наук">философских наук</option>
+                                      <option value="экономических наук">экономических наук</option>
+                                      <option value="юридических наук">юридических наук</option>
+                                      <option value="педагогических наук">педагогических наук</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <!-- <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a> -->
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Конец блока ученной степени -->
+              <h3>Стаж</h3>
+              <div class="row experience-block block">
+                <div class="col-md-12">
+                  <!-- <a href="#" class="btn btn-primary experience-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a> -->
+                  <div id="experience_items">
+                      <div class="experience-item" id="experience_item_1">
+                          <div class="row">
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="experience_id_1">Общий стаж</label>
+                                  <select name="experience_1" class="form-control action-change experience" id="experience_id_1" style="padding-left: 220px;">
+                                      <option value="0" selected="selected">нет</option>
+                                      <option value="1">1 год</option>
+                                      <option value="2">2 года</option>
+                                      <option value="3">3 года</option>
+                                      <option value="4">4 года</option>
+                                      <option value="5">5 лет</option>
+                                      <option value="6">6 лет</option>
+                                      <option value="7">7 лет</option>
+                                      <option value="8">8 лет</option>
+                                      <option value="9">9 лет</option>
+                                      <option value="10">Более 10 лет</option>
+                                  </select>
+                              </div>
+                          
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="experience_id_2">По специальности</label>
+                                  <select name="experience_2" class="form-control action-change" id="experience_id_2" style="padding-left: 220px;">
+                                      <option value="0" selected="selected">нет</option>
+                                      <option value="1">1 год</option>
+                                      <option value="2">2 года</option>
+                                      <option value="3">3 года</option>
+                                      <option value="4">4 года</option>
+                                      <option value="5">5 лет</option>
+                                      <option value="6">6 лет</option>
+                                      <option value="7">7 лет</option>
+                                      <option value="8">8 лет</option>
+                                      <option value="9">9 лет</option>
+                                      <option value="10">Более 10 лет</option>
+                                  </select>
+                              </div>
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="experience_id_3">Управленческий стаж</label>
+                                  <select name="experience_3" class="form-control action-change" id="experience_id_3" style="padding-left: 220px;">
+                                      <option value="0" selected="selected">нет</option>
+                                      <option value="1">1 год</option>
+                                      <option value="2">2 года</option>
+                                      <option value="3">3 года</option>
+                                      <option value="4">4 года</option>
+                                      <option value="5">5 лет</option>
+                                      <option value="6">6 лет</option>
+                                      <option value="7">7 лет</option>
+                                      <option value="8">8 лет</option>
+                                      <option value="9">9 лет</option>
+                                      <option value="10">Более 10 лет</option>
+                                  </select>
+                              </div>
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="experience_id_4">Педагогический стаж</label>
+                                  <select name="experience_4" class="form-control action-change" id="experience_id_4" style="padding-left: 220px;">
+                                      <option value="0" selected="selected">нет</option>
+                                      <option value="1">1 год</option>
+                                      <option value="2">2 года</option>
+                                      <option value="3">3 года</option>
+                                      <option value="4">4 года</option>
+                                      <option value="5">5 лет</option>
+                                      <option value="6">6 лет</option>
+                                      <option value="7">7 лет</option>
+                                      <option value="8">8 лет</option>
+                                      <option value="9">9 лет</option>
+                                      <option value="10">Более 10 лет</option>
+                                  </select>
+                              </div>
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="experience_id_5">Управление проектами</label>
+                                  <select name="experience_5" class="form-control action-change" id="experience_id_5" style="padding-left: 220px;">
+                                      <option value="0" selected="selected">нет</option>
+                                      <option value="1">1 год</option>
+                                      <option value="2">2 года</option>
+                                      <option value="3">3 года</option>
+                                      <option value="4">4 года</option>
+                                      <option value="5">5 лет</option>
+                                      <option value="6">6 лет</option>
+                                      <option value="7">7 лет</option>
+                                      <option value="8">8 лет</option>
+                                      <option value="9">9 лет</option>
+                                      <option value="10">Более 10 лет</option>
+                                  </select>
+                              </div>
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="experience_id_6">Не по специальности</label>
+                                  <select name="experience_6" class="form-control action-change" id="experience_id_6" style="padding-left: 220px;">
+                                      <option value="0" selected="selected">нет</option>
+                                      <option value="1">1 год</option>
+                                      <option value="2">2 года</option>
+                                      <option value="3">3 года</option>
+                                      <option value="4">4 года</option>
+                                      <option value="5">5 лет</option>
+                                      <option value="6">6 лет</option>
+                                      <option value="7">7 лет</option>
+                                      <option value="8">8 лет</option>
+                                      <option value="9">9 лет</option>
+                                      <option value="10">Более 10 лет</option>
+                                  </select>
+                              </div>
+                              <div class="form-group label-inline col-md-6">
+                                  <label for="experience_id_7">Рабочие специальности</label>
+                                  <select name="experience_7" class="form-control action-change" id="experience_id_7" style="padding-left: 220px;">
+                                      <option value="0" selected="selected">нет</option>
+                                      <option value="1">1 год</option>
+                                      <option value="2">2 года</option>
+                                      <option value="3">3 года</option>
+                                      <option value="4">4 года</option>
+                                      <option value="5">5 лет</option>
+                                      <option value="6">6 лет</option>
+                                      <option value="7">7 лет</option>
+                                      <option value="8">8 лет</option>
+                                      <option value="9">9 лет</option>
+                                      <option value="10">Более 10 лет</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <!-- <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a> -->
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Конец блока про стаж -->
               <hr class="mb-4">
               <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
             </div>
@@ -506,11 +726,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../dist/js/app.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../javascripts/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../javascripts/vendor/popper.min.js"></script>
+    <script src="../javascripts/bootstrap.min.js"></script>
+    <script src="../javascripts/vendor/holder.min.js"></script>
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {

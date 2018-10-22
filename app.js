@@ -5,9 +5,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mysql = require('mysql');
 
-var indexRouter = require('./routes/index');
+//var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+const {getHomePage, addPlayer} = require('./routes/index');
 
 var app = express();
 
@@ -17,34 +20,42 @@ var app = express();
 
 // view engine setup
 
+const db  = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "mydb"
+});
+
+db.connect((err) => {
+  if (err) {
+      throw err;
+  }
+  console.log('Connected to database');
+});
+global.db = db;
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json()); // parse form data client
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.bodyParser());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.get('/', getHomePage);
+//app.get('/add', addPlayerPage);
+//app.get('/edit/:id', editPlayerPage);
+//app.get('/delete/:id', deletePlayer);
+app.get('/add', addPlayer);
+//app.post('/edit/:id', editPlayer);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+//app.use('/', indexRouter);
+//app.use('/users', usersRouter);
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
 
 
 

@@ -1,5 +1,577 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Checkout
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='../stylesheets/bootstrap.min.css')
+    script(src='../javascripts/bootstrap.min.js')
+    script(src='../javascripts/jquery-3.3.1.js')
+    // Custom styles for this template
+    link(href='../stylesheets/form-validation.css', rel='stylesheet')
+    link(href='../stylesheets/style.css', rel='stylesheet')
+  body.bg-light
+    .container
+      .py-5.text-center
+        img.d-block.mx-auto.mb-4(src='../survey.svg', alt='', width='72', height='72')
+        h2 Анкетирование
+        // <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      .row
+        .col-md-12.order-md-1
+          form.needs-validation(novalidate='')
+            .resume-block
+              h3 Основная часть
+              .basis-block.block
+                .row
+                  .col-md-4.mb-3
+                    label(for='firstName') Имя
+                    input#firstName.form-control(type='text', placeholder='', value='DDDD', required='')
+                    .invalid-feedback
+                      | Valid first name is required.
+                  .col-md-4.mb-3
+                    label(for='lastName') Фамилия
+                    input#lastName.form-control(type='text', placeholder='', value='', required='')
+                    .invalid-feedback
+                      | Valid last name is required.
+                  .col-md-4.mb-3
+                    label(for='secondName') Отчество
+                    input#secondName.form-control(type='text', placeholder='', value='', required='')
+                    .invalid-feedback
+                      | Valid last name is required.
+                .row
+                  .col-md-4.mb-3
+                    label(for='gender') Пол
+                    input#gender.form-control(type='text', placeholder='', value='', required='')
+                    .invalid-feedback
+                      | Valid first name is required.
+                  .col-md-4.mb-3
+                    label(for='age') Возраст
+                    input#age.form-control(type='text', placeholder='', value='', required='')
+                    .invalid-feedback
+                      | Valid last name is required.
+                  .col-md-4.mb-3
+                    label(for='registration') Гражданство
+                    input#registration.form-control(type='text', placeholder='', value='', required='')
+                    .invalid-feedback
+                      | Valid last name is required.
+              // Конец блока основная часть
+              h3 Меняли ли вы...
+              .change-block.block
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_1') Вы меняли имя?
+                    select#change_1.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_2') Сколько раз?
+                    input#change_2.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_3') Вы меняли фамилию?
+                    select#change_3.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_4') Сколько раз?
+                    input#change_4.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_5') Вы меняли отчество?
+                    select#change_5.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_6') Сколько раз?
+                    input#change_6.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_7') Вы меняли дату рождения?
+                    select#change_7.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_8') Сколько раз?
+                    input#change_8.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_9') Вы меняли место регистрации?
+                    select#change_9.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_10') Сколько раз?
+                    input#change_10.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_11') Вы меняли место жительства?
+                    select#change_11.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_12') Сколько раз?
+                    input#change_12.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_13') Вы меняли мобильный телефон?
+                    select#change_13.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_14') Сколько раз?
+                    input#change_14.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-5.mb-3
+                    label(for='change_15') Вы меняли почту?
+                    select#change_15.custom-select.d-block.w-100(required='')
+                      option(value='Да') Да
+                      option(selected='', value='Нет') Нет
+                    .invalid-feedback
+                      | Please select a valid country.
+                  .col-md-4.mb-3
+                    label(for='change_16') Сколько раз?
+                    input#change_16.form-control(type='text', placeholder='0')
+                    .invalid-feedback
+                      | Please provide a valid state.
+                .row
+                  .col-md-9.mb-3
+                    label(for='sp') Семейное положение
+                    select#sp.form-control(name='sp')
+                      option(value='замужем/женат', selected='selected') замужем/женат
+                      option(value='вдова/вдовец') вдова/вдовец
+                      option(value='не замужем/ холост') не замужем/ холост
+                      option(value='в разводе') в разводе
+                      option(value='сожительство') сожительство
+                  .col-md-9.mb-3
+                    label(for='children') Дети (Пример заполнения М:9;Ж:2;)
+                    input#children.form-control(type='text', placeholder='Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;')
+                    .invalid-feedback
+                      | Please provide a valid state.
+              // Конец блока меняли ли вы...
+              h3 Водительское удостоверение
+              .row.driver-block.block
+                .col-md-5.mb-3
+                  label(for='drive_0') Имеете ли вы водительское удостоверение?
+                  select#drive_0.custom-select.d-block.w-100(required='')
+                    option(value='Да') Да
+                    option(selected='', value='Нет') Нет
+                  .invalid-feedback
+                    | Please select a valid country.
+                .col-md-9.mb-3
+                  label(for='drive_2') Какой у вас стаж?
+                  input#drive_2.form-control(type='number', placeholder='2')
+                  .invalid-feedback
+                    | Please provide a valid state.
+                .col-md-9.mb-3
+                  label(for='drive_3') Укажите катигорию вашего водительского удостоверения
+                  input#drive_3.form-control(type='text', placeholder='А – мотоциклы')
+                  .invalid-feedback
+                    | Please provide a valid state.
+                .col-md-9.mb-3
+                  label(for='drive_4') Укажите катигорию вашего автомобиля
+                  input#drive_4.form-control(type='text', placeholder='легковой автомобиль')
+                  .invalid-feedback
+                    | Please provide a valid state.
+              // Конец блока про водительское удостоверение
+              h3 Образование
+              .education-block.block
+                .custom-control
+                  input#checkbox_1.custom-control-input(name='checkbox_name_1', type='checkbox', value='Без образования')
+                  label.custom-control-label(for='checkbox_1') Без образования
+                .custom-control
+                  input#checkbox_2.custom-control-input(name='checkbox_name_2', type='checkbox', value='Полное среднее образование')
+                  label.custom-control-label(for='checkbox_2') Полное среднее образование
+                  #checkbox_at_2(style='display: none;')
+                    label  Средний балл
+                    input#check_2.form-control(type='text', name='check_2')
+                .custom-control
+                  input#checkbox_3.custom-control-input(name='checkbox_name_3', type='checkbox', value='Магистратура')
+                  label.custom-control-label(for='checkbox_3') Магистратура
+                  #checkbox_at_3(style='display: none;')
+                    label  Средний балл
+                    input#check_3.form-control(type='text', name='check_3')
+                .custom-control
+                  input#checkbox_4.custom-control-input(name='checkbox_name_4', type='checkbox', value='Специалитет')
+                  label.custom-control-label(for='checkbox_4') Специалитет
+                  #checkbox_at_4(style='display: none;')
+                    label  Средний балл
+                    input#check_4.form-control(type='text', name='check_4')
+                .custom-control
+                  input#checkbox_5.custom-control-input(name='checkbox_name_5', type='checkbox', value='Кандидат наук')
+                  label.custom-control-label(for='checkbox_5') Кандидат наук
+                .custom-control
+                  input#checkbox_6.custom-control-input(name='checkbox_name_6', type='checkbox', value='Доктор наук')
+                  label.custom-control-label(for='checkbox_6') Доктор наук
+                .custom-control
+                  input#checkbox_7.custom-control-input(name='checkbox_name_7', type='checkbox', value='PhD')
+                  label.custom-control-label(for='checkbox_7') PhD
+                .custom-control
+                  input#checkbox_8.custom-control-input(name='checkbox_name_8', type='checkbox', value='Профессиональная переподготовка')
+                  label.custom-control-label(for='checkbox_8') Профессиональная переподготовка
+                  #checkbox_at_8(style='display: none;')
+                    label  Средний балл
+                    input#check_8.form-control(type='text', name='check_8')
+                .custom-control
+                  input#checkbox_9.custom-control-input(name='checkbox_name_9', type='checkbox', value='Профессиональная переподготовка в области управления')
+                  label.custom-control-label(for='checkbox_9') Профессиональная переподготовка в области управления
+                  #checkbox_at_9(style='display: none;')
+                    label  Средний балл
+                    input#check_9.form-control(type='text', name='check_9')
+                .custom-control
+                  input#checkbox_10.custom-control-input(name='checkbox_name_10', type='checkbox', value='Высшее образования + учёная степень')
+                  label.custom-control-label(for='checkbox_10') Высшее образования + учёная степень
+                .custom-control
+                  input#checkbox_11.custom-control-input(name='checkbox_name_11', type='checkbox', value='Высшее образование + профессиональная переподготовка')
+                  label.custom-control-label(for='checkbox_11') Высшее образование + профессиональная переподготовка
+                .custom-control
+                  input#checkbox_12.custom-control-input(name='checkbox_name_12', type='checkbox', value='Высшее образование + учёная степень + профессиональная переподготовка в области управления')
+                  label.custom-control-label(for='checkbox_12')
+                    | Высшее образование + учёная степень + профессиональная переподготовка в области управления
+                script.
+                  $( "input" ).change(function() {
+                  for( var $i = 2; $i < 10; $i++){
+                  if($i != 5 && $i != 6){
+                  var $input = $("#checkbox_" + $i);
+                  if($input.is( ":checked" ))
+                  {
+                  $("#checkbox_at_" + $i).show()
+                  }else {
+                  $("#checkbox_at_" + $i).hide()
+                  }
+                  }
+                  }
+                  }).change();
+              // Конец блока про образование
+              h3 Отношение к военнской обязанности
+              .row.military-block.block
+                .col-md-6.mb-3
+                  label(for='militarySelectId') Отношение к воинской обязанности
+                  select#militarySelectId.custom-select.d-block.w-100(name='militarySelect')
+                    option(value='невоеннообязанный', selected='selected') Невоеннообязанный
+                    option(value='военнообязанный') Военнообязанный
+                #notMilitary.col-md-6.mb-3
+                  label(for='notMilitarySelectId') По какой причине?
+                  select#notMilitarySelectId.form-control(name='notMilitarySelect')
+                    option(value='по медицинским показателям', selected='selected') по медицинским показателям
+                    option(value='наличие непогашенной судимости') наличие непогашенной судимости
+                    option(value='другое') другое
+                #yesMilitary.col-md-6.mb-3(style='display: none;')
+                  div
+                    label(for='yesMilitarySelectId') Военнообязанный
+                    select#yesMilitarySelectId.form-control(name='yesMilitarySelect')
+                      option(value='прошедший военную службу по контракту', selected='selected') прошедший военную службу по контракту
+                      option(value='прошедшие военную службу') прошедшие военную службу
+                      option(value='прошедшие альтернативную гражданскую службу') прошедшие альтернативную гражданскую службу
+                      option(value='призывного возраста') призывного возраста
+                      option(value='другое') другое
+                #yesMilitaryRankId.col-md-6.mb-3(style='display: none;')
+                  label(for='yesMilitaryRankSelectId') Воинское звания
+                  select#yesMilitaryRankSelectId.form-control(name='yesMilitaryRankSelect')
+                    option(value='нет', selected='') Выберети из списка...
+                    option(value='солдаты/матросы') солдаты/матросы
+                    option(value='сержанты/старшины') сержанты/старшины
+                    option(value='прапорщики/мичманы') прапорщики/мичманы
+                    option(value='младший офицерский состав') младший офицерский состав
+                    option(value='Старший офицерский состав') Старший офицерский состав
+                    option(value='Высший офицерский состав') Высший офицерский состав
+                script.
+                  $(function() {
+                  $('#militarySelectId').on('change', function() {
+                  if(this.value == "невоеннообязанный"){
+                  $("#notMilitary").show()
+                  $("#yesMilitary").hide()
+                  $("#yesMilitaryRankId").hide()
+                  }else if(this.value == "военнообязанный"){
+                  $("#notMilitary").hide()
+                  $("#yesMilitary").show()
+                  $("#yesMilitaryRankId").show()
+                  }
+                  })
+                  });
+              // Конец военного блока
+              h3 Иностранные языки
+              .row.languages-block.block
+                .col-md-12
+                  // <a href="#" class="btn btn-primary add-language-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                  #language_items
+                    #language_item_1.language-item
+                      .row
+                        .form-group.label-inline.col-md-6
+                          label(for='language_name_id_1') Язык
+                          select#language_name_id_1.form-control.action-change.language_name.error-item(name='languages_name_1', style='padding-left: 220px;')
+                            option(value='') ---
+                            option(value='Английский язык') Английский язык
+                            option(value='Китайский язык') Китайский язык
+                            option(value='Немецкий язык') Немецкий язык
+                            option(value='Французский язык') Французский язык
+                            option(value='other') Другой
+                        .form-group.col-md-6.label-inline(style='display: none;')
+                          label(for='language_id_other_1') Свой вариант
+                          input#language_id_other_1.form-control.action-fo(maxlength='191', type='text', name='languages_name_other_1', value='')
+                      .row
+                        .form-group.label-inline.col-md-6
+                          label(for='language_level_1') Уровень владения языком
+                          select#language_level_1.form-control.action-change.error-item(name='languages[1][language_level]', style='padding-left: 220px;')
+                            option(value='') ---
+                            option(value='Начальный') Начальный
+                            option(value='Средний') Средний
+                            option(value='Продвинутый') Продвинутый
+                            option(value='Свободно владею') Свободно владею
+                      .row
+                        .form-group.col-md-6
+                          label(for='language_level_id_2') Шкала уровней владения иностранными языками по системе CEFR
+                          select#languages_level_id_2.form-control.action-change.error-item(name='languages_level_2', style='padding-left: 220px;')
+                            option(value='') ---
+                            option(value='С2') С2
+                            option(value='С1') С1
+                            option(value='B2') B2
+                            option(value='B1') B1
+                            option(value='A2') A2
+                            option(value='A1') A1
+                      script.
+                        $(document).on('change', '.language_name', function(){
+                        if($(this).val() == 'other'){
+                        $(this).parent('div').next('div').css('display', 'block');
+                        }else{
+                        $(this).parent('div').next('div').css('display', 'none');
+                        $(this).parent('div').next('div').find('input').val('');
+                        }
+                        });
+                      // <a class="language-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                      // Конец языкового блока
+                      h3 Учёная степень
+                      .row.academic-degree-block.block
+                        .col-md-12
+                          // <a href="#" class="btn btn-primary academic-degree-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                          #academic_degree_items
+                            #academic_degree_item_1.academic-degree-item
+                              .row
+                                .form-group.label-inline.col-md-6
+                                  label(for='academic_degree_doc_id_1') Доктор наук
+                                  select#academic_degree_doc_id_1.form-control.action-change.academic_degree_doc(name='academic_degree_doc_1', style='padding-left: 220px;')
+                                    option(value='', disabled='', selected='') ---
+                                    option(value='архитектурных наук') архитектурных наук
+                                    option(value='технических наук') технических наук
+                                    option(value='физико-математических') физико-математических
+                                    option(value='ветеринарных наук') ветеринарных наук
+                                    option(value='медицинских наук') медицинских наук
+                                    option(value='биологических наук') биологических наук
+                                    option(value='географических наук') географических наук
+                                    option(value='геолого – минералогических наук') геолого – минералогических наук
+                                    option(value='сельскохозяйственные науки') сельскохозяйственные науки
+                                    option(value='химических наук') химических наук
+                                    option(value='военных наук') военных наук
+                                    option(value='искусствоведения') искусствоведения
+                                    option(value='исторических наук') исторических наук
+                                    option(value='культурологии') культурологии
+                                    option(value='политологических наук') политологических наук
+                                    option(value='психологических наук') психологических наук
+                                    option(value='социологических наук') социологических наук
+                                    option(value='филологических наук') филологических наук
+                                    option(value='философских наук') философских наук
+                                    option(value='экономических наук') экономических наук
+                                    option(value='юридических наук') юридических наук
+                                    option(value='педагогических наук') педагогических наук
+                                .form-group.label-inline.col-md-6
+                                  label(for='academic_degree_candidate_id_1') Кандидат наук
+                                  select#academic_degree_candidate_id_1.form-control.action-change(name='academic_degree_candidate_1', style='padding-left: 220px;')
+                                    option(value='', disabled='', selected='') ---
+                                    option(value='архитектурных наук') архитектурных наук
+                                    option(value='технических наук') технических наук
+                                    option(value='физико-математических') физико-математических
+                                    option(value='ветеринарных наук') ветеринарных наук
+                                    option(value='медицинских наук') медицинских наук
+                                    option(value='биологических наук') биологических наук
+                                    option(value='географических наук') географических наук
+                                    option(value='геолого – минералогических наук') геолого – минералогических наук
+                                    option(value='сельскохозяйственные науки') сельскохозяйственные науки
+                                    option(value='химических наук') химических наук
+                                    option(value='военных наук') военных наук
+                                    option(value='искусствоведения') искусствоведения
+                                    option(value='исторических наук') исторических наук
+                                    option(value='культурологии') культурологии
+                                    option(value='политологических наук') политологических наук
+                                    option(value='психологических наук') психологических наук
+                                    option(value='социологических наук') социологических наук
+                                    option(value='филологических наук') филологических наук
+                                    option(value='философских наук') философских наук
+                                    option(value='экономических наук') экономических наук
+                                    option(value='юридических наук') юридических наук
+                                    option(value='педагогических наук') педагогических наук
+                              // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                              // Конец блока ученной степени
+                              h3 Стаж
+                              .row.experience-block.block
+                                .col-md-12
+                                  // <a href="#" class="btn btn-primary experience-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                                  #experience_items
+                                    #experience_item_1.experience-item
+                                      .row
+                                        .form-group.label-inline.col-md-6
+                                          label(for='experience_id_1') Общий стаж
+                                          select#experience_id_1.form-control.action-change.experience(name='experience_1', style='padding-left: 220px;')
+                                            option(value='0', selected='selected') нет
+                                            option(value='1') 1 год
+                                            option(value='2') 2 года
+                                            option(value='3') 3 года
+                                            option(value='4') 4 года
+                                            option(value='5') 5 лет
+                                            option(value='6') 6 лет
+                                            option(value='7') 7 лет
+                                            option(value='8') 8 лет
+                                            option(value='9') 9 лет
+                                            option(value='10') Более 10 лет
+                                        .form-group.label-inline.col-md-6
+                                          label(for='experience_id_2') По специальности
+                                          select#experience_id_2.form-control.action-change(name='experience_2', style='padding-left: 220px;')
+                                            option(value='0', selected='selected') нет
+                                            option(value='1') 1 год
+                                            option(value='2') 2 года
+                                            option(value='3') 3 года
+                                            option(value='4') 4 года
+                                            option(value='5') 5 лет
+                                            option(value='6') 6 лет
+                                            option(value='7') 7 лет
+                                            option(value='8') 8 лет
+                                            option(value='9') 9 лет
+                                            option(value='10') Более 10 лет
+                                        .form-group.label-inline.col-md-6
+                                          label(for='experience_id_3') Управленческий стаж
+                                          select#experience_id_3.form-control.action-change(name='experience_3', style='padding-left: 220px;')
+                                            option(value='0', selected='selected') нет
+                                            option(value='1') 1 год
+                                            option(value='2') 2 года
+                                            option(value='3') 3 года
+                                            option(value='4') 4 года
+                                            option(value='5') 5 лет
+                                            option(value='6') 6 лет
+                                            option(value='7') 7 лет
+                                            option(value='8') 8 лет
+                                            option(value='9') 9 лет
+                                            option(value='10') Более 10 лет
+                                        .form-group.label-inline.col-md-6
+                                          label(for='experience_id_4') Педагогический стаж
+                                          select#experience_id_4.form-control.action-change(name='experience_4', style='padding-left: 220px;')
+                                            option(value='0', selected='selected') нет
+                                            option(value='1') 1 год
+                                            option(value='2') 2 года
+                                            option(value='3') 3 года
+                                            option(value='4') 4 года
+                                            option(value='5') 5 лет
+                                            option(value='6') 6 лет
+                                            option(value='7') 7 лет
+                                            option(value='8') 8 лет
+                                            option(value='9') 9 лет
+                                            option(value='10') Более 10 лет
+                                        .form-group.label-inline.col-md-6
+                                          label(for='experience_id_5') Управление проектами
+                                          select#experience_id_5.form-control.action-change(name='experience_5', style='padding-left: 220px;')
+                                            option(value='0', selected='selected') нет
+                                            option(value='1') 1 год
+                                            option(value='2') 2 года
+                                            option(value='3') 3 года
+                                            option(value='4') 4 года
+                                            option(value='5') 5 лет
+                                            option(value='6') 6 лет
+                                            option(value='7') 7 лет
+                                            option(value='8') 8 лет
+                                            option(value='9') 9 лет
+                                            option(value='10') Более 10 лет
+                                        .form-group.label-inline.col-md-6
+                                          label(for='experience_id_6') Не по специальности
+                                          select#experience_id_6.form-control.action-change(name='experience_6', style='padding-left: 220px;')
+                                            option(value='0', selected='selected') нет
+                                            option(value='1') 1 год
+                                            option(value='2') 2 года
+                                            option(value='3') 3 года
+                                            option(value='4') 4 года
+                                            option(value='5') 5 лет
+                                            option(value='6') 6 лет
+                                            option(value='7') 7 лет
+                                            option(value='8') 8 лет
+                                            option(value='9') 9 лет
+                                            option(value='10') Более 10 лет
+                                        .form-group.label-inline.col-md-6
+                                          label(for='experience_id_7') Рабочие специальности
+                                          select#experience_id_7.form-control.action-change(name='experience_7', style='padding-left: 220px;')
+                                            option(value='0', selected='selected') нет
+                                            option(value='1') 1 год
+                                            option(value='2') 2 года
+                                            option(value='3') 3 года
+                                            option(value='4') 4 года
+                                            option(value='5') 5 лет
+                                            option(value='6') 6 лет
+                                            option(value='7') 7 лет
+                                            option(value='8') 8 лет
+                                            option(value='9') 9 лет
+                                            option(value='10') Более 10 лет
+                                      // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                                      // Конец блока про стаж
+                                      hr.mb-4
+                                      button.btn.btn-primary.btn-lg.btn-block(type='submit') Continue to checkout
+      footer.my-5.pt-5.text-muted.text-center.text-small
+        p.mb-1 © 2017-2018 Company Name
+        ul.list-inline
+          li.list-inline-item
+            a(href='#') Privacy
+          li.list-inline-item
+            a(href='#') Terms
+          li.list-inline-item
+            a(href='#') Support
+    //
+      Bootstrap core JavaScript
+      ==================================================
+    // Placed at the end of the document so the pages load faster
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+    script.
+      window.jQuery || document.write('<script src="../javascripts/vendor/jquery-slim.min.js"><\\/script>')
+    script(src='../javascripts/vendor/popper.min.js')
+    script(src='../javascripts/bootstrap.min.js')
+    script(src='../javascripts/vendor/holder.min.js')
+    script.
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+      }, false);
+      });
+      }, false);
+      })();
