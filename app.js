@@ -10,14 +10,6 @@ const {getHomePage, addData, addPlayerPage} = require('./routes/index');
 
 const port = 5000;
 
-
-/*db.connect((err) => {
-  if (err) {
-      throw err;
-  }
-  console.log('Connected to database');
-});*/
-
 const db_config = {
   host: "localhost",
   user: "root",
@@ -65,31 +57,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 
 app.get('/', getHomePage);
-//app.get('/addData', function(req, res){
-//  let firstName = req.body.firstName;
-//  let lastName = req.body.lastName;
-//  console.log(req.query);
-//  res.send('id: ' + req.query.lastName);
-//});
-//app.get('/add', addPlayerPage);
-//app.get('/edit/:id', editPlayerPage);
-//app.get('/delete/:id', deletePlayer);
 app.post('/addData', addData);
-//app.route('/addData')
-//  .get(function(req, res) {
-//    res.send('Get a random book');
-//  })
-//  .post(function(req, res) {
-//    res.send('Add a book');
-//    
-//  })
-//  .put(function(req, res) {
-//    res.send('Update the book');
-//  });
-//app.post('/edit/:id', editPlayer);
-
-//app.use('/', indexRouter);
-//app.use('/users', usersRouter);
 
 
 app.listen(port, () => {
