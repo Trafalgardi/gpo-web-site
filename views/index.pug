@@ -18,40 +18,40 @@ html(lang='en')
         // <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       .row
         .col-md-12.order-md-1
-          form.needs-validation(action='/add', novalidate='')
+          form.needs-validation(action='addData', method='post')
             .resume-block
               h3 Основная часть
               .basis-block.block
                 .row
                   .col-md-4.mb-3
                     label(for='firstName') Имя
-                    input#firstName.form-control(type='text', placeholder='', value='DDDD', required='')
+                    input#firstName.form-control(name='firstName' type='text', placeholder='', value='firstName', required='')
                     .invalid-feedback
                       | Valid first name is required.
                   .col-md-4.mb-3
                     label(for='lastName') Фамилия
-                    input#lastName.form-control(type='text', placeholder='', value='', required='')
+                    input#lastName.form-control(name='lastName' type='text', placeholder='', value='lastName', required='')
                     .invalid-feedback
                       | Valid last name is required.
                   .col-md-4.mb-3
                     label(for='secondName') Отчество
-                    input#secondName.form-control(type='text', placeholder='', value='', required='')
+                    input#secondName.form-control(name='secondName' type='text', placeholder='', value='secondName', required='')
                     .invalid-feedback
                       | Valid last name is required.
                 .row
                   .col-md-4.mb-3
                     label(for='gender') Пол
-                    input#gender.form-control(type='text', placeholder='', value='', required='')
+                    input#gender.form-control(name='gender' type='text', placeholder='', value='gender', required='')
                     .invalid-feedback
                       | Valid first name is required.
                   .col-md-4.mb-3
                     label(for='age') Возраст
-                    input#age.form-control(type='text', placeholder='', value='', required='')
+                    input#age.form-control(name='age' type='text', placeholder='', value='age', required='')
                     .invalid-feedback
                       | Valid last name is required.
                   .col-md-4.mb-3
                     label(for='registration') Гражданство
-                    input#registration.form-control(type='text', placeholder='', value='', required='')
+                    input#registration.form-control(name='registration' type='text', placeholder='', value='registration', required='')
                     .invalid-feedback
                       | Valid last name is required.
               // Конец блока основная часть
@@ -60,105 +60,105 @@ html(lang='en')
                 .row
                   .col-md-5.mb-3
                     label(for='change_1') Вы меняли имя?
-                    select#change_1.custom-select.d-block.w-100(required='')
+                    select#change_1.custom-select.d-block.w-100(name='change_1' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_2') Сколько раз?
-                    input#change_2.form-control(type='text', placeholder='0')
+                    input#change_2.form-control(name='change_2' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
                   .col-md-5.mb-3
                     label(for='change_3') Вы меняли фамилию?
-                    select#change_3.custom-select.d-block.w-100(required='')
+                    select#change_3.custom-select.d-block.w-100(name='change_3' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_4') Сколько раз?
-                    input#change_4.form-control(type='text', placeholder='0')
+                    input#change_4.form-control(name='change_4' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
                   .col-md-5.mb-3
                     label(for='change_5') Вы меняли отчество?
-                    select#change_5.custom-select.d-block.w-100(required='')
+                    select#change_5.custom-select.d-block.w-100(name='change_5' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_6') Сколько раз?
-                    input#change_6.form-control(type='text', placeholder='0')
+                    input#change_6.form-control(name='change_6' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
                   .col-md-5.mb-3
                     label(for='change_7') Вы меняли дату рождения?
-                    select#change_7.custom-select.d-block.w-100(required='')
+                    select#change_7.custom-select.d-block.w-100(name='change_7' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_8') Сколько раз?
-                    input#change_8.form-control(type='text', placeholder='0')
+                    input#change_8.form-control(name='change_8' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
                   .col-md-5.mb-3
                     label(for='change_9') Вы меняли место регистрации?
-                    select#change_9.custom-select.d-block.w-100(required='')
+                    select#change_9.custom-select.d-block.w-100(name='change_9' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_10') Сколько раз?
-                    input#change_10.form-control(type='text', placeholder='0')
+                    input#change_10.form-control(name='change_10' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
                   .col-md-5.mb-3
                     label(for='change_11') Вы меняли место жительства?
-                    select#change_11.custom-select.d-block.w-100(required='')
+                    select#change_11.custom-select.d-block.w-100(name='change_11' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_12') Сколько раз?
-                    input#change_12.form-control(type='text', placeholder='0')
+                    input#change_12.form-control(name='change_12' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
                   .col-md-5.mb-3
                     label(for='change_13') Вы меняли мобильный телефон?
-                    select#change_13.custom-select.d-block.w-100(required='')
+                    select#change_13.custom-select.d-block.w-100(name='change_13' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_14') Сколько раз?
-                    input#change_14.form-control(type='text', placeholder='0')
+                    input#change_14.form-control(name='change_14' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
                   .col-md-5.mb-3
                     label(for='change_15') Вы меняли почту?
-                    select#change_15.custom-select.d-block.w-100(required='')
+                    select#change_15.custom-select.d-block.w-100(name='change_15' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
                       | Please select a valid country.
                   .col-md-4.mb-3
                     label(for='change_16') Сколько раз?
-                    input#change_16.form-control(type='text', placeholder='0')
+                    input#change_16.form-control(name='change_16' type='text', placeholder='0')
                     .invalid-feedback
                       | Please provide a valid state.
                 .row
@@ -338,8 +338,8 @@ html(lang='en')
                           input#language_id_other_1.form-control.action-fo(maxlength='191', type='text', name='languages_name_other_1', value='')
                       .row
                         .form-group.label-inline.col-md-6
-                          label(for='language_level_1') Уровень владения языком
-                          select#language_level_1.form-control.action-change.error-item(name='languages[1][language_level]', style='padding-left: 220px;')
+                          label(for='language_level_id_1') Уровень владения языком
+                          select#language_level_id_1.form-control.action-change.error-item(name='languages_level_1', style='padding-left: 220px;')
                             option(value='') ---
                             option(value='Начальный') Начальный
                             option(value='Средний') Средний
@@ -536,7 +536,8 @@ html(lang='en')
                                       // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                                       // Конец блока про стаж
                                       hr.mb-4
-                                      button.btn.btn-primary.btn-lg.btn-block(type='submit') Continue to checkout
+                                      button#submit.btn.btn-primary.btn-lg.btn-block(type='submit') Continue to checkout
+      
       footer.my-5.pt-5.text-muted.text-center.text-small
         p.mb-1 © 2017-2018 Company Name
         ul.list-inline

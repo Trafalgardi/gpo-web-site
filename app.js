@@ -6,7 +6,7 @@ var app = express();
 
 var usersRouter = require('./routes/users');
 
-const {getHomePage, addPlayer, addPlayerPage} = require('./routes/index');
+const {getHomePage, addData, addPlayerPage} = require('./routes/index');
 
 const port = 5000;
 
@@ -57,20 +57,41 @@ function handleDisconnect() {
 
 handleDisconnect();
 
+global.connection = connection;
+
 
 // configure middleware
 app.set('port', process.env.port || port); // set express to use this port
 app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
 app.set('view engine', 'pug');
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // parse form data client
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 
 app.get('/', getHomePage);
-app.get('/add', addPlayerPage);
+//app.get('/addData', function(req, res){
+//  let firstName = req.body.firstName;
+//  let lastName = req.body.lastName;
+//  console.log(req.query);
+//  res.send('id: ' + req.query.lastName);
+//});
+//app.get('/add', addPlayerPage);
 //app.get('/edit/:id', editPlayerPage);
 //app.get('/delete/:id', deletePlayer);
-app.post('/add', addPlayer);
+app.post('/addData', addData);
+//app.route('/addData')
+//  .get(function(req, res) {
+//    res.send('Get a random book');
+//  })
+//  .post(function(req, res) {
+//    res.send('Add a book');
+//    
+//  })
+//  .put(function(req, res) {
+//    res.send('Update the book');
+//  });
 //app.post('/edit/:id', editPlayer);
 
 //app.use('/', indexRouter);
