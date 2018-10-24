@@ -17,7 +17,28 @@ module.exports = {
             res.send("Данные записанны!\n" + JSON.stringify(req.body));
         }
        
+       var swapJson = 
+       {
+
+            Name: '',
+            check: false,
+            number: 0
+
+       };
+       var swap = [];
+       var temp = req.body;
+       
+       for (var i = 0; i < 8 ; i++) {
+
+            swapJson.Name = temp['change_'+ i + '_0'];
+            swapJson.check = temp['change_'+ i + '_1'];
+            swapJson.number = temp['change_'+ i + '_2'];
+            swap[i] = JSON.stringify(swapJson);
+       }
+       
+       
     }
+
 
 }
 
