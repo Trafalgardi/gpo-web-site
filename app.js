@@ -10,12 +10,6 @@ const {getHomePage, addData, addPlayerPage} = require('./routes/index');
 
 const port = 5000;
 
-const db  = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "mydb"
-});
 
 /*db.connect((err) => {
   if (err) {
