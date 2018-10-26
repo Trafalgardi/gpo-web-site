@@ -1,9 +1,12 @@
+var pool = require('../database')
 module.exports = {
+    
     getHomePage: (req, res) => {
     res.render('index');
     
     },
     addData: (req, res) => {
+        
 
         let body = req.body;
         var personnelData = {
@@ -37,20 +40,15 @@ module.exports = {
             personnelData: personnelData,
             swap: swap
         };
-        console.log(data);
-        var sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(body) +"')";
-        connection.query(sql, function (err, result) {
-            if (err) throw err;
-            console.log("Result: " + body);
-        });
-        if(req.query != null){
-            res.send("Данные записанны!\n" + JSON.stringify(data));
-        }
-       
         
-       
-    }
+        console.log("Данные записанны!\n" + data);
+        var sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(body) +"')";
+        pool.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            res.send("Данные записанны!\n" + JSON.stringify(data));
+        });
 
+    }
 
 }
 
