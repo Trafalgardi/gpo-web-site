@@ -24,36 +24,39 @@ html(lang='en')
               .basis-block.block
                 .row
                   .col-md-4.mb-3
-                    label(for='firstName') Имя
-                    input#firstName.form-control(name='firstName' type='text', placeholder='', value='firstName', required='')
-                    .invalid-feedback
-                      | Valid first name is required.
-                  .col-md-4.mb-3
                     label(for='lastName') Фамилия
-                    input#lastName.form-control(name='lastName' type='text', placeholder='', value='lastName', required='')
+                    input#lastName.form-control(name='lastName' type='text', placeholder='', value='Мальцев', required='')
                     .invalid-feedback
-                      | Valid last name is required.
+                      | Not Valid.
+                  .col-md-4.mb-3
+                    label(for='firstName') Имя
+                    input#firstName.form-control(name='firstName' type='text', placeholder='', value='Вячеслав', required='')
+                    .invalid-feedback
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='secondName') Отчество
-                    input#secondName.form-control(name='secondName' type='text', placeholder='', value='secondName', required='')
+                    input#secondName.form-control(name='secondName' type='text', placeholder='', value='Евгеньевич', required='')
                     .invalid-feedback
-                      | Valid last name is required.
+                      | Not Valid.
                 .row
                   .col-md-4.mb-3
                     label(for='gender') Пол
-                    input#gender.form-control(name='gender' type='text', placeholder='', value='gender', required='')
-                    .invalid-feedback
-                      | Valid first name is required.
+                    select#gender.custom-select.d-block.w-100(name='gender' required='')
+                      option(value='Мужской') Мужской
+                      option(value='Женский') Женский
                   .col-md-4.mb-3
                     label(for='age') Возраст
-                    input#age.form-control(name='age' type='text', placeholder='', value='age', required='')
+                    input#age.form-control(name='age' type='number', placeholder='', value='22', required='')
                     .invalid-feedback
-                      | Valid last name is required.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='registration') Гражданство
-                    input#registration.form-control(name='registration' type='text', placeholder='', value='registration', required='')
-                    .invalid-feedback
-                      | Valid last name is required.
+                    select#registration.custom-select.d-block.w-100(name='registration' required='')
+                      option(value='гражданство РФ') гражданство РФ
+                      option(value='двойное гражданство (РФ и др.)') двойное гражданство (РФ и др.)
+                      option(value='политический беженец (политическое убежище)') политический беженец (политическое убежище)
+                      option(value='лицо без гражданство') лицо без гражданство
+                      option(value='другое') другое
               // Конец блока основная часть
               h3 Меняли ли вы...
               .change-block.block
@@ -65,12 +68,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_0_2') Сколько раз?
                     input#change_2.form-control(name='change_0_2' type='text',value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-5.mb-3
                     input(name="change_1_0" value="Фамилия" style="display: none;")
@@ -79,12 +82,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_1_2') Сколько раз?
                     input#change_4.form-control(name='change_1_2' type='text',value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-5.mb-3
                     input(name="change_2_0" value="Отчество" style="display: none;")
@@ -93,12 +96,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_2_2') Сколько раз?
                     input#change_6.form-control(name='change_2_2' type='text',value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-5.mb-3
                     input(name="change_3_0" value="Дата рождения" style="display: none;")
@@ -107,12 +110,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_3_2') Сколько раз?
                     input#change_8.form-control(name='change_3_2' type='text',value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-5.mb-3
                     input(name="change_4_0" value="Место регистрации" style="display: none;")
@@ -121,12 +124,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_4_2') Сколько раз?
                     input#change_10.form-control(name='change_4_2' type='text',value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-5.mb-3
                     input(name="change_5_0" value="Место жительства" style="display: none;")
@@ -135,12 +138,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_5_2') Сколько раз?
                     input#change_12.form-control(name='change_5_2' type='text',value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-5.mb-3
                     input(name="change_6_0" value="Мобильный телефон" style="display: none;")
@@ -149,12 +152,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_6_2') Сколько раз?
                     input#change_14.form-control(name='change_6_2' type='text',value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-5.mb-3
                     input(name="change_7_0" value="Почта" style="display: none;")
@@ -163,12 +166,12 @@ html(lang='en')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
                     .invalid-feedback
-                      | Please select a valid country.
+                      | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_7_2') Сколько раз?
                     input#change_16.form-control(name='change_7_2' type='text', value="0" placeholder='0')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
                 .row
                   .col-md-9.mb-3
                     label(for='sp') Семейное положение
@@ -182,7 +185,7 @@ html(lang='en')
                     label(for='childrenId') Дети (Пример заполнения М:9;Ж:2;)
                     input#childrenId.form-control(name="children" value="dsadsad" type='text', placeholder='Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;')
                     .invalid-feedback
-                      | Please provide a valid state.
+                      | Not Valid.
               // Конец блока меняли ли вы...
               h3 Водительское удостоверение
               .row.driver-block.block
@@ -192,22 +195,22 @@ html(lang='en')
                     option(value='Да') Да
                     option(selected='', value='Нет') Нет
                   .invalid-feedback
-                    | Please select a valid country.
+                    | Not Valid.
                 .col-md-9.mb-3
                   label(for='drive_2') Какой у вас стаж?
                   input#drive_2.form-control(type='number', placeholder='2')
                   .invalid-feedback
-                    | Please provide a valid state.
+                    | Not Valid.
                 .col-md-9.mb-3
                   label(for='drive_3') Укажите катигорию вашего водительского удостоверения
                   input#drive_3.form-control(type='text', placeholder='А – мотоциклы')
                   .invalid-feedback
-                    | Please provide a valid state.
+                    | Not Valid.
                 .col-md-9.mb-3
                   label(for='drive_4') Укажите катигорию вашего автомобиля
                   input#drive_4.form-control(type='text', placeholder='легковой автомобиль')
                   .invalid-feedback
-                    | Please provide a valid state.
+                    | Not Valid.
               // Конец блока про водительское удостоверение
               h3 Образование
               .education-block.block
@@ -334,7 +337,7 @@ html(lang='en')
                       .row
                         .form-group.label-inline.col-md-6
                           label(for='language_name_id_1') Язык
-                          select#language_name_id_1.form-control.action-change.language_name.error-item(name='languages_name_1', style='padding-left: 220px;')
+                          select#language_name_id_1.form-control.language_name.error-item(name='languages_name_1', style='padding-left: 220px;')
                             option(value='') ---
                             option(value='Английский язык') Английский язык
                             option(value='Китайский язык') Китайский язык
@@ -347,7 +350,7 @@ html(lang='en')
                       .row
                         .form-group.label-inline.col-md-6
                           label(for='language_level_id_1') Уровень владения языком
-                          select#language_level_id_1.form-control.action-change.error-item(name='languages_level_1', style='padding-left: 220px;')
+                          select#language_level_id_1.form-control.error-item(name='languages_level_1', style='padding-left: 220px;')
                             option(value='') ---
                             option(value='Начальный') Начальный
                             option(value='Средний') Средний
@@ -356,7 +359,7 @@ html(lang='en')
                       .row
                         .form-group.col-md-6
                           label(for='language_level_id_2') Шкала уровней владения иностранными языками по системе CEFR
-                          select#languages_level_id_2.form-control.action-change.error-item(name='languages_level_2', style='padding-left: 220px;')
+                          select#languages_level_id_2.form-control.error-item(name='languages_level_2', style='padding-left: 220px;')
                             option(value='') ---
                             option(value='С2') С2
                             option(value='С1') С1
@@ -384,7 +387,7 @@ html(lang='en')
                               .row
                                 .form-group.label-inline.col-md-6
                                   label(for='academic_degree_doc_id_1') Доктор наук
-                                  select#academic_degree_doc_id_1.form-control.action-change.academic_degree_doc(name='academic_degree_doc_1', style='padding-left: 220px;')
+                                  select#academic_degree_doc_id_1.form-control.academic_degree_doc(name='academic_degree_doc_1', style='padding-left: 150px;')
                                     option(value='', disabled='', selected='') ---
                                     option(value='архитектурных наук') архитектурных наук
                                     option(value='технических наук') технических наук
@@ -410,7 +413,7 @@ html(lang='en')
                                     option(value='педагогических наук') педагогических наук
                                 .form-group.label-inline.col-md-6
                                   label(for='academic_degree_candidate_id_1') Кандидат наук
-                                  select#academic_degree_candidate_id_1.form-control.action-change(name='academic_degree_candidate_1', style='padding-left: 220px;')
+                                  select#academic_degree_candidate_id_1.form-control.action-change(name='academic_degree_candidate_1', style='padding-left: 150px;')
                                     option(value='', disabled='', selected='') ---
                                     option(value='архитектурных наук') архитектурных наук
                                     option(value='технических наук') технических наук
@@ -436,6 +439,19 @@ html(lang='en')
                                     option(value='педагогических наук') педагогических наук
                               // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                               // Конец блока ученной степени
+                              h3 Опыт работы
+                              .row.work_experience-block.block
+                                .col-md-12
+                                  // <a href="#" class="btn btn-primary work_experience-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                                  #work_experience_items
+                                      #work_experience_item_1.work_experience-item
+                                        .form-group.label-inline.col-md-6(style='padding-left: 0px;')
+                                          label(for='work_experience_id') Имеется ли у вас опыт работы?
+                                          select#work_experience_id.form-control.work_experience(name='work_experience', style='padding-left: 350px;')
+                                            option(value='нет', selected='selected') нет
+                                            option(value='да') да
+                              // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                              // Конец блока про опыт
                               h3 Стаж
                               .row.experience-block.block
                                 .col-md-12
@@ -445,7 +461,7 @@ html(lang='en')
                                       .row
                                         .form-group.label-inline.col-md-6
                                           label(for='experience_id_1') Общий стаж
-                                          select#experience_id_1.form-control.action-change.experience(name='experience_1', style='padding-left: 220px;')
+                                          select#experience_id_1.form-control.experience(name='experience_1', style='padding-left: 220px;')
                                             option(value='0', selected='selected') нет
                                             option(value='1') 1 год
                                             option(value='2') 2 года

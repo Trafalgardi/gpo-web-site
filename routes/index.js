@@ -41,7 +41,7 @@ module.exports = {
             swap: swap
         };
         
-        console.log("Данные записанны!\n" + data);
+        console.log("Данные записанны!\n" + JSON.stringify(body));
         var sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(body) +"')";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;

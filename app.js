@@ -8,7 +8,7 @@ var usersRouter = require('./routes/users');
 
 const {getHomePage, addData, addPlayerPage} = require('./routes/index');
 
-const port = 5000;
+const port = 3000;
 
 // configure middleware
 app.set('port', process.env.port || port); // set express to use this port
