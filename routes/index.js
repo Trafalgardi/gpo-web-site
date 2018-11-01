@@ -13,7 +13,7 @@ module.exports = {
         var personnelData = {
             firstName: body.firstName,
             lastName: body.lastName,
-            firstName: body.secondName,
+            secondName: body.secondName,
             gender: body.gender,
             age: body.age,
             registration: body.registration,
@@ -36,6 +36,9 @@ module.exports = {
             swap[i] = JSON.stringify(swapJson);
         }
         
+        let education = [];
+        
+        
 
         var data = {
             personnelData: personnelData,
@@ -43,7 +46,7 @@ module.exports = {
         };
         
         //console.log("Данные записанны!\n" + JSON.stringify(body));
-        var sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(body) +"')";
+        var sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(data) +"')";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             res.render('post');
@@ -57,8 +60,8 @@ module.exports = {
         var sql = "SELECT data FROM json WHERE 1";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
-            res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
-            
+            //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
+            res.json(result);
         });
 
     

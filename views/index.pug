@@ -2,11 +2,12 @@ doctype html
 html(lang='en')
   head
     meta(charset='utf-8')
-    title Checkout
+    title Анкетирование
     // Bootstrap core CSS
     link(rel='stylesheet', href='../stylesheets/bootstrap.min.css')
     script(src='../javascripts/bootstrap.min.js')
     script(src='../javascripts/jquery-3.3.1.js')
+    script(src='../javascripts/main.js')
     // Custom styles for this template
     link(href='../stylesheets/form-validation.css', rel='stylesheet')
     link(href='../stylesheets/style.css', rel='stylesheet')
@@ -21,7 +22,7 @@ html(lang='en')
           form.needs-validation(action='addData', method='post')
             .resume-block
               h3 Основная часть
-              .basis-block.block
+              .basis-block
                 .row
                   .col-md-4.mb-3
                     label(for='lastName') Фамилия
@@ -57,9 +58,23 @@ html(lang='en')
                       option(value='политический беженец (политическое убежище)') политический беженец (политическое убежище)
                       option(value='лицо без гражданство') лицо без гражданство
                       option(value='другое') другое
+                .row
+                  .col-md-9.mb-3
+                    label(for='sp') Семейное положение
+                    select#sp.form-control(name='sp')
+                      option(value='замужем/женат', selected='selected') замужем/женат
+                      option(value='вдова/вдовец') вдова/вдовец
+                      option(value='не замужем/ холост') не замужем/ холост
+                      option(value='в разводе') в разводе
+                      option(value='сожительство') сожительство
+                  .col-md-9.mb-3
+                    label(for='childrenId') Дети (Пример заполнения М:9;Ж:2;)
+                    input#childrenId.form-control(name="children" value="" type='text', placeholder='Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;')
+                    .invalid-feedback
+                      | Not Valid.
               // Конец блока основная часть
               h3 Меняли ли вы...
-              .change-block.block
+              .change-block
                 .row
                   .col-md-5.mb-3
                     input(name="change_0_0" value="Имя" style="display: none;")
@@ -172,23 +187,9 @@ html(lang='en')
                     input#change_16.form-control(name='change_7_2' type='text', value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
-                .row
-                  .col-md-9.mb-3
-                    label(for='sp') Семейное положение
-                    select#sp.form-control(name='sp')
-                      option(value='замужем/женат', selected='selected') замужем/женат
-                      option(value='вдова/вдовец') вдова/вдовец
-                      option(value='не замужем/ холост') не замужем/ холост
-                      option(value='в разводе') в разводе
-                      option(value='сожительство') сожительство
-                  .col-md-9.mb-3
-                    label(for='childrenId') Дети (Пример заполнения М:9;Ж:2;)
-                    input#childrenId.form-control(name="children" value="" type='text', placeholder='Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;')
-                    .invalid-feedback
-                      | Not Valid.
               // Конец блока меняли ли вы...
               h3 Водительское удостоверение
-              .row.driver-block.block
+              .row.driver-block
                 .col-md-5.mb-3
                   label(for='drive_0') Имеете ли вы водительское удостоверение?
                   select#drive_0.custom-select.d-block.w-100(required='', onchange='checkSelect(document.getElementById("drive_0").value)')
@@ -200,57 +201,57 @@ html(lang='en')
                   
               // Конец блока про водительское удостоверение
               h3 Образование
-              .education-block.block
+              .education-block
                 .custom-control
-                  input#checkbox_1.custom-control-input(name='checkbox_name_1', type='checkbox', value='Без образования')
+                  input#checkbox_1.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Без образования')
                   label.custom-control-label(for='checkbox_1') Без образования
                 .custom-control
-                  input#checkbox_2.custom-control-input(name='checkbox_name_2', type='checkbox', value='Полное среднее образование')
+                  input#checkbox_2.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Полное среднее образование')
                   label.custom-control-label(for='checkbox_2') Полное среднее образование
                   #checkbox_at_2(style='display: none;')
                     label  Средний балл
-                    input#check_2.form-control(type='text', name='check_2')
+                    input#check_2.form-control(type='text')
                 .custom-control
-                  input#checkbox_3.custom-control-input(name='checkbox_name_3', type='checkbox', value='Магистратура')
+                  input#checkbox_3.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Магистратура')
                   label.custom-control-label(for='checkbox_3') Магистратура
                   #checkbox_at_3(style='display: none;')
                     label  Средний балл
-                    input#check_3.form-control(type='text', name='check_3')
+                    input#check_3.form-control(type='text')
                 .custom-control
-                  input#checkbox_4.custom-control-input(name='checkbox_name_4', type='checkbox', value='Специалитет')
+                  input#checkbox_4.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Специалитет')
                   label.custom-control-label(for='checkbox_4') Специалитет
                   #checkbox_at_4(style='display: none;')
                     label  Средний балл
-                    input#check_4.form-control(type='text', name='check_4')
+                    input#check_4.form-control(type='text')
                 .custom-control
-                  input#checkbox_5.custom-control-input(name='checkbox_name_5', type='checkbox', value='Кандидат наук')
+                  input#checkbox_5.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Кандидат наук')
                   label.custom-control-label(for='checkbox_5') Кандидат наук
                 .custom-control
-                  input#checkbox_6.custom-control-input(name='checkbox_name_6', type='checkbox', value='Доктор наук')
+                  input#checkbox_6.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Доктор наук')
                   label.custom-control-label(for='checkbox_6') Доктор наук
                 .custom-control
-                  input#checkbox_7.custom-control-input(name='checkbox_name_7', type='checkbox', value='PhD')
+                  input#checkbox_7.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='PhD')
                   label.custom-control-label(for='checkbox_7') PhD
                 .custom-control
-                  input#checkbox_8.custom-control-input(name='checkbox_name_8', type='checkbox', value='Профессиональная переподготовка')
+                  input#checkbox_8.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Профессиональная переподготовка')
                   label.custom-control-label(for='checkbox_8') Профессиональная переподготовка
                   #checkbox_at_8(style='display: none;')
                     label  Средний балл
-                    input#check_8.form-control(type='text', name='check_8')
+                    input#check_8.form-control(type='text')
                 .custom-control
-                  input#checkbox_9.custom-control-input(name='checkbox_name_9', type='checkbox', value='Профессиональная переподготовка в области управления')
+                  input#checkbox_9.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Профессиональная переподготовка в области управления')
                   label.custom-control-label(for='checkbox_9') Профессиональная переподготовка в области управления
                   #checkbox_at_9(style='display: none;')
                     label  Средний балл
-                    input#check_9.form-control(type='text', name='check_9')
+                    input#check_9.form-control(type='text')
                 .custom-control
-                  input#checkbox_10.custom-control-input(name='checkbox_name_10', type='checkbox', value='Высшее образования + учёная степень')
+                  input#checkbox_10.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Высшее образования + учёная степень')
                   label.custom-control-label(for='checkbox_10') Высшее образования + учёная степень
                 .custom-control
-                  input#checkbox_11.custom-control-input(name='checkbox_name_11', type='checkbox', value='Высшее образование + профессиональная переподготовка')
+                  input#checkbox_11.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Высшее образование + профессиональная переподготовка')
                   label.custom-control-label(for='checkbox_11') Высшее образование + профессиональная переподготовка
                 .custom-control
-                  input#checkbox_12.custom-control-input(name='checkbox_name_12', type='checkbox', value='Высшее образование + учёная степень + профессиональная переподготовка в области управления')
+                  input#checkbox_12.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Высшее образование + учёная степень + профессиональная переподготовка в области управления')
                   label.custom-control-label(for='checkbox_12')
                     | Высшее образование + учёная степень + профессиональная переподготовка в области управления
                 script.
@@ -269,7 +270,7 @@ html(lang='en')
                   }).change();
               // Конец блока про образование
               h3 Отношение к военнской обязанности
-              .row.military-block.block
+              .row.military-block
                 .col-md-6.mb-3
                   label(for='militarySelectId') Отношение к воинской обязанности
                   select#militarySelectId.custom-select.d-block.w-100(name='militarySelect')
@@ -316,7 +317,7 @@ html(lang='en')
                   });
               // Конец военного блока
               h3 Иностранные языки
-              .row.languages-block.block
+              .row.languages-block
                 .col-md-12
                   // <a href="#" class="btn btn-primary add-language-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
                   #language_items
@@ -366,7 +367,7 @@ html(lang='en')
                       // <a class="language-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                       // Конец языкового блока
                       h3 Учёная степень
-                      .row.academic-degree-block.block
+                      .row.academic-degree-block
                         .col-md-12
                           // <a href="#" class="btn btn-primary academic-degree-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
                           #academic_degree_items
@@ -427,7 +428,7 @@ html(lang='en')
                               // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                               // Конец блока ученной степени
                               h3 Опыт работы
-                              .row.work_experience-block.block
+                              .row.work_experience-block
                                 .col-md-12
                                   // <a href="#" class="btn btn-primary work_experience-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
                                   #work_experience_items
@@ -440,7 +441,7 @@ html(lang='en')
                               // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                               // Конец блока про опыт
                               h3 Стаж
-                              .row.experience-block.block
+                              .row.experience-block
                                 .col-md-12
                                   // <a href="#" class="btn btn-primary experience-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
                                   #experience_items
@@ -568,7 +569,7 @@ html(lang='en')
     script(src='../javascripts/vendor/popper.min.js')
     script(src='../javascripts/bootstrap.min.js')
     script(src='../javascripts/vendor/holder.min.js')
-    script(src='../javascripts/main.js')
+    
     script.
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {
