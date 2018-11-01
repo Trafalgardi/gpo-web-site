@@ -48,6 +48,18 @@ module.exports = {
             res.send("Данные записанны!\n" + JSON.stringify(data));
         });
 
+    },
+    getData: (req, res) => {
+        
+        
+        var sql = "SELECT data FROM json WHERE 1";
+        pool.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
+            
+        });
+
+    
     }
 
 }

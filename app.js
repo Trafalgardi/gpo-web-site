@@ -6,7 +6,7 @@ var app = express();
 
 var usersRouter = require('./routes/users');
 
-const {getHomePage, addData, addPlayerPage} = require('./routes/index');
+const {getHomePage, addData, getData} = require('./routes/index');
 
 const port = 3000;
 
@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // configure express to
 
 app.get('/', getHomePage);
 app.post('/addData', addData);
+app.get('/getData', getData);
 
 
 app.listen(port, () => {

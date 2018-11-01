@@ -25,17 +25,17 @@ html(lang='en')
                 .row
                   .col-md-4.mb-3
                     label(for='lastName') Фамилия
-                    input#lastName.form-control(name='lastName' type='text', placeholder='', value='Мальцев', required='')
+                    input#lastName.form-control(name='lastName' type='text', placeholder='', value='', required='')
                     .invalid-feedback
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='firstName') Имя
-                    input#firstName.form-control(name='firstName' type='text', placeholder='', value='Вячеслав', required='')
+                    input#firstName.form-control(name='firstName' type='text', placeholder='', value='', required='')
                     .invalid-feedback
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='secondName') Отчество
-                    input#secondName.form-control(name='secondName' type='text', placeholder='', value='Евгеньевич', required='')
+                    input#secondName.form-control(name='secondName' type='text', placeholder='', value='', required='')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -46,7 +46,7 @@ html(lang='en')
                       option(value='Женский') Женский
                   .col-md-4.mb-3
                     label(for='age') Возраст
-                    input#age.form-control(name='age' type='number', placeholder='', value='22', required='')
+                    input#age.form-control(name='age' type='number', placeholder='', value='', required='')
                     .invalid-feedback
                       | Not Valid.
                   .col-md-4.mb-3
@@ -183,7 +183,7 @@ html(lang='en')
                       option(value='сожительство') сожительство
                   .col-md-9.mb-3
                     label(for='childrenId') Дети (Пример заполнения М:9;Ж:2;)
-                    input#childrenId.form-control(name="children" value="dsadsad" type='text', placeholder='Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;')
+                    input#childrenId.form-control(name="children" value="" type='text', placeholder='Если у вас есть дети заполните по форме( Пол ребенка:Возраст; ) Пример М:9;Ж:2;')
                     .invalid-feedback
                       | Not Valid.
               // Конец блока меняли ли вы...
