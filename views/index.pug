@@ -191,26 +191,13 @@ html(lang='en')
               .row.driver-block.block
                 .col-md-5.mb-3
                   label(for='drive_0') Имеете ли вы водительское удостоверение?
-                  select#drive_0.custom-select.d-block.w-100(required='')
+                  select#drive_0.custom-select.d-block.w-100(required='', onchange='checkSelect(document.getElementById("drive_0").value)')
                     option(value='Да') Да
                     option(selected='', value='Нет') Нет
                   .invalid-feedback
-                    | Not Valid.
-                .col-md-9.mb-3
-                  label(for='drive_2') Какой у вас стаж?
-                  input#drive_2.form-control(type='number', placeholder='2')
-                  .invalid-feedback
-                    | Not Valid.
-                .col-md-9.mb-3
-                  label(for='drive_3') Укажите катигорию вашего водительского удостоверения
-                  input#drive_3.form-control(type='text', placeholder='А – мотоциклы')
-                  .invalid-feedback
-                    | Not Valid.
-                .col-md-9.mb-3
-                  label(for='drive_4') Укажите катигорию вашего автомобиля
-                  input#drive_4.form-control(type='text', placeholder='легковой автомобиль')
-                  .invalid-feedback
-                    | Not Valid.
+                    | Not Valid. 
+                #innerDrive    
+                  
               // Конец блока про водительское удостоверение
               h3 Образование
               .education-block.block
@@ -581,6 +568,7 @@ html(lang='en')
     script(src='../javascripts/vendor/popper.min.js')
     script(src='../javascripts/bootstrap.min.js')
     script(src='../javascripts/vendor/holder.min.js')
+    script(src='../javascripts/main.js')
     script.
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {
