@@ -47,7 +47,7 @@ module.exports = {
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             res.render('post');
-            res.send("Данные записанны!\n" + JSON.stringify(data));
+            //res.send("Данные записанны!\n" + JSON.stringify(data));
         });
 
     },
