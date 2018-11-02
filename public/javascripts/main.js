@@ -34,7 +34,7 @@ function checkSelect(bool){
 }
 $(document).ready(function(){
 
-    alert("Hello World!");
+    //alert("Hello World!");
 
     
 
