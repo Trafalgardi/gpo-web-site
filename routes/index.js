@@ -33,7 +33,7 @@ module.exports = {
             swapJson.Name = body['change_'+ i + '_0'];
             swapJson.check = body['change_'+ i + '_1'];
             swapJson.number = body['change_'+ i + '_2'];
-            swap[i] = JSON.stringify(swapJson);
+            swap[i] = swapJson;
         }
         
         let education = [];
