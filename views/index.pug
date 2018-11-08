@@ -161,8 +161,8 @@ html(lang='en')
                       | Not Valid.
                 .row
                   .col-md-5.mb-3
-                    input(name="change_6_0" value="Мобильный телефон" style="display: none;")
-                    label(for='change_6_1') Вы меняли мобильный телефон?
+                    input(name="change_6_0" value="Номер мобильного телефона" style="display: none;")
+                    label(for='change_6_1') Вы меняли номер мобильного телефона?
                     select#change_13.custom-select.d-block.w-100(name='change_6_1' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
@@ -175,8 +175,8 @@ html(lang='en')
                       | Not Valid.
                 .row
                   .col-md-5.mb-3
-                    input(name="change_7_0" value="Почта" style="display: none;")
-                    label(for='change_7_1') Вы меняли почту?
+                    input(name="change_7_0" value="E-mail" style="display: none;")
+                    label(for='change_7_1') Вы меняли e-mail?
                     select#change_15.custom-select.d-block.w-100(name='change_7_1' required='')
                       option(value='Да') Да
                       option(selected='', value='Нет') Нет
@@ -192,7 +192,7 @@ html(lang='en')
               .row.driver-block
                 .col-md-5.mb-3
                   label(for='drive_0') Имеете ли вы водительское удостоверение?
-                  select#drive_0.custom-select.d-block.w-100(required='', onchange='checkSelect(document.getElementById("drive_0").value)')
+                  select#drive_0.custom-select.d-block.w-100(required='', onchange='checkSelect(document.getElementById("drive_0").value)', name="drive")
                     option(value='Да') Да
                     option(selected='', value='Нет') Нет
                   .invalid-feedback
@@ -200,64 +200,101 @@ html(lang='en')
                 #innerDrive    
                   
               // Конец блока про водительское удостоверение
-              h3 Образование
+              h3 Базовое образование
               .education-block
                 .custom-control
-                  input#checkbox_1.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Без образования')
-                  label.custom-control-label(for='checkbox_1') Без образования
-                .custom-control
-                  input#checkbox_2.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Полное среднее образование')
-                  label.custom-control-label(for='checkbox_2') Полное среднее образование
-                  #checkbox_at_2(style='display: none;')
+                  input#checkbox_1.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Полное среднетехническое образование')
+                  label.custom-control-label(for='checkbox_1') Полное среднетехническое образование
+                  #checkbox_at_1(style='display: none;')
                     label  Средний балл
                     input#check_2.form-control(type='text')
+
+                
+                h6 Высшее образование
                 .custom-control
-                  input#checkbox_3.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Магистратура')
-                  label.custom-control-label(for='checkbox_3') Магистратура
+                  input#checkbox_3.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Бакалавриат' )
+                  label.custom-control-label(for='checkbox_3' style='margin-left: 25px;') Бакалавриат
                   #checkbox_at_3(style='display: none;')
                     label  Средний балл
                     input#check_3.form-control(type='text')
                 .custom-control
-                  input#checkbox_4.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Специалитет')
-                  label.custom-control-label(for='checkbox_4') Специалитет
+                  input#checkbox_4.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Магистратура' )
+                  label.custom-control-label(for='checkbox_4' style="margin-left: 25px;") Магистратура
                   #checkbox_at_4(style='display: none;')
                     label  Средний балл
                     input#check_4.form-control(type='text')
                 .custom-control
-                  input#checkbox_5.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Кандидат наук')
-                  label.custom-control-label(for='checkbox_5') Кандидат наук
-                .custom-control
-                  input#checkbox_6.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Доктор наук')
-                  label.custom-control-label(for='checkbox_6') Доктор наук
-                .custom-control
-                  input#checkbox_7.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='PhD')
-                  label.custom-control-label(for='checkbox_7') PhD
-                .custom-control
-                  input#checkbox_8.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Профессиональная переподготовка')
-                  label.custom-control-label(for='checkbox_8') Профессиональная переподготовка
-                  #checkbox_at_8(style='display: none;')
+                  input#checkbox_5.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Специалитет' )
+                  label.custom-control-label(for='checkbox_5' style="margin-left: 25px;") Специалитет
+                  #checkbox_at_5(style='display: none;')
                     label  Средний балл
-                    input#check_8.form-control(type='text')
+                    input#check_4.form-control(type='text')
+
+                h6 Направление подготовки
                 .custom-control
-                  input#checkbox_9.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Профессиональная переподготовка в области управления')
-                  label.custom-control-label(for='checkbox_9') Профессиональная переподготовка в области управления
-                  #checkbox_at_9(style='display: none;')
-                    label  Средний балл
-                    input#check_9.form-control(type='text')
+                  input#checkbox_6.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Гуманитарное' )
+                  label.custom-control-label(for='checkbox_6' style='margin-left: 25px;') Гуманитарное
+                  
                 .custom-control
-                  input#checkbox_10.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Высшее образования + учёная степень')
-                  label.custom-control-label(for='checkbox_10') Высшее образования + учёная степень
+                  input#checkbox_7.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Педагогическое' )
+                  label.custom-control-label(for='checkbox_7' style="margin-left: 25px;") Педагогическое
+                  
                 .custom-control
-                  input#checkbox_11.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Высшее образование + профессиональная переподготовка')
-                  label.custom-control-label(for='checkbox_11') Высшее образование + профессиональная переподготовка
+                  input#checkbox_8.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='В области управления' )
+                  label.custom-control-label(for='checkbox_8' style="margin-left: 25px;") В области управления
+
                 .custom-control
-                  input#checkbox_12.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Высшее образование + учёная степень + профессиональная переподготовка в области управления')
-                  label.custom-control-label(for='checkbox_12')
-                    | Высшее образование + учёная степень + профессиональная переподготовка в области управления
+                  input#checkbox_9.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Управление проектами' )
+                  label.custom-control-label(for='checkbox_9' style="margin-left: 25px;") Управление проектами
+
+                .custom-control
+                  input#checkbox_10.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Техническое' )
+                  label.custom-control-label(for='checkbox_10' style="margin-left: 25px;") Техническое
+
+                h6 Ученая степень
+                .custom-control
+                  input#checkbox_11.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Кандитат наук' )
+                  label.custom-control-label(for='checkbox_11' style='margin-left: 25px;') Кандитат наук
+                  
+                .custom-control
+                  input#checkbox_12.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Доктор наук' )
+                  label.custom-control-label(for='checkbox_12' style="margin-left: 25px;") Доктор наук
+                  
+                .custom-control
+                  input#checkbox_13.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='PhD' )
+                  label.custom-control-label(for='checkbox_13' style="margin-left: 25px;") PhD
+                .custom-control
+                  label(for='prof') Проходили ли вы профессиональную переподготовку?
+                  select#prof.custom-select.d-block.w-100(name='prof')
+                    option(value='Да') Да
+                    option(value='Нет', selected='selected') Нет
+                #hide
+                .custom-control
+                    input#prof_1.custom-control-input( type='checkbox', value='Гуманитарное' )
+                    label.custom-control-label(for='prof_1' style='margin-left: 25px;') Гуманитарное
+                    
+                  .custom-control
+                    input#prof_2.custom-control-input( type='checkbox', value='Педагогическое' )
+                    label.custom-control-label(for='prof_2' style="margin-left: 25px;") Педагогическое
+                    
+                  .custom-control
+                    input#prof_3.custom-control-input( type='checkbox', value='В области управления' )
+                    label.custom-control-label(for='prof_3' style="margin-left: 25px;") В области управления
+  
+                  .custom-control
+                    input#prof_4.custom-control-input( type='checkbox', value='Управление проектами' )
+                    label.custom-control-label(for='prof_4' style="margin-left: 25px;") Управление проектами
+
+                  .custom-control
+                    input#prof_5.custom-control-input( type='checkbox', value='Техническое' )
+                    label.custom-control-label(for='prof_5' style="margin-left: 25px;") Техническое
+
+                  
+                
                 script.
-                  $( "input" ).change(function() {
+                  /*$( "input" ).change(function() {
                   for( var $i = 2; $i < 10; $i++){
-                  if($i != 5 && $i != 6){
+                  if($i !=   && $i != 6){
                   var $input = $("#checkbox_" + $i);
                   if($input.is( ":checked" ))
                   {
@@ -267,9 +304,19 @@ html(lang='en')
                   }
                   }
                   }
-                  }).change();
+                  }).change();*/
+                  $(function() {
+                  $('#prof').on('change', function() {
+                  if(this.value == "Да"){
+                  $("#hide").show()
+                  }else if(this.value == "Нет"){
+                  $("#hide").hide()
+                  }
+                  })
+                  });
+
               // Конец блока про образование
-              h3 Отношение к военнской обязанности
+              h3 Отношение к воинской обязанности
               .row.military-block
                 .col-md-6.mb-3
                   label(for='militarySelectId') Отношение к воинской обязанности

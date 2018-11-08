@@ -26,7 +26,15 @@ module.exports = {
             number: 0
 
         };
-        var swap = [];
+        let swap = [];
+        let education = {
+            Name: '',
+            average: ''
+        };
+        let drive = {
+            experience: '',
+            haveCar: ''
+        };
 
         for (var i = 0; i < 8 ; i++) {
 
@@ -37,14 +45,25 @@ module.exports = {
             swap[i] = JSON.parse(temp);
         }
         
-        let education = [];
-        
+        if(body["drive"] == "Нет"){ 
+            drive.experience = 0;
+            drive.haveCar = '-';
+        }else {
+            drive.experience = body['drive_1'];
+            drive.haveCar = body['drive_3'];
+        }
         
 
         var data = {
             personnelData: personnelData,
-            swap: swap
+            swap: swap,
+            drive: drive
         };
+
+        
+
+
+
         
         //console.log("Данные записанны!\n" + JSON.stringify(body));
         var sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(data) +"')";
