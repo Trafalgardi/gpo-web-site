@@ -40,40 +40,50 @@ $(document).ready(function(){
 
 });
 
-function checkBox(value, bool){
-    console.log(value + "\n" + bool)
-    
-        for (let index = 1; index <= 12; index++) {
-            
-            if(value == "checkbox_"+index && bool == true){
-                document.getElementById(value).name = "checkbox_name_"+index;
-                if(index == 2){
-                    document.getElementById("check_2").name = "check_name_2";
-                }else if(index == 3){
-                    document.getElementById("check_3").name = "check_name_3";
-                }else if(index == 4){
-                    document.getElementById("check_4").name = "check_name_4";
-                }else if(index == 8){
-                    document.getElementById("check_8").name = "check_name_8";
-                }else if(index == 9){
-                    document.getElementById("check_9").name = "check_name_9";
-                }
-            }else if(value == "checkbox_"+index && bool == false){
-                document.getElementById(value).removeAttribute("name");
-                if(index == 2){
-                    document.getElementById("check_2").removeAttribute("name");
-                }else if(index == 3){
-                    document.getElementById("check_3").removeAttribute("name");
-                }else if(index == 4){
-                    document.getElementById("check_4").removeAttribute("name");
-                }else if(index == 8){
-                    document.getElementById("check_8").removeAttribute("name");
-                }else if(index == 9){
-                    document.getElementById("check_9").removeAttribute("name");
-                }
-            }
-            
-        }
-    
-    
+//function checkBox(value, bool){
+//    console.log(value + "\n" + bool)
+//    
+//        for (let index = 1; index <= 12; index++) {
+//            
+//            if(value == "checkbox_"+index && bool == true){
+//                document.getElementById(value).name = "checkbox_name_"+index;
+//                if(index == 2){
+//                    document.getElementById("check_2").name = "check_name_2";
+//                }else if(index == 3){
+//                    document.getElementById("check_3").name = "check_name_3";
+//                }else if(index == 4){
+//                    document.getElementById("check_4").name = "check_name_4";
+//                }else if(index == 8){
+//                    document.getElementById("check_8").name = "check_name_8";
+//                }else if(index == 9){
+//                    document.getElementById("check_9").name = "check_name_9";
+//                }
+//            }else if(value == "checkbox_"+index && bool == false){
+//                document.getElementById(value).removeAttribute("name");
+//                if(index == 2){
+//                    document.getElementById("check_2").removeAttribute("name");
+//                }else if(index == 3){
+//                    document.getElementById("check_3").removeAttribute("name");
+//                }else if(index == 4){
+//                    document.getElementById("check_4").removeAttribute("name");
+//                }else if(index == 8){
+//                    document.getElementById("check_8").removeAttribute("name");
+//                }else if(index == 9){
+//                    document.getElementById("check_9").removeAttribute("name");
+//                }
+//            }
+//            
+//        }
+//    
+//    
+//}
+
+function check(temp){
+    if(temp === 'Да'){
+        document.getElementById("hide").style.display = "";
+    }else if(temp === 'Нет') {
+        
+        document.getElementById("hide").style.display = "none";
+        
+    }
 }

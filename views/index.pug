@@ -264,56 +264,31 @@ html(lang='en')
                   input#checkbox_13.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='PhD' )
                   label.custom-control-label(for='checkbox_13' style="margin-left: 25px;") PhD
                 .custom-control
-                  label(for='prof') Проходили ли вы профессиональную переподготовку?
-                  select#prof.custom-select.d-block.w-100(name='prof')
+                  label(for='prof' ) Проходили ли вы профессиональную переподготовку?
+                  select#prof.custom-select.d-block.w-100(style='margin-bottom: 20px;' onchange='check(this.value)')
                     option(value='Да') Да
                     option(value='Нет', selected='selected') Нет
-                #hide
-                .custom-control
-                    input#prof_1.custom-control-input( type='checkbox', value='Гуманитарное' )
-                    label.custom-control-label(for='prof_1' style='margin-left: 25px;') Гуманитарное
-                    
-                  .custom-control
-                    input#prof_2.custom-control-input( type='checkbox', value='Педагогическое' )
-                    label.custom-control-label(for='prof_2' style="margin-left: 25px;") Педагогическое
-                    
-                  .custom-control
-                    input#prof_3.custom-control-input( type='checkbox', value='В области управления' )
-                    label.custom-control-label(for='prof_3' style="margin-left: 25px;") В области управления
-  
-                  .custom-control
-                    input#prof_4.custom-control-input( type='checkbox', value='Управление проектами' )
-                    label.custom-control-label(for='prof_4' style="margin-left: 25px;") Управление проектами
+                  #hide(style="display: none;")
+                    h6 По какому направлению
+                    .custom-control
+                      input#prof_1.custom-control-input( type='checkbox', value='Гуманитарное' )
+                      label.custom-control-label(for='prof_1' style="margin-left: 25px;") Гуманитарное
+                      
+                    .custom-control
+                      input#prof_2.custom-control-input( type='checkbox', value='Педагогическое' )
+                      label.custom-control-label(for='prof_2' style="margin-left: 25px;") Педагогическое
+                      
+                    .custom-control
+                      input#prof_3.custom-control-input( type='checkbox', value='В области управления' )
+                      label.custom-control-label(for='prof_3' style="margin-left: 25px;") В области управления
+    
+                    .custom-control
+                      input#prof_4.custom-control-input( type='checkbox', value='Управление проектами' )
+                      label.custom-control-label(for='prof_4' style="margin-left: 25px;") Управление проектами
 
-                  .custom-control
-                    input#prof_5.custom-control-input( type='checkbox', value='Техническое' )
-                    label.custom-control-label(for='prof_5' style="margin-left: 25px;") Техническое
-
-                  
-                
-                script.
-                  /*$( "input" ).change(function() {
-                  for( var $i = 2; $i < 10; $i++){
-                  if($i !=   && $i != 6){
-                  var $input = $("#checkbox_" + $i);
-                  if($input.is( ":checked" ))
-                  {
-                  $("#checkbox_at_" + $i).show()
-                  }else {
-                  $("#checkbox_at_" + $i).hide()
-                  }
-                  }
-                  }
-                  }).change();*/
-                  $(function() {
-                  $('#prof').on('change', function() {
-                  if(this.value == "Да"){
-                  $("#hide").show()
-                  }else if(this.value == "Нет"){
-                  $("#hide").hide()
-                  }
-                  })
-                  });
+                    .custom-control
+                      input#prof_5.custom-control-input( type='checkbox', value='Техническое' )
+                      label.custom-control-label(for='prof_5' style="margin-left: 25px;") Техническое
 
               // Конец блока про образование
               h3 Отношение к воинской обязанности
