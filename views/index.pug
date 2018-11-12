@@ -86,7 +86,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_0_2') Сколько раз?
-                    input#change_2.form-control(name='change_0_2' type='text',value="0" placeholder='0')
+                    input#change_2.form-control(name='change_0_2' type='number',value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -100,7 +100,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_1_2') Сколько раз?
-                    input#change_4.form-control(name='change_1_2' type='text',value="0" placeholder='0')
+                    input#change_4.form-control(name='change_1_2' type='number',value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -114,7 +114,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_2_2') Сколько раз?
-                    input#change_6.form-control(name='change_2_2' type='text',value="0" placeholder='0')
+                    input#change_6.form-control(name='change_2_2' type='number',value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -128,7 +128,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_3_2') Сколько раз?
-                    input#change_8.form-control(name='change_3_2' type='text',value="0" placeholder='0')
+                    input#change_8.form-control(name='change_3_2' type='number',value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -142,7 +142,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_4_2') Сколько раз?
-                    input#change_10.form-control(name='change_4_2' type='text',value="0" placeholder='0')
+                    input#change_10.form-control(name='change_4_2' type='number',value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -156,7 +156,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_5_2') Сколько раз?
-                    input#change_12.form-control(name='change_5_2' type='text',value="0" placeholder='0')
+                    input#change_12.form-control(name='change_5_2' type='number',value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -170,7 +170,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_6_2') Сколько раз?
-                    input#change_14.form-control(name='change_6_2' type='text',value="0" placeholder='0')
+                    input#change_14.form-control(name='change_6_2' type='number',value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
                 .row
@@ -184,7 +184,7 @@ html(lang='en')
                       | Not Valid.
                   .col-md-4.mb-3
                     label(for='change_7_2') Сколько раз?
-                    input#change_16.form-control(name='change_7_2' type='text', value="0" placeholder='0')
+                    input#change_16.form-control(name='change_7_2' type='number', value="0" placeholder='0')
                     .invalid-feedback
                       | Not Valid.
               // Конец блока меняли ли вы...
@@ -200,98 +200,106 @@ html(lang='en')
                 #innerDrive    
                   
               // Конец блока про водительское удостоверение
-              h3 Базовое образование
+
               .education-block
+                h3 Базовое образование
+                p
+                  h6 Cреднее образование
                 .custom-control
-                  input#checkbox_1.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Полное среднетехническое образование')
-                  label.custom-control-label(for='checkbox_1') Полное среднетехническое образование
+                  input#checkbox_0.custom-control-input(type='checkbox', value='Полное среднетехническое образование', onchange="checkBox('checkbox_at_0', this.checked, 'check_avr_0')")
+                  label.custom-control-label(for='checkbox_0' style="margin-left: 25px;") Полное среднетехническое образование
+                  #checkbox_at_0(style='display: none;')
+                    label  Средний балл
+                    input#check_avr_0.form-control(type='number')
+
+                p
+                  h6 Высшее образование
+                .custom-control
+                  input#checkbox_1.custom-control-input(type='checkbox', value='Бакалавриат', onchange="checkBox('checkbox_at_1', this.checked, 'check_avr_1')" )
+                  label.custom-control-label(for='checkbox_1' style='margin-left: 25px;') Бакалавриат
                   #checkbox_at_1(style='display: none;')
                     label  Средний балл
-                    input#check_2.form-control(type='text')
-
-                
-                h6 Высшее образование
+                    input#check_avr_1.form-control(type='number')
                 .custom-control
-                  input#checkbox_3.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Бакалавриат' )
-                  label.custom-control-label(for='checkbox_3' style='margin-left: 25px;') Бакалавриат
+                  input#checkbox_2.custom-control-input(type='checkbox', value='Магистратура', onchange="checkBox('checkbox_at_2', this.checked, 'check_avr_2')" )
+                  label.custom-control-label(for='checkbox_2' style="margin-left: 25px;") Магистратура
+                  #checkbox_at_2(style='display: none;')
+                    label  Средний балл
+                    input#check_avr_2.form-control(type='number')
+                .custom-control
+                  input#checkbox_3.custom-control-input(type='checkbox', value='Специалитет', onchange="checkBox('checkbox_at_3', this.checked, 'check_avr_3')" )
+                  label.custom-control-label(for='checkbox_3' style="margin-left: 25px;") Специалитет
                   #checkbox_at_3(style='display: none;')
                     label  Средний балл
-                    input#check_3.form-control(type='text')
-                .custom-control
-                  input#checkbox_4.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Магистратура' )
-                  label.custom-control-label(for='checkbox_4' style="margin-left: 25px;") Магистратура
-                  #checkbox_at_4(style='display: none;')
-                    label  Средний балл
-                    input#check_4.form-control(type='text')
-                .custom-control
-                  input#checkbox_5.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Специалитет' )
-                  label.custom-control-label(for='checkbox_5' style="margin-left: 25px;") Специалитет
-                  #checkbox_at_5(style='display: none;')
-                    label  Средний балл
-                    input#check_4.form-control(type='text')
+                    input#check_avr_3.form-control(type='number')
 
-                h6 Направление подготовки
+                p
+                  h6 Направление подготовки
                 .custom-control
-                  input#checkbox_6.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Гуманитарное' )
-                  label.custom-control-label(for='checkbox_6' style='margin-left: 25px;') Гуманитарное
+                  input#checkbox_4.custom-control-input(type='checkbox', value='Гуманитарное' )
+                  label.custom-control-label(for='checkbox_4' style='margin-left: 25px;') Гуманитарное
                   
                 .custom-control
-                  input#checkbox_7.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Педагогическое' )
-                  label.custom-control-label(for='checkbox_7' style="margin-left: 25px;") Педагогическое
+                  input#checkbox_5.custom-control-input(type='checkbox', value='Педагогическое' )
+                  label.custom-control-label(for='checkbox_5' style="margin-left: 25px;") Педагогическое
                   
                 .custom-control
-                  input#checkbox_8.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='В области управления' )
-                  label.custom-control-label(for='checkbox_8' style="margin-left: 25px;") В области управления
+                  input#checkbox_6.custom-control-input(type='checkbox', value='В области управления' )
+                  label.custom-control-label(for='checkbox_6' style="margin-left: 25px;") В области управления
 
                 .custom-control
-                  input#checkbox_9.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Управление проектами' )
-                  label.custom-control-label(for='checkbox_9' style="margin-left: 25px;") Управление проектами
+                  input#checkbox_7.custom-control-input(type='checkbox', value='Управление проектами' )
+                  label.custom-control-label(for='checkbox_7' style="margin-left: 25px;") Управление проектами
 
                 .custom-control
-                  input#checkbox_10.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Техническое' )
-                  label.custom-control-label(for='checkbox_10' style="margin-left: 25px;") Техническое
+                  input#checkbox_8.custom-control-input(type='checkbox', value='Техническое' )
+                  label.custom-control-label(for='checkbox_8' style="margin-left: 25px;") Техническое
 
-                h6 Ученая степень
+                p
+                  h6 Ученая степень
                 .custom-control
-                  input#checkbox_11.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Кандитат наук' )
-                  label.custom-control-label(for='checkbox_11' style='margin-left: 25px;') Кандитат наук
+                  input#checkbox_9.custom-control-input(type='checkbox', value='Кандитат наук' )
+                  label.custom-control-label(for='checkbox_9' style='margin-left: 25px;') Кандитат наук
                   
                 .custom-control
-                  input#checkbox_12.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='Доктор наук' )
-                  label.custom-control-label(for='checkbox_12' style="margin-left: 25px;") Доктор наук
+                  input#checkbox_10.custom-control-input(type='checkbox', value='Доктор наук' )
+                  label.custom-control-label(for='checkbox_10' style="margin-left: 25px;") Доктор наук
                   
                 .custom-control
-                  input#checkbox_13.custom-control-input(onchange='checkBox(this.id, this.checked)', type='checkbox', value='PhD' )
-                  label.custom-control-label(for='checkbox_13' style="margin-left: 25px;") PhD
+                  input#checkbox_11.custom-control-input(type='checkbox', value='PhD' )
+                  label.custom-control-label(for='checkbox_11' style="margin-left: 25px;") PhD
+                p
+                  h6 Проходили ли вы профессиональную переподготовку?
                 .custom-control
-                  label(for='prof' ) Проходили ли вы профессиональную переподготовку?
                   select#prof.custom-select.d-block.w-100(style='margin-bottom: 20px;' onchange='check(this.value)')
                     option(value='Да') Да
                     option(value='Нет', selected='selected') Нет
                   #hide(style="display: none;")
-                    h6 По какому направлению
+                    p
+                      h6 По какому направлению
                     .custom-control
-                      input#prof_1.custom-control-input( type='checkbox', value='Гуманитарное' )
-                      label.custom-control-label(for='prof_1' style="margin-left: 25px;") Гуманитарное
+                      input#prof_0.custom-control-input( type='checkbox', value='Гуманитарное' )
+                      label.custom-control-label(for='prof_0' style="margin-left: 25px;") Гуманитарное
                       
                     .custom-control
-                      input#prof_2.custom-control-input( type='checkbox', value='Педагогическое' )
-                      label.custom-control-label(for='prof_2' style="margin-left: 25px;") Педагогическое
+                      input#prof_1.custom-control-input( type='checkbox', value='Педагогическое' )
+                      label.custom-control-label(for='prof_1' style="margin-left: 25px;") Педагогическое
                       
                     .custom-control
-                      input#prof_3.custom-control-input( type='checkbox', value='В области управления' )
-                      label.custom-control-label(for='prof_3' style="margin-left: 25px;") В области управления
+                      input#prof_2.custom-control-input( type='checkbox', value='В области управления' )
+                      label.custom-control-label(for='prof_2' style="margin-left: 25px;") В области управления
     
                     .custom-control
-                      input#prof_4.custom-control-input( type='checkbox', value='Управление проектами' )
-                      label.custom-control-label(for='prof_4' style="margin-left: 25px;") Управление проектами
+                      input#prof_3.custom-control-input( type='checkbox', value='Управление проектами' )
+                      label.custom-control-label(for='prof_3' style="margin-left: 25px;") Управление проектами
 
                     .custom-control
-                      input#prof_5.custom-control-input( type='checkbox', value='Техническое' )
-                      label.custom-control-label(for='prof_5' style="margin-left: 25px;") Техническое
+                      input#prof_4.custom-control-input( type='checkbox', value='Техническое' )
+                      label.custom-control-label(for='prof_4' style="margin-left: 25px;") Техническое
 
               // Конец блока про образование
-              h3 Отношение к воинской обязанности
+              p
+                h3 Отношение к воинской обязанности
               .row.military-block
                 .col-md-6.mb-3
                   label(for='militarySelectId') Отношение к воинской обязанности
@@ -585,7 +593,6 @@ html(lang='en')
       Bootstrap core JavaScript
       ==================================================
     // Placed at the end of the document so the pages load faster
-    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
     script.
       window.jQuery || document.write('<script src="../javascripts/vendor/jquery-slim.min.js"><\\/script>')
     script(src='../javascripts/vendor/popper.min.js')
