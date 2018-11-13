@@ -63,3 +63,46 @@ function check(temp){
         
     }
 }
+
+
+function military(value){
+    if(value === 'Невоеннообязанный'){
+        document.getElementById("notMilitary").style.display = '';
+        document.getElementById("yesMilitary").style.display = 'none';
+        document.getElementById("yesMilitaryRankId").style.display = 'none';
+        document.getElementById("yesMilitarySelectId").selectedIndex = 0;
+        document.getElementById("yesMilitaryRankSelectId").selectedIndex = 0;
+    }else if(value === 'Военнообязанный'){
+        document.getElementById("notMilitary").style.display = 'none';
+        document.getElementById("notMilitarySelectId").selectedIndex = 0;
+        document.getElementById("yesMilitary").style.display = '';
+        document.getElementById("yesMilitaryRankId").style.display = '';
+        
+    }
+    if(value === "призывного возраста" || value === 'Невоеннообязанный'){
+        document.getElementById("yesMilitaryRankId").style.display = 'none';
+        document.getElementById("yesMilitaryRankSelectId").selectedIndex = 0;
+        
+    }else {
+        document.getElementById("yesMilitaryRankId").style.display = '';
+    }
+
+    document.getElementById("notMilitary")
+}
+function militaryAge(value){
+    if(value === "призывного возраста"){
+        document.getElementById("yesMilitaryRankId").style.display = 'none';
+        document.getElementById("yesMilitaryRankSelectId").selectedIndex = 0;
+        
+    }else {
+        document.getElementById("yesMilitaryRankId").style.display = '';
+    }
+}
+
+function languageAdd(){
+    let languageJson = {
+        id: '1'
+    }
+    console.log(languageJson.id)
+}
+//document.getElementById("myBtn").addEventListener("click", displayDate);

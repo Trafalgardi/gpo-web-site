@@ -11,6 +11,7 @@ html(lang='en')
     // Custom styles for this template
     link(href='../stylesheets/form-validation.css', rel='stylesheet')
     link(href='../stylesheets/style.css', rel='stylesheet')
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   body.bg-light
     .container
       .py-5.text-center
@@ -18,6 +19,7 @@ html(lang='en')
         h2 Анкетирование
         // <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       .row
+
         .col-md-12.order-md-1
           form.needs-validation(action='addData', method='post')
             .resume-block
@@ -303,20 +305,22 @@ html(lang='en')
               .row.military-block
                 .col-md-6.mb-3
                   label(for='militarySelectId') Отношение к воинской обязанности
-                  select#militarySelectId.custom-select.d-block.w-100(name='militarySelect')
-                    option(value='невоеннообязанный', selected='selected') Невоеннообязанный
-                    option(value='военнообязанный') Военнообязанный
+                  select#militarySelectId.custom-select.d-block.w-100(name='militarySelect', onchange='military(this.value)')
+                    option(value='Невоеннообязанный', selected='selected') Невоеннообязанный
+                    option(value='Военнообязанный') Военнообязанный
                 #notMilitary.col-md-6.mb-3
                   label(for='notMilitarySelectId') По какой причине?
                   select#notMilitarySelectId.form-control(name='notMilitarySelect')
-                    option(value='по медицинским показателям', selected='selected') по медицинским показателям
+                    option(value='нет', selected='') Выберети из списка...
+                    option(value='по медицинским показателям') по медицинским показателям
                     option(value='наличие непогашенной судимости') наличие непогашенной судимости
                     option(value='другое') другое
                 #yesMilitary.col-md-6.mb-3(style='display: none;')
                   div
                     label(for='yesMilitarySelectId') Военнообязанный
-                    select#yesMilitarySelectId.form-control(name='yesMilitarySelect')
-                      option(value='прошедший военную службу по контракту', selected='selected') прошедший военную службу по контракту
+                    select#yesMilitarySelectId.form-control(name='yesMilitarySelect', onchange='militaryAge(this.value)')
+                      option(value='нет', selected='') Выберети из списка...
+                      option(value='прошедший военную службу по контракту') прошедший военную службу по контракту
                       option(value='прошедшие военную службу') прошедшие военную службу
                       option(value='прошедшие альтернативную гражданскую службу') прошедшие альтернативную гражданскую службу
                       option(value='призывного возраста') призывного возраста
@@ -331,25 +335,14 @@ html(lang='en')
                     option(value='младший офицерский состав') младший офицерский состав
                     option(value='Старший офицерский состав') Старший офицерский состав
                     option(value='Высший офицерский состав') Высший офицерский состав
-                script.
-                  $(function() {
-                  $('#militarySelectId').on('change', function() {
-                  if(this.value == "невоеннообязанный"){
-                  $("#notMilitary").show()
-                  $("#yesMilitary").hide()
-                  $("#yesMilitaryRankId").hide()
-                  }else if(this.value == "военнообязанный"){
-                  $("#notMilitary").hide()
-                  $("#yesMilitary").show()
-                  $("#yesMilitaryRankId").show()
-                  }
-                  })
-                  });
+                
               // Конец военного блока
               h3 Иностранные языки
               .row.languages-block
                 .col-md-12
-                  // <a href="#" class="btn btn-primary add-language-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                  a.btn.btn-primary.add-language-link(href='#', style='margin-bottom: 10px;')
+                    i.fa.fa-plus(aria-hidden='true')
+                    |  Добавить
                   #language_items
                     #language_item_1.language-item
                       .row
@@ -394,7 +387,7 @@ html(lang='en')
                         $(this).parent('div').next('div').find('input').val('');
                         }
                         });
-                      // <a class="language-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                      <a class="language-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                       // Конец языкового блока
                       h3 Учёная степень
                       .row.academic-degree-block
