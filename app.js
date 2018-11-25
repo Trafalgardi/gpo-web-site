@@ -25,6 +25,9 @@ app.get('/', getHomePage);
 app.post('/addData', addData);
 app.get('/getData', getData);
 app.get('/getLastData', getLastData);
+app.get('/phpmyadmin', function(req, res) {
+  res.redirect('http://personnelsecurity.info:8000/phpmyadmin/');
+})
 
 
 app.listen(port, () => {
