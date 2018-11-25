@@ -430,8 +430,6 @@ html(lang='en')
                   select#drive_0.custom-select.d-block.w-100(required='', onchange='checkSelect(document.getElementById("drive_0").value)', name="drive")
                     option(value='Да') Да
                     option(selected='', value='Нет') Нет
-                  .invalid-feedback
-                    | Not Valid. 
                 #innerDrive    
                   
               // Конец блока про водительское удостоверение
@@ -445,7 +443,7 @@ html(lang='en')
                   label.custom-control-label(for='checkbox_0' style="margin-left: 25px;") Полное среднетехническое образование
                   #checkbox_at_0(style='display: none;')
                     label  Средний балл
-                    input#check_avr_0.form-control(name="education_0_0", type='number')
+                    input#check_avr_0.form-control(name="education_0_0", type='number', step="0.01")
 
                 p
                   h6 Высшее образование
@@ -454,19 +452,19 @@ html(lang='en')
                   label.custom-control-label(for='checkbox_1' style='margin-left: 25px;') Бакалавриат
                   #checkbox_at_1(style='display: none;')
                     label  Средний балл
-                    input#check_avr_1.form-control(name="education_1_0", type='number')
+                    input#check_avr_1.form-control(name="education_1_0", type='number', step="0.01")
                 .custom-control
                   input#checkbox_2.custom-control-input(name="education_2", type='checkbox', value='Магистратура', onchange="checkBox('checkbox_at_2', this.checked, 'check_avr_2')" )
                   label.custom-control-label(for='checkbox_2' style="margin-left: 25px;") Магистратура
                   #checkbox_at_2(style='display: none;')
                     label  Средний балл
-                    input#check_avr_2.form-control(name="education_2_0", type='number')
+                    input#check_avr_2.form-control(name="education_2_0", type='number', step="0.01")
                 .custom-control
                   input#checkbox_3.custom-control-input(name="education_3", type='checkbox', value='Специалитет', onchange="checkBox('checkbox_at_3', this.checked, 'check_avr_3')" )
                   label.custom-control-label(for='checkbox_3' style="margin-left: 25px;") Специалитет
                   #checkbox_at_3(style='display: none;')
                     label  Средний балл
-                    input#check_avr_3.form-control(name="education_3_0", type='number')
+                    input#check_avr_3.form-control(name="education_3_0", type='number', step="0.01")
 
                 p
                   h6 Направление подготовки

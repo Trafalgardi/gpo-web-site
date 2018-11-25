@@ -10,16 +10,22 @@ function checkSelect(bool){
         content += '    <input name="drive_1" class="form-control" id="drive_2" type="number" placeholder="2" />';
         content += '    <div class="invalid-feedback">Not Valid.</div>';
         content += '  </div>';
+        
         content += '  <div class="col-md-9 mb-3">';
         content += '    <label for="drive_3">Укажите катигорию вашего водительского удостоверения</label>';
         content += '    <input name="drive_2" class="form-control" id="drive_3" type="text" placeholder="А – мотоциклы" />';
         content += '    <div class="invalid-feedback">Not Valid.</div>';
         content += '  </div>';
+
         content += '  <div class="col-md-9 mb-3">';
-        content += '    <label for="drive_4">Укажите катигорию вашего автомобиля</label>'
-        content += '    <input name="drive_3" class="form-control" id="drive_4" type="text" placeholder="легковой автомобиль" />';
-        content += '    <div class="invalid-feedback">Not Valid.</div>';
-        content += '  </div>';
+        content += '       <label for="drive_4">Укажите катигорию вашего автомобиля</label>';
+        content +='        <select name="drive_3" class="form-control" id="drive_4">';
+        content +='            <option value="легковой автомобиль" selected="selected">легковой автомобиль</option>';
+        content +='            <option value="грузовой автомобиль">грузовой автомобиль</option>';
+        content +='            <option value="общественный автомобильный транспорт">общественный автомобильный транспорт</option>';
+        content +='            <option value="другое">другое</option>';
+        content +='        </select>';
+        content +='    </div>';
 
     
     if(bool == "Да"){
