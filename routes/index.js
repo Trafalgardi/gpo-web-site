@@ -18,6 +18,7 @@ module.exports = {
             gender: body.gender,
             age: body.age,
             registration: body.registration,
+            familyStatus: body.sp,
             children: children()
         };
         
