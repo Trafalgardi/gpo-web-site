@@ -100,9 +100,9 @@ module.exports = {
             };
             
             if(body["drive"] == "Да"){ 
-                drive.experience = body['drive_1'];
-                drive.category = body['drive_2'];
-                drive.haveCar = body['drive_3'];
+                driveLicenseJSON.experience = body['drive_1'];
+                driveLicenseJSON.category = body['drive_2'];
+                driveLicenseJSON.haveCar = body['drive_3'];
             }
             return driveLicenseJSON;
         }
