@@ -1,7 +1,14 @@
-var pool = require('../database')
+const pool = require('../database')
+const dateTime = require('node-datetime');
+let bcrypt = require('bcrypt');
+
+
+ 
+
 module.exports = {
     
     getHomePage: (req, res) => {
+        //res.clearCookie('cookie')
         
         res.render('index');
     
@@ -11,7 +18,7 @@ module.exports = {
 
         let body = req.body; // Our body from post request
         
-        var personnelData = {
+        let personnelData = {
             firstName: body.firstName,
             lastName: body.lastName,
             secondName: body.secondName,
@@ -23,14 +30,14 @@ module.exports = {
         };
         
         let swap = [];
-        var swapJson = {
+        let swapJson = {
             Name: '',
             check: false,
             cause: ''
         };
         
         
-        for (var i = 0; i < 8 ; i++) {
+        for (let i = 0; i < 8 ; i++) {
 
             swapJson.Name = body['change_'+ i + '_0'];
             swapJson.check = body['change_'+ i + '_1'];
@@ -41,7 +48,7 @@ module.exports = {
 
         function causeSwap(index){
             let cause = {};
-            for (var i = 0; i < 9 ; i++) {
+            for (let i = 0; i < 9 ; i++) {
                 if(body['change_'+ index + '_1_' + i] == undefined) continue; 
                 cause[body['change_'+ index + '_1_' + i]] = body['change_'+ index + '_1_' + i + '_1'];
             }
@@ -205,7 +212,7 @@ module.exports = {
         //console.log("Данные записанны!\n" + JSON.stringify(body));
         //let tempData = JSON.stringify(data);
 
-        var sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(data) +"')";
+        let sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(data) +"')";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             res.render('post');
@@ -216,7 +223,7 @@ module.exports = {
     getData: (req, res) => {
         
         
-        var sql = "SELECT data FROM json WHERE 1";
+        let sql = "SELECT data FROM json WHERE 1";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
@@ -226,11 +233,85 @@ module.exports = {
     
     },
     getLastData: (req, res)=>{
-        var sql = "SELECT data FROM json WHERE 1 ORDER BY ID DESC LIMIT 1";
+        let sql = "SELECT data FROM json WHERE 1 ORDER BY ID DESC LIMIT 1";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
             res.json(result);
+        });
+    },
+    into: (req, res)=>{
+        const passworFromForm = req.body.password;
+        
+        //SELECT * FROM tbl_users WHERE email = 'theremandram@gmail.com' LIMIT 1
+        const sql = "SELECT * FROM tbl_users WHERE email = '"+req.body.email+"' LIMIT 1";
+        console.log(sql)
+        pool.query(sql, function (error, results, fields) {  
+            console.log(results[0].id)
+            if (error) {
+                return console.log(error);
+            }
+            const passworFromBD = results[0].password;//если чо то result[0]....
+            console.log(passworFromForm +'\n' + passworFromBD)
+            if(passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null){
+                if(bcrypt.compareSync(passworFromForm, passworFromBD)) {
+                    console.log("Passwords match")
+                    res.cookie('id', results[0].id, { httpOnly: true});
+                    res.send('Check your cookies. One should be in there now');
+                    
+                } else {
+                    console.log("Passwords don't match")
+                    
+                }
+            }
+        });
+    },
+    reg: (req, res)=>{
+        let body = req.body; // Our body from post request
+        console.log(body)
+
+        let dt = dateTime.create();
+        let formatted = dt.format('Y-m-d H:M:S');
+        // пароль пользователя
+        let passwordFromUser = req.body.password; 
+        // создаем соль
+        let salt = bcrypt.genSaltSync(10);
+        // шифруем пароль
+        let passwordToSave = bcrypt.hashSync(passwordFromUser, salt)
+        
+        let user = {
+            email: req.body.email,
+            password: passwordToSave,
+            date: formatted
+        };
+        pool.query('SELECT * FROM tbl_users WHERE email = ?', req.body.email, function (error, results, fields) {
+            
+            if(results == '')
+            {
+                console.log("check1")
+                pool.query("INSERT INTO tbl_users SET ?", user, function(error, results, fields){
+                if (error) {
+                    res.json({
+                    status: false,
+                    message: "there is some error with query"
+                    });
+                } else {
+                    res.json({
+                    //results.redirect('/index.html');
+            
+                    message: "Успешно зарегистрирован пользователь" + req.body.email
+                    });
+                    console.log("registered!");
+                }
+                });
+            }else {
+                console.log("check2")
+                res.json({
+                status: false,
+                message: "Данный email уже зарегистрирован!"
+                });
+            }
+            
         });
     }
 

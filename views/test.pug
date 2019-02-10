@@ -1,0 +1,33 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Тестирование
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='../stylesheets/bootstrap.min.css')
+    // Custom styles for this template
+    link(href='../stylesheets/form-validation.css', rel='stylesheet')
+    link(href='../stylesheets/style.css', rel='stylesheet')
+    link(href="../css/all.css" rel="stylesheet")
+  body.bg-light
+
+    .container
+    h1#testName
+    form#questions(action='addDataTest', method='post')
+        
+
+    //
+      Bootstrap core JavaScript
+      ==================================================
+    // Placed at the end of the document so the pages load faster
+    script.
+      window.jQuery || document.write('<script src="../javascripts/vendor/jquery-slim.min.js"><\\/script>')
+    script(src='../javascripts/vendor/popper.min.js')
+    script(src='../javascripts/bootstrap.min.js')
+    script(src='../javascripts/vendor/holder.min.js')
+    script(src='../javascripts/test.js')
+    
+    script.
+        
+        printTest('#{json}', '#{id}');
+

@@ -1,0 +1,37 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Начальная страница
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='../stylesheets/bootstrap.min.css')
+    // Custom styles for this template
+    link(href='../stylesheets/form-validation.css', rel='stylesheet')
+    link(href='../stylesheets/style.css', rel='stylesheet')
+    link(href='../stylesheets/signin.css', rel='stylesheet')
+  body.bg-light.text-center
+    form.form-signin(method="post")
+        img.mb-4(src='./smartphone.svg' alt='' width='72' height='72')
+        h1.h3.mb-3.font-weight-normal Введите свои данные
+        label.sr-only(for='inputEmail') Email
+        input#inputEmail.form-control(type='email' placeholder='Email' required='' autofocus='')
+        label.sr-only(for='inputPassword') Password
+        input#inputPassword.form-control(type='password' placeholder='Пароль' required='')
+        //.checkbox.mb-3
+            label
+            input(type='checkbox' value='remember-me')
+            |  Запомнить меня
+        button.btn.btn-lg.btn-primary.btn-block(type='button' onclick='signin()') Вход
+        p.mt-5.mb-3.text-muted &copy; 2017-2019
+
+
+    //
+      Bootstrap core JavaScript
+      ==================================================
+    // Placed at the end of the document so the pages load faster
+    script.
+      window.jQuery || document.write('<script src="../javascripts/vendor/jquery-slim.min.js"><\\/script>')
+    script(src='../javascripts/vendor/popper.min.js')
+    script(src='../javascripts/bootstrap.min.js')
+    script(src='../javascripts/vendor/holder.min.js')
+    script(src='../javascripts/reg.js')
