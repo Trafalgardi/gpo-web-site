@@ -40,13 +40,14 @@ module.exports = {
         
     }, 
     setTestCoef:(req, res) => {
-        let data = {
-            id: 0,
-            result: 0
-        }
-        if (!(req.body && req.body.data && req.body.data.lenght > 0)) return;
+        //let data = {
+        //    id: 0,
+        //    result: 0
+        //}
+        if (req.body.data === undefined || req.body.data.lenght <= 0) return;
         console.log(req.body)
         let temp = req.body.data;
+        //UPDATE `user_tests` SET `result`=1 WHERE `id` = 1
         //let sql = 'UPDATE user_tests SET result='+temp.result+' WHERE id='+temp.id;
         let sql = 'UPDATE `user_tests` SET `result`= CASE ';
         for (let index = 0; index < temp.length; index++) {
