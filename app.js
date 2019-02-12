@@ -13,7 +13,7 @@ var app = express();
 var usersRouter = require('./routes/users');
 
 const {getHomePage, addData, getData, getLastData, into,reg} = require('./routes/index');
-const {setTest, addDataTest, setTestCoef,getTestData} = require('./routes/test');
+const {setTest, addDataTest, setTestCoef,getTestData, setAnketaCoef, updateTests} = require('./routes/test');
 const port = 3000;
 
 
@@ -135,7 +135,9 @@ app.get('/phpmyadmin', function(req, res) {
 app.get('/test/:id', setTest)
 app.get('/getTestData', getTestData)
 app.post('/test/addDataTest', addDataTest);
-app.post('/test/setTestCoef', setTestCoef);
+app.post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
+app.post('/test/setTestCoef', setTestCoef);//Обновление столбца anketa  в таблице tbl_users(Общий коэф. тестов)
+app.post('/test/setAnketaCoef', setAnketaCoef); //Обновление столбца tests в таблице tbl_users(Коэф. анкеты)
 
 
 

@@ -39,7 +39,7 @@ module.exports = {
         }
         
     }, 
-    setTestCoef:(req, res) => {
+    updateTests:(req, res) => {
         //let data = {
         //    id: 0,
         //    result: 0
@@ -61,6 +61,49 @@ module.exports = {
             if (err) throw err;
             console.log(result)
         });
+    },
+    setAnketaCoef:(req, res) => {
+        //let data = {
+        //    id: 0,
+        //    anketa: 0
+        //}
+        console.log(req.body)
+        if (req.body.data === undefined || req.body.data.lenght <= 0) return;
+        let temp = req.body.data;
+        console.log(temp)
+        let sql = 'UPDATE `tbl_users` SET `anketa`= CASE ';
+        for (let index = 0; index < temp.length; index++) {
+            sql+= " WHEN `id`="+temp[index].id+" THEN "+temp[index].anketa;
+        }
+        sql+= ' ELSE `anketa` END WHERE 1';
+        console.log(sql)   
+        pool.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result)
+        });
+    },
+    setTestCoef:(req, res) => {
+        //let data = {
+        //    id: 0,
+        //    tests: 0
+        //}
+        console.log(req.body)
+        if (req.body.data === undefined || req.body.data.lenght <= 0) return;
+        let temp = req.body.data;
+        console.log(temp)
+        let sql = 'UPDATE `tbl_users` SET `tests`= CASE ';
+        for (let index = 0; index < temp.length; index++) {
+            sql+= " WHEN `id`="+temp[index].id+" THEN "+temp[index].tests;
+        }
+        sql+= ' ELSE `tests` END WHERE 1';
+        console.log(sql)  
+        let message = 'Сообщение об ошибки'; 
+        pool.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result)
+            message = 'Данные успешно загруженны';
+        });
+        //res.json({ message: message });
     },
     getTestAnswers:(req, res) => {
         
