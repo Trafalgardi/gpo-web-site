@@ -7,7 +7,7 @@ module.exports = {
         
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
-            console.log(result[0].data)
+            //console.log(result[0].data)
             let js = JSON.stringify(result[0].data);
             res.render('test', {json: js, id: req.params.id});
             //res.send("Данные записанны!\n" + JSON.stringify(data));
