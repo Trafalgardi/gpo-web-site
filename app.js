@@ -13,7 +13,7 @@ var app = express();
 var usersRouter = require('./routes/users');
 
 const {getHomePage, addData, getData, getLastData, into,reg} = require('./routes/index');
-const {setTest, addDataTest, setTestCoef,getTestData, setAnketaCoef, updateTests} = require('./routes/test');
+const {setTest, addDataTest, setTestCoef, getTestData, setAnketaCoef, updateTests} = require('./routes/test');
 const port = 3000;
 
 
@@ -132,8 +132,9 @@ app.get('/getLastData', getLastData);
 app.get('/phpmyadmin', function(req, res) {
   res.redirect('http://personnelsecurity.info:8000/phpmyadmin/');
 })
-app.get('/test/:id', setTest)
-app.get('/getTestData', getTestData)
+
+app.get('/test/getTestData', getTestData);
+app.get('/test/:id', setTest);
 app.post('/test/addDataTest', addDataTest);
 app.post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
 app.post('/test/setTestCoef', setTestCoef);//Обновление столбца anketa  в таблице tbl_users(Общий коэф. тестов)

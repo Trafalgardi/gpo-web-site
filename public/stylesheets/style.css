@@ -68,3 +68,15 @@
   background: #333;
   color: #fff;
 }
+.jst-hours {
+  float: left;
+}
+.jst-minutes {
+  float: left;
+}
+.jst-seconds {
+  float: left;
+}
+.jst-clearDiv {
+  clear: both;
+}

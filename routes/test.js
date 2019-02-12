@@ -2,10 +2,12 @@ var pool = require('../database')
 module.exports = {
     setTest: (req, res) => {
         //var idTest = require('../tests/question_'+req.params.id+'.json');
-        let sql = 'SELECT JSON_MERGE(JSON_OBJECT("testName", name), questions) as data FROM tests WHERE id='+req.params.id;
+        //let sql = 'SELECT JSON_MERGE(JSON_OBJECT("testName", name), questions) as data FROM tests WHERE id='+req.params.id;
+        let sql = 'SELECT `questions` as data FROM `tests` WHERE id='+req.params.id;
         
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
+            console.log(result[0].data)
             let js = JSON.stringify(result[0].data);
             res.render('test', {json: js, id: req.params.id});
             //res.send("Данные записанны!\n" + JSON.stringify(data));
@@ -15,28 +17,30 @@ module.exports = {
     addDataTest: (req, res) => {
 
         let body = req.body; // Our body from post request
+        console.log(req.body)
         let temp = Object.values(body);
         let answers = {
             data: []
         };
-        for (let index = 0; index < temp.length-2; index++) {
+        for (let index = 0; index < temp.length-1; index++) {
 
             answers.data[index] = temp[index];
 
         }
         
-        if(answers.data.length != body.size){
-            console.log("Ошибка заполнения")
-            res.redirect('./'+body.id);
+        //if(answers.data.length != body.size){
+        //    console.log("Ошибка заполнения")
+        //    res.redirect('./'+body.id);
         
-        }else {
-            console.log("Данные ушли")
-            pool.query("INSERT INTO user_tests VALUES (?,?,?,?,?);", [0,0,body.id,JSON.stringify(answers),-1], function(error, results, fields){
-                if (error) throw error;
-                res.render('post');
-                //res.send("Данные записанны!\n" + JSON.stringify(data));UPDATE UserTests SET result= 0 WHERE id=1
-            });
-        }
+        
+        console.log("Данные ушли")
+        pool.query("INSERT INTO user_tests VALUES (?,?,?,?,?);", [0,0,body.id,JSON.stringify(answers),-1], function(error, results, fields){
+            if (error) throw error;
+            
+            res.render('post');
+            //res.send("Данные записанны!\n" + JSON.stringify(data));UPDATE UserTests SET result= 0 WHERE id=1
+        });
+        
         
     }, 
     updateTests:(req, res) => {
@@ -117,12 +121,11 @@ module.exports = {
             id: '',
             user_id: 0,
             test_id: 0,
-            test_name: '',
             questions: [],
             answers: []
         }
         let response = {};
-        let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`name`, `tests`.`questions`, `user_tests`.`answers`'
+        let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`'
         + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
         pool.query(sql, function (error, results, fields) {
             

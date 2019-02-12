@@ -10,9 +10,11 @@ html(lang='en')
     link(href='../stylesheets/style.css', rel='stylesheet')
     link(href="../css/all.css" rel="stylesheet")
   body.bg-light
-
+    
     .container
     h1#testName
+    div#timer
+    div#comment
     form#questions(action='addDataTest', method='post')
         
 
@@ -26,8 +28,12 @@ html(lang='en')
     script(src='../javascripts/bootstrap.min.js')
     script(src='../javascripts/vendor/holder.min.js')
     script(src='../javascripts/test.js')
+    script(src='../javascripts/jquery.simple.timer.js')
+
     
     script.
         
         printTest('#{json}', '#{id}');
+
+        
 
