@@ -223,7 +223,7 @@ module.exports = {
     getData: (req, res) => {
         
         
-        let sql = "SELECT data FROM json WHERE 1";
+        let sql = "SELECT json FROM data WHERE 1";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
@@ -233,7 +233,7 @@ module.exports = {
     
     },
     getLastData: (req, res)=>{
-        let sql = "SELECT data FROM json WHERE 1 ORDER BY ID DESC LIMIT 1";
+        let sql = "SELECT json FROM data WHERE 1 ORDER BY ID DESC LIMIT 1";
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
