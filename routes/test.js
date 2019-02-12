@@ -8,6 +8,10 @@ module.exports = {
         pool.query(sql, function (err, result, fields) {
             if (err) throw err;
             //console.log(result[0].data)
+            if(result[0] === undefined || result[0].data === undefined){
+                return res.status(500).send('<h1>Something failed!</h1>');
+            }
+               
             let js = JSON.stringify(result[0].data);
             res.render('test', {json: js, id: req.params.id});
             //res.send("Данные записанны!\n" + JSON.stringify(data));
