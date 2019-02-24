@@ -161,7 +161,7 @@ function Answers(parms, i, def) { //Мы передаём сюда массив 
         let checked = x == def ? 'checked' : '';
         content += '    <div class="radio">'
         content += '        <label>'
-        content += '            <input type="radio" name="optionsRadios_' + i + '" value="' + parms[x] + '" ' + checked + ' >' + parms[x] // добавить защиту от дурака
+        content += '            <input type="radio" name="optionsRadios_' + i + '" value=\'' + parms[x] + '\' ' + checked + ' >' + parms[x] // добавить защиту от дурака
         content += '        </label>'
         content += '    </div>'
     }
