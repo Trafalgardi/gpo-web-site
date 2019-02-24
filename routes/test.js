@@ -141,7 +141,7 @@ module.exports = {
                 }
                 return res.render('error', {json});
               }else {
-                    response = results[0];
+                    response = results;
                     //console.log(response)
                     res.json(response);
               }
