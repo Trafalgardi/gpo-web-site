@@ -17,7 +17,11 @@ function printTest(params, id) {
         console.log("Таймера нет")
     }
     if (json.html !== undefined) {
-        document.getElementById('comment').innerHTML = json.html;
+        console.log(json.html)
+        let temp = json.html.replace(/&lt;/g, '<');
+        temp = temp.replace(/&gt;/g, '>');
+        console.log(temp)
+        document.getElementById('comment').innerHTML = temp;
     } else {
         console.log('Коментария нет')
     }
