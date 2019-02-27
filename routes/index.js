@@ -1,23 +1,24 @@
-const pool = require('../database')
+const connection = require('../database')
 const dateTime = require('node-datetime');
 let bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
- 
+
 
 module.exports = {
-    
+
     getHomePage: (req, res) => {
         //res.clearCookie('cookie')
-        
-        res.render('index');
-    
+
+        res.render('homepage');
+
     },
     addData: (req, res) => {
-        
+
 
         let body = req.body; // Our body from post request
-        
+
         let personnelData = {
             firstName: body.firstName,
             lastName: body.lastName,
@@ -28,29 +29,29 @@ module.exports = {
             familyStatus: body.sp,
             children: children()
         };
-        
+
         let swap = [];
         let swapJson = {
             Name: '',
             check: false,
             cause: ''
         };
-        
-        
-        for (let i = 0; i < 8 ; i++) {
 
-            swapJson.Name = body['change_'+ i + '_0'];
-            swapJson.check = body['change_'+ i + '_1'];
+
+        for (let i = 0; i < 8; i++) {
+
+            swapJson.Name = body['change_' + i + '_0'];
+            swapJson.check = body['change_' + i + '_1'];
             swapJson.cause = causeSwap(i);
             let temp = JSON.stringify(swapJson);
             swap[i] = JSON.parse(temp);
         }
 
-        function causeSwap(index){
+        function causeSwap(index) {
             let cause = {};
-            for (let i = 0; i < 9 ; i++) {
-                if(body['change_'+ index + '_1_' + i] == undefined) continue; 
-                cause[body['change_'+ index + '_1_' + i]] = body['change_'+ index + '_1_' + i + '_1'];
+            for (let i = 0; i < 9; i++) {
+                if (body['change_' + index + '_1_' + i] == undefined) continue;
+                cause[body['change_' + index + '_1_' + i]] = body['change_' + index + '_1_' + i + '_1'];
             }
             return cause;
         }
@@ -60,7 +61,7 @@ module.exports = {
                 "Бакалавриат": "0",
                 "Магистратура": "0",
                 "Специалитет": "0",
-                "Направление подготовки":{
+                "Направление подготовки": {
                     "Педагогическое": "false",
                     "В области управления": "false",
                     "Управление проектами": "false",
@@ -73,30 +74,30 @@ module.exports = {
                     "Доктор наук": "false",
                     "PhD": "false"
                 },
-                "Профессиональная переподготовка":{
+                "Профессиональная переподготовка": {
                     "Гуманитарное": "false",
                     "Педагогическое": "false",
                     "В области управления": "false",
                     "Управление проектами": "false",
                     "Техническое": "false"
                 }
-                
+
             };
             for (let index = 0; index < 19; index++) {
-                if(body["education_" + index] == undefined) continue; 
-                if(index == 12) continue; 
-                if(index < 4){
+                if (body["education_" + index] == undefined) continue;
+                if (index == 12) continue;
+                if (index < 4) {
                     education[body["education_" + index]] = body["education_" + index + '_0'];
-                    
-                }else if(index > 3 && index < 9){
+
+                } else if (index > 3 && index < 9) {
                     education['Направление подготовки'][body["education_" + index]] = true;
-                }else if(body["education_12"] == 'Да' && index > 13){
+                } else if (body["education_12"] == 'Да' && index > 13) {
                     education["Профессиональная переподготовка"][body["education_" + index]] = true;
-                    
-                }else{
+
+                } else {
                     education["Ученая степень"][body["education_" + index]] = true;
                 }
-                
+
             }
             return education;
         }
@@ -106,8 +107,8 @@ module.exports = {
                 category: '-',
                 haveCar: '-'
             };
-            
-            if(body["drive"] == "Да"){ 
+
+            if (body["drive"] == "Да") {
                 driveLicenseJSON.experience = body['drive_1'];
                 driveLicenseJSON.category = body['drive_2'];
                 driveLicenseJSON.haveCar = body['drive_3'];
@@ -123,7 +124,7 @@ module.exports = {
             }
             return militaryServiceJSON;
         }
-        
+
         function language() {
             let num = body['langNubmer'];
             let languageArr = [];
@@ -133,20 +134,20 @@ module.exports = {
                 'Шкала уровней владения иностранными языками по системе CEFR': ''
             };
 
-           
+
             for (let index = 0; index <= num; index++) {
-                if (body['language_name_'+ index] == undefined) continue;
-                languageJSON['Язык'] =  body['language_name_'+ index];
-                languageJSON['Уровень владения языком'] =  body['language_level_'+ index];
-                languageJSON['Шкала уровней владения иностранными языками по системе CEFR'] =  body['language_CEFR_'+ index]; 
+                if (body['language_name_' + index] == undefined) continue;
+                languageJSON['Язык'] = body['language_name_' + index];
+                languageJSON['Уровень владения языком'] = body['language_level_' + index];
+                languageJSON['Шкала уровней владения иностранными языками по системе CEFR'] = body['language_CEFR_' + index];
                 let temp = JSON.stringify(languageJSON);
                 languageArr[index] = JSON.parse(temp);
-                
+
             }
-            
-                    
-                
-            
+
+
+
+
             return languageArr;
         }
 
@@ -155,17 +156,17 @@ module.exports = {
             let child = {
                 "Дети": body['children']
             };
-            
-            
-            if(body['children'] == 'true'){
+
+
+            if (body['children'] == 'true') {
                 let childrenJSON = {
                     'age': '',
                     'gender': ''
                 }
-                let temp =  body["childrenNumber"];
+                let temp = body["childrenNumber"];
                 for (let index = 0; index <= 13; index++) {
-                    
-                    if(body["ageChildrenName_" + index] == undefined) continue;
+
+                    if (body["ageChildrenName_" + index] == undefined) continue;
                     childrenJSON['age'] = body["ageChildrenName_" + index]
                     childrenJSON['gender'] = body["genderChildrenName_" + index]
                     let temp = JSON.stringify(childrenJSON);
@@ -174,12 +175,12 @@ module.exports = {
                 const result = arr.filter(Boolean); //определенный баг, не уверен где он появляется, но в начале массива всегда пустое значение это строка уберает пустое значение
                 child['children'] = result;
             }
-           
+
             return child;
-           
+
         }
-       
-    
+
+
         let data = {
             personnelData: personnelData,
             swap: swap,
@@ -207,111 +208,175 @@ module.exports = {
         data.academicDegree['Доктор наук'] = body['academic_degree_doc_1'];
         data.academicDegree['Кандидат наук'] = body['academic_degree_candidate_1'];
 
-        
-        
+
+
         //console.log("Данные записанны!\n" + JSON.stringify(body));
         //let tempData = JSON.stringify(data);
 
-        let sql = "INSERT INTO json (data) VALUES ('"+ JSON.stringify(data) +"')";
-        pool.query(sql, function (err, result, fields) {
+        let sql = "INSERT INTO users (anketaData) VALUES ('" + JSON.stringify(data) + "')";
+        connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             res.render('post');
             //res.send("Данные записанны!\n" + JSON.stringify(data));
         });
 
     },
-    getData: (req, res) => {
-        
-        
-        let sql = "SELECT json FROM data WHERE 1";
-        pool.query(sql, function (err, result, fields) {
+    getOpenTest: (req, res) =>{
+        let sql = "SELECT `id`, `name` FROM `tests` WHERE 1"
+        connection.query(sql, function (err, result, fields) {
             if (err) throw err;
-            //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
+            
             res.json(result);
+            console.log("got get");
+        })
+    },
+    getData: (req, res) => {
+        let json = {
+            anketa: [], // все анкеты id и анкета
+            newTests: [], //где result = -1
+            checkedTests: []  //где result != -1
+        }
+
+        let sql = "SELECT id, anketaData FROM users WHERE 1";
+        connection.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            json.anketa = result;
+            sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`'
+                + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
+            connection.query(sql, function (error, results, fields) {
+                if (error) {
+                    console.log("check1")
+                    let json = {
+                        status: false,
+                        message: 'there are some error with query'
+                    }
+                    return res.render('error', { json });
+                } else {
+                    json.newTests = results;
+                    sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`'
+                        + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1';
+                    connection.query(sql, function (error, results, fields) {
+                        if (error) {
+                            console.log("check2")
+                            let json = {
+                                status: false,
+                                message: 'there are some error with query'
+                            }
+                            return res.render('error', { json });
+                        } else {
+                            json.checkedTests = results;
+
+                            res.json(json)
+                        }
+                    })
+
+                }
+            })
+
         });
 
-    
+
+
+
     },
-    getLastData: (req, res)=>{
+    getLastData: (req, res) => {
         let sql = "SELECT json FROM data WHERE 1 ORDER BY ID DESC LIMIT 1";
-        pool.query(sql, function (err, result, fields) {
+        connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
             res.json(result);
         });
     },
-    into: (req, res)=>{
+    signin: (req, res) => {
+
         const passworFromForm = req.body.password;
-        
-        //SELECT * FROM tbl_users WHERE email = 'theremandram@gmail.com' LIMIT 1
-        const sql = "SELECT * FROM tbl_users WHERE email = '"+req.body.email+"' LIMIT 1";
+        let user = {
+            id: 0,
+            email: ""
+        }
+
+        //SELECT * FROM users WHERE email = 'theremandram@gmail.com' LIMIT 1
+        const sql = "SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1";
         console.log(sql)
-        pool.query(sql, function (error, results, fields) {  
+        connection.query(sql, function (error, results, fields) {
             console.log(results[0].id)
             if (error) {
                 return console.log(error);
             }
             const passworFromBD = results[0].password;//если чо то result[0]....
-            console.log(passworFromForm +'\n' + passworFromBD)
-            if(passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null){
-                if(bcrypt.compareSync(passworFromForm, passworFromBD)) {
+            console.log(passworFromForm + '\n' + passworFromBD)
+            if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
+                if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
                     console.log("Passwords match")
-                    res.cookie('id', results[0].id, { httpOnly: true});
-                    res.send('Check your cookies. One should be in there now');
-                    
+                    user.id = results[0].id
+                    user.email = results[0].email
+                    jwt.sign({ user }, 'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
+                        res.cookie('token', token.toString());
+                        res.redirect('/homepage');
+                    });
+
+
                 } else {
-                    console.log("Passwords don't match")
-                    
+                    console.log("Passwordss don't match")
                 }
             }
         });
     },
-    reg: (req, res)=>{
+    reg: (req, res) => {
         let body = req.body; // Our body from post request
         console.log(body)
 
         let dt = dateTime.create();
         let formatted = dt.format('Y-m-d H:M:S');
         // пароль пользователя
-        let passwordFromUser = req.body.password; 
+        let passwordFromUser = req.body.password;
         // создаем соль
         let salt = bcrypt.genSaltSync(10);
         // шифруем пароль
         let passwordToSave = bcrypt.hashSync(passwordFromUser, salt)
-        
+
         let user = {
             email: req.body.email,
             password: passwordToSave,
             date: formatted
         };
-        pool.query('SELECT * FROM tbl_users WHERE email = ?', req.body.email, function (error, results, fields) {
-            
-            if(results == '')
-            {
+        connection.query('SELECT * FROM users WHERE email = ?', req.body.email, function (error, results, fields) {
+
+            if (results == '') {
                 console.log("check1")
-                pool.query("INSERT INTO tbl_users SET ?", user, function(error, results, fields){
-                if (error) {
-                    res.json({
-                    status: false,
-                    message: "there is some error with query"
-                    });
-                } else {
-                    res.json({
-                    //results.redirect('/index.html');
-            
-                    message: "Успешно зарегистрирован пользователь" + req.body.email
-                    });
-                    console.log("registered!");
-                }
+                connection.query("INSERT INTO users SET ?", user, function (error, results, fields) {
+                    if (error) {
+                        res.json({
+                            status: error,
+                            message: "there is some error with query"
+                        });
+                    } else {
+                        connection.query("SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1", function (error, results, fields) {
+                            console.log(results[0].id)
+                            if (error) {
+                                return console.log(error);
+                            }
+                            user = {
+                                id: 0,
+                                email: ""
+                            }
+                            user.id = results[0].id
+                            user.email = results[0].email
+                            jwt.sign({ user }, 'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
+                                res.cookie('token', token.toString());
+                                res.redirect('/homepage');
+                            });
+
+
+                        })
+                        console.log("registered!");
+                    }
                 });
-            }else {
+            } else {
                 console.log("check2")
-                res.json({
-                status: false,
-                message: "Данный email уже зарегистрирован!"
-                });
+                res.render('error', { error: { message: "Данный email уже заригистрирован!", status: "Ошибка при регистрации" } })
             }
-            
+
         });
     }
 

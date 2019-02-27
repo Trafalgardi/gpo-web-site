@@ -1,0 +1,50 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Начальная страница
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='../stylesheets/bootstrap.min.css')
+    // Custom styles for this template
+    link(href='../stylesheets/homepage.css', rel='stylesheet')
+
+  body
+    .d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.shadow-sm
+      h5.my-0.mr-md-auto.font-weight-normal СКБП
+      a.btn.btn-outline-primary(href="#") Выход из системы
+    .pricing-header.px-3.py-3.pt-md-5.pb-md-4.mx-auto.text-center
+      h1.display-4 Система кадровой безопасности предприятия
+      p.lead
+        | Добро пожаловать!
+        user#userName
+        |  На данный момент вам доступно два этапа: тестирование,
+        |       анкетирования. Вам необходимо пройти данные этапы. Для начала нажмини на кнопку под этапом.
+    .container
+      .card-deck.mb-3.text-center
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Анкетирование
+          .card-body
+            ul.list-unstyled.mt-3.mb-4
+              li Заполните все данные
+              li После заполенния изменить
+              li данные невозможно
+            a.btn.btn-lg.btn-block.btn-outline-primary(href="/questionnaire") Начать
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Тестирование
+          .card-body
+            ul.list-unstyled.mt-3.mb-4
+              li Пройдите все доступные тесты
+              li Тесты могут пополнятся со временем
+              li 10 \ 10
+            a.btn.btn-lg.btn-block.btn-outline-primary(href="/opentests") Начать
+
+
+    //
+      Bootstrap core JavaScript
+      ==================================================
+    // Placed at the end of the document so the pages load faster
+    script.
+      window.jQuery || document.write('<script src="../javascripts/vendor/jquery-slim.min.js"><\\/script>')
+    script(src='../javascripts/bootstrap.min.js')

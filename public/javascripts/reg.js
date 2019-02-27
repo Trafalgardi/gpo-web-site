@@ -43,23 +43,17 @@ function checkPassword(){
     const pass2 = document.getElementById('inputPassword2').value
     const email = document.getElementById('inputEmail').value
     let validation = false;
+    document.getElementById('btn').classList.add( "disabled" );
     if(pass1 === pass2){
         validation = true;
         document.getElementById('message').innerHTML = ''
         if(email != null && pass1 != null && pass2 != null || email != '' && pass1 != '' && pass2 != ''){
-            let xhr = new XMLHttpRequest();
-            let json = JSON.stringify({
-                'email': email,
-                'password': pass1
-            });
-            xhr.open("POST", '/reg', true)
-            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-            // Отсылаем объект в формате JSON и с Content-Type application/json
-            xhr.send(json);
+            document.getElementById('btn').classList.remove( "disabled" );
         }
     }else {
         validation = false;
         document.getElementById('message').innerText = 'Пароли не совподают!'
+        document.getElementById('btn').classList.add( "disabled" );
     }
     console.log(validation)
     
@@ -75,6 +69,7 @@ function signin(){
         });
         xhr.open("POST", '/api/signin', true)
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        
         // Отсылаем объект в формате JSON и с Content-Type application/json
         xhr.send(json);
     }

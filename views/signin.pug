@@ -10,18 +10,18 @@ html(lang='en')
     link(href='../stylesheets/style.css', rel='stylesheet')
     link(href='../stylesheets/signin.css', rel='stylesheet')
   body.bg-light.text-center
-    form.form-signin(method="post")
+    form.form-signin(method="post" action="/signin")
         img.mb-4(src='./smartphone.svg' alt='' width='72' height='72')
         h1.h3.mb-3.font-weight-normal Введите свои данные
-        label.sr-only(for='inputEmail') Email
-        input#inputEmail.form-control(type='email' placeholder='Email' required='' autofocus='')
+        label.sr-only( for='inputEmail') Email
+        input#inputEmail.form-control(name = 'email' type='email' placeholder='Email' required='' autofocus='')
         label.sr-only(for='inputPassword') Password
-        input#inputPassword.form-control(type='password' placeholder='Пароль' required='')
+        input#inputPassword.form-control(name = 'password' type='password' placeholder='Пароль' required='')
         //.checkbox.mb-3
             label
             input(type='checkbox' value='remember-me')
             |  Запомнить меня
-        button.btn.btn-lg.btn-primary.btn-block(type='button' onclick='signin()') Вход
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Вход
         p.mt-5.mb-3.text-muted &copy; 2017-2019
 
 

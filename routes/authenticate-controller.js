@@ -18,7 +18,7 @@ module.exports.authenticate = function (req, res) {
   const passworFromForm = req.body.password;
 
 
-  connection.query('SELECT * FROM tbl_users WHERE email = ?', [email], function (error, results, fields) {
+  connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results, fields) {
     if (error) {
 
       console.log("check1")

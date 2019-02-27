@@ -17,11 +17,8 @@ html(lang='en')
         input#inputEmail.form-control(name='email' type='email' placeholder='Email' required='' autofocus='')
         label.sr-only(for='inputPassword') Пароль
         input#inputPassword1.form-control(name='password' type='password' placeholder='Пароль' required='')
-        #progress.progress(style = 'display: none')
-          #progress-bar.progress-bar.bg-success(role='progressbar' style='' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
-        input#inputPassword2.form-control(type='password' placeholder='Повторите пароль' required='')
         h5#message(style='color: red')
-        button.btn.btn-lg.btn-primary.btn-block(type='button' onclick='checkPassword()') Регистрация
+        button#btn.btn.btn-lg.btn-primary.btn-block(type='submit') Регистрация
         p.mt-5.mb-3.text-muted &copy; 2017-2019
 
 

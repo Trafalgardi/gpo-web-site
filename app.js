@@ -12,8 +12,8 @@ var app = express();
 
 var usersRouter = require('./routes/users');
 
-const {getHomePage, addData, getData, getLastData, into,reg} = require('./routes/index');
-const {setTest, addDataTest, setTestCoef, getTestData, setAnketaCoef, updateTests} = require('./routes/test');
+const {getHomePage, addData, getData, getLastData, signin,reg, getOpenTest} = require('./routes/index');
+const {setTest, addDataTest, getTestData, setAnketaCoef, updateTests} = require('./routes/test');
 const port = 3000;
 
 
@@ -32,12 +32,11 @@ app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 app.use(express.static(path.join(__dirname, 'fontawesome')));
 app.get('/', getHomePage);
-//app.get('/into', into);
 //app.get('/reg', reg);
 
 /* Creae API route */
-app.get('/api/home', (req, res) => {
-  res.render('home')
+app.get('/index', (req, res) => {
+  res.render('index')
 })
 app.get('/api', (req, res) => {
   res.json({
@@ -58,15 +57,29 @@ app.post('/api/posts', verifyToken, (req, res) => {
   });
 });
 
+app.get('/api/cookie', verifyTokenCookie, (req, res) => {
+  jwt.verify(req.token, 'SuperSecRetKey', (err, authData)=>{
+      if(err){
+          res.sendStatus(403);
+      }else{
+          res.json({
+              msg: "A new post is created",
+              authData
+          });
+      }
+  });
+});
+
 //User signin route - create a token and return to user
-app.post('/api/signin', (req, res) => {
+app.post('/api/signin',  (req, res) => {
   const passworFromForm = req.body.password;
   let user = {
     id: 0,
     email: ""
-  }    
-  //SELECT * FROM tbl_users WHERE email = 'theremandram@gmail.com' LIMIT 1
-  const sql = "SELECT * FROM tbl_users WHERE email = '"+req.body.email+"' LIMIT 1";
+  } 
+     
+  //SELECT * FROM users WHERE email = 'theremandram@gmail.com' LIMIT 1
+  const sql = "SELECT * FROM users WHERE email = '"+req.body.email+"' LIMIT 1";
   console.log(sql)
   connection.query(sql, function (error, results, fields) {  
       console.log(results[0].id)
@@ -80,14 +93,14 @@ app.post('/api/signin', (req, res) => {
             console.log("Passwords match")
             user.id = results[0].id
             user.email = results[0].email
-            jwt.sign({user},'SuperSecRetKey', { expiresIn: 60 * 60 }, (err, token) => {
-              res.clearCookie();
-              res.cookie('token', token.toString(), { httpOnly: true});
-              res.json({token});
-              console.log(req.cookies("token"))
+            jwt.sign({user},'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
+              res.cookie('token', token.toString());
+              res.redirect('/homepage');
             });
+            
+            
           } else {
-            console.log("Passwords don't match")
+            console.log("Passwordss don't match")
           }
       }
   });
@@ -97,7 +110,7 @@ app.post('/api/signin', (req, res) => {
 
 /** verifyToken method - this method verifies token */
 function verifyToken(req, res, next){
-    
+  
   //Request header with authorization key
   const bearerHeader = req.headers['authorization'];
   
@@ -114,30 +127,73 @@ function verifyToken(req, res, next){
       res.sendStatus(403);
   }
 }
+function verifyTokenCookie(req, res, next){
+  const cookie = req.cookies;
+ 
+  if(cookie.token != '' && cookie.token != undefined){
+
+      req.token = cookie.token;
+      console.log('печеньки существуют')
+      //call next middleware
+      next();
+  }else{
+    console.log('печеньки не существуют')
+    res.redirect('signin');
+  }
+
+}
+
+app.route('/homepage')
+  .get(verifyTokenCookie, (req, res) => {
+    jwt.verify(req.token, 'SuperSecRetKey', (err, authData)=>{
+        if(err){
+          res.redirect('signin');
+        }else{
+          console.log()
+          res.render('homepage');
+        }
+    });
+    
+  })
 
 app.route('/reg')
   .get(function(req, res) {
     res.render('reg');
   })
   .post(reg)
-app.route('/into')
-  .get(function(req, res) {
-    res.render('into');
-  })
-  .post(into)
 
+app.route('/signin')
+  .get((req, res) => {
+    res.render('signin')
+  })
+  .post(signin)
+
+app.get('/403', function(req, res) {
+  res.render('403');
+})
+
+app.route('/opentests')
+  .get(verifyTokenCookie, function(req, res){
+    res.render('opentests')
+  })
+  
+  app.route('/questionnaire')
+  .get(verifyTokenCookie, function(req, res){
+    res.render('questionnaire')
+  })
+
+app.get('/api/getOpenTests', getOpenTest);
 app.post('/addData', addData);
 app.get('/getData', getData);
 app.get('/getLastData', getLastData);
 app.get('/phpmyadmin', function(req, res) {
   res.redirect('http://personnelsecurity.info:8000/phpmyadmin/');
 })
-app.get('/test/:id', setTest);
+app.get('/test/:id', verifyTokenCookie, setTest);
 app.get('/getTestData', getTestData);
 app.post('/test/addDataTest', addDataTest);
 app.post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
-app.post('/test/setTestCoef', setTestCoef);//Обновление столбца anketa  в таблице tbl_users(Общий коэф. тестов)
-app.post('/test/setAnketaCoef', setAnketaCoef); //Обновление столбца tests в таблице tbl_users(Коэф. анкеты)
+app.post('/test/setAnketaCoef', setAnketaCoef); //Обновление столбца tests в таблице users(Коэф. анкеты)
 
 
 
