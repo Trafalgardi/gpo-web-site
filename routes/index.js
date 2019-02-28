@@ -213,11 +213,11 @@ module.exports = {
         //console.log("Данные записанны!\n" + JSON.stringify(body));
         //let tempData = JSON.stringify(data);
         const token = req.cookies.token;
-        jwt.verify(token, 'SuperSecRetKey', (err, authData)=>{
-            if(err){
-              res.send(err);
-            }else{
-                let sql = "UPDATE users SET anketaData='" + JSON.stringify(data)+"' WHERE id='"+ authData.user.id+"'";
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.send(err);
+            } else {
+                let sql = "UPDATE users SET anketaData='" + JSON.stringify(data) + "' WHERE id='" + authData.user.id + "'";
                 console.log(sql)
                 connection.query(sql, function (err, result, fields) {
                     if (err) throw err;
@@ -226,14 +226,14 @@ module.exports = {
                 });
             }
         });
-        
+
 
     },
-    getOpenTest: (req, res) =>{
+    getOpenTest: (req, res) => {
         let sql = "SELECT `id`, `name` FROM `tests` WHERE 1"
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
-            
+
             res.json(result);
             console.log("got get");
         })
@@ -243,7 +243,7 @@ module.exports = {
             anketa: [], // все анкеты id и анкета
             newTests: [] //где result = -1
         }
-        let sql = "SELECT id, anketaData FROM users WHERE anketaResult = -1"; 
+        let sql = "SELECT id, anketaData FROM users WHERE anketaResult = -1";
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             json.anketa = result;
@@ -268,7 +268,7 @@ module.exports = {
         let json = {
             anketa: [] // все анкеты id и анкета
         }
-        let sql = "SELECT id, anketaData, anketaResult FROM users WHERE 1"; 
+        let sql = "SELECT id, anketaData, anketaResult FROM users WHERE 1";
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             json.anketa = result;
@@ -295,28 +295,29 @@ module.exports = {
         const sql = "SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1";
         console.log(sql)
         connection.query(sql, function (error, results, fields) {
-            console.log(results[0].id)
-            if (error) {
-                
-                return res.redirect('/homepage');
-            }
-            const passworFromBD = results[0].password;//если чо то result[0]....
-            console.log(passworFromForm + '\n' + passworFromBD)
-            if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
-                if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
-                    console.log("Passwords match")
-                    user.id = results[0].id
-                    user.email = results[0].email
-                    jwt.sign({ user }, 'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
-                        res.cookie('token', token.toString());
+            
+            if (error || results == "") {
+                return res.redirect('/signin');
+            } else {
+                const passworFromBD = results[0].password;//если чо то result[0]....
+                console.log(passworFromForm + '\n' + passworFromBD)
+                if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
+                    if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
+                        console.log("Passwords match")
+                        user.id = results[0].id
+                        user.email = results[0].email
+                        jwt.sign({ user }, 'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
+                            res.cookie('token', token.toString());
+                            res.redirect('/homepage');
+                        });
+
+
+                    } else {
                         res.redirect('/homepage');
-                    });
-
-
-                } else {
-                    res.redirect('/homepage');
+                    }
                 }
             }
+
         });
     },
     reg: (req, res) => {
