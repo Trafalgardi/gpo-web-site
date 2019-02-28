@@ -31,7 +31,7 @@ app.use(cookieParser())
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 app.use(express.static(path.join(__dirname, 'fontawesome')));
-app.get('/', getHomePage);
+app.get('/', verifyTokenCookie, getHomePage);
 //app.get('/reg', reg);
 
 /* Creae API route */
@@ -181,7 +181,10 @@ app.route('/opentests')
   .get(verifyTokenCookie, function(req, res){
     res.render('questionnaire')
   })
-
+app.get('/sign-out', function(req, res){
+  res.clearCookie("token");
+  res.redirect('homepage');
+})
 app.get('/api/getOpenTests', getOpenTest);
 app.post('/addData', addData);
 app.get('/getUsers', getUsers)
