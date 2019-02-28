@@ -268,7 +268,7 @@ module.exports = {
         let json = {
             anketa: [] // все анкеты id и анкета
         }
-        let sql = "SELECT id, anketaData FROM users WHERE 1"; 
+        let sql = "SELECT id, anketaData, anketaResult FROM users WHERE 1"; 
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             json.anketa = result;
