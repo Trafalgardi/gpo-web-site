@@ -313,7 +313,7 @@ module.exports = {
 
 
                 } else {
-                    console.log("Passwordss don't match")
+                    res.redirect('/homepage');
                 }
             }
         });
