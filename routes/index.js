@@ -212,13 +212,21 @@ module.exports = {
 
         //console.log("Данные записанны!\n" + JSON.stringify(body));
         //let tempData = JSON.stringify(data);
-
-        let sql = "INSERT INTO users (anketaData) VALUES ('" + JSON.stringify(data) + "')";
-        connection.query(sql, function (err, result, fields) {
-            if (err) throw err;
-            res.render('post');
-            //res.send("Данные записанны!\n" + JSON.stringify(data));
+        const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData)=>{
+            if(err){
+              res.send(err);
+            }else{
+                let sql = "UPDATE users SET anketaData='" + JSON.stringify(data)+"' WHERE id='"+ authData.user.id+"'";
+                console.log(sql)
+                connection.query(sql, function (err, result, fields) {
+                    if (err) throw err;
+                    res.render('post');
+                    //res.send("Данные записанны!\n" + JSON.stringify(data));
+                });
+            }
         });
+        
 
     },
     getOpenTest: (req, res) =>{
@@ -233,15 +241,13 @@ module.exports = {
     getData: (req, res) => {
         let json = {
             anketa: [], // все анкеты id и анкета
-            newTests: [], //где result = -1
-            checkedTests: []  //где result != -1
+            newTests: [] //где result = -1
         }
-
-        let sql = "SELECT id, anketaData FROM users WHERE 1";
+        let sql = "SELECT id, anketaData FROM users WHERE anketaResult = -1"; 
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             json.anketa = result;
-            sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`'
+            sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`'
                 + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
             connection.query(sql, function (error, results, fields) {
                 if (error) {
@@ -253,31 +259,21 @@ module.exports = {
                     return res.render('error', { json });
                 } else {
                     json.newTests = results;
-                    sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`'
-                        + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1';
-                    connection.query(sql, function (error, results, fields) {
-                        if (error) {
-                            console.log("check2")
-                            let json = {
-                                status: false,
-                                message: 'there are some error with query'
-                            }
-                            return res.render('error', { json });
-                        } else {
-                            json.checkedTests = results;
-
-                            res.json(json)
-                        }
-                    })
-
+                    res.json(json)
                 }
             })
-
         });
-
-
-
-
+    },
+    getUsers: (req, res) => {
+        let json = {
+            anketa: [] // все анкеты id и анкета
+        }
+        let sql = "SELECT id, anketaData FROM users WHERE 1"; 
+        connection.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            json.anketa = result;
+            res.json(json)
+        });
     },
     getLastData: (req, res) => {
         let sql = "SELECT json FROM data WHERE 1 ORDER BY ID DESC LIMIT 1";

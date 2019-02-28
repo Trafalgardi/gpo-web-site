@@ -1,4 +1,5 @@
 var connection = require('../database')
+const dateTime = require('node-datetime');
 const jwt = require('jsonwebtoken');
 module.exports = {
     setTest: (req, res) => {
@@ -32,7 +33,8 @@ module.exports = {
             answers.data[index] = temp[index];
 
         }
-
+        let dt = dateTime.create();
+        let formatted = dt.format('Y-m-d H:M:S');
         //if(answers.data.length != body.size){
         //    console.log("Ошибка заполнения")
         //    res.redirect('./'+body.id);
@@ -43,7 +45,7 @@ module.exports = {
                 res.sendStatus(403);
             } else {
                 console.log("Данные ушли")
-                connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1], function (error, results, fields) {
+                connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function (error, results, fields) {
                     if (error) throw error;
 
                     res.render('post');
@@ -81,17 +83,17 @@ module.exports = {
     setAnketaCoef: (req, res) => {
         //let data = {
         //    id: 0,
-        //    anketa: 0
+        //    anketaResult: 0
         //}
         console.log(req.body)
         if (req.body.data === undefined || req.body.data.lenght <= 0) return;
         let temp = req.body.data;
         console.log(temp)
-        let sql = 'UPDATE `users` SET `anketa`= CASE ';
+        let sql = 'UPDATE `users` SET `anketaResult`= CASE ';
         for (let index = 0; index < temp.length; index++) {
-            sql += " WHEN `id`=" + temp[index].id + " THEN " + temp[index].anketa;
+            sql += " WHEN `id`=" + temp[index].id + " THEN " + temp[index].anketaResult;
         }
-        sql += ' ELSE `anketa` END WHERE 1';
+        sql += ' ELSE `anketaResult` END WHERE 1';
         console.log(sql)
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -105,7 +107,7 @@ module.exports = {
     //SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers` FROM `user_tests` WHERE `user_tests`.`result` != -1
     //SELECT `tests`.`name`, `tests`.`questions`, `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers` FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id`
     //SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`name`, `tests`.`questions`, `user_tests`.`answers` FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1
-    getTestData: (req, res) => {
+    getDataTest: (req, res) => {
         let data = {
             id: '',
             user_id: 0,
@@ -113,9 +115,10 @@ module.exports = {
             questions: [],
             answers: []
         }
+        
         let response = {};
         let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`'
-            + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
+            + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = '+req.body.id;
         connection.query(sql, function (error, results, fields) {
 
             if (error) {

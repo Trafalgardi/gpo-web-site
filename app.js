@@ -12,8 +12,8 @@ var app = express();
 
 var usersRouter = require('./routes/users');
 
-const {getHomePage, addData, getData, getLastData, signin,reg, getOpenTest} = require('./routes/index');
-const {setTest, addDataTest, getTestData, setAnketaCoef, updateTests} = require('./routes/test');
+const {getHomePage, addData, getData, getLastData, signin,reg, getOpenTest,getUsers} = require('./routes/index');
+const {setTest, addDataTest, getDataTest, setAnketaCoef, updateTests} = require('./routes/test');
 const port = 3000;
 
 
@@ -184,16 +184,18 @@ app.route('/opentests')
 
 app.get('/api/getOpenTests', getOpenTest);
 app.post('/addData', addData);
+app.get('/getUsers', getUsers)
 app.get('/getData', getData);
 app.get('/getLastData', getLastData);
 app.get('/phpmyadmin', function(req, res) {
   res.redirect('http://personnelsecurity.info:8000/phpmyadmin/');
 })
 app.get('/test/:id', verifyTokenCookie, setTest);
-app.get('/getTestData', getTestData);
+//app.get('/getDataTest', getDataTest);
+app.post('/getDataTest', getDataTest);
 app.post('/test/addDataTest', addDataTest);
 app.post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
-app.post('/test/setAnketaCoef', setAnketaCoef); //Обновление столбца tests в таблице users(Коэф. анкеты)
+app.post('/setAnketaCoef', setAnketaCoef); //Обновление столбца tests в таблице users(Коэф. анкеты)
 
 
 
