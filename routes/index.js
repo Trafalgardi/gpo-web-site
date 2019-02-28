@@ -297,7 +297,8 @@ module.exports = {
         connection.query(sql, function (error, results, fields) {
             console.log(results[0].id)
             if (error) {
-                return console.log(error);
+                
+                return res.redirect('/homepage');
             }
             const passworFromBD = results[0].password;//если чо то result[0]....
             console.log(passworFromForm + '\n' + passworFromBD)
