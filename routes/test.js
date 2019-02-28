@@ -47,7 +47,6 @@ module.exports = {
                 console.log("Данные ушли")
                 connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function (error, results, fields) {
                     if (error) throw error;
-
                     res.render('post');
                     //res.send("Данные записанны!\n" + JSON.stringify(data));UPDATE UserTests SET result= 0 WHERE id=1
                 });
@@ -113,11 +112,13 @@ module.exports = {
             user_id: 0,
             test_id: 0,
             questions: [],
-            answers: []
+            answers: [],
+            result: 0,
+            date: ''
         }
         
         let response = {};
-        let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`'
+        let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`'
             + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = '+req.body.id;
         connection.query(sql, function (error, results, fields) {
 
