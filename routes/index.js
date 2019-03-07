@@ -10,8 +10,15 @@ module.exports = {
 
     getHomePage: (req, res) => {
         //res.clearCookie('cookie')
-
-        res.render('homepage');
+        const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.render('homepage',{email: authData.user.email} );
+            }
+        });
+        
 
     },
     addData: (req, res) => {
@@ -230,13 +237,50 @@ module.exports = {
 
     },
     getOpenTest: (req, res) => {
-        let sql = "SELECT `id`, `name` FROM `tests` WHERE 1"
-        connection.query(sql, function (err, result, fields) {
-            if (err) throw err;
+        const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                //console.log(authData)
+                let sql = "SELECT `id`, `name` FROM `tests` WHERE 1"
+                connection.query(sql, function (err, result, fields) {
+                    if (err) throw err;
 
-            res.json(result);
-            console.log("got get");
-        })
+                    sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
+                    connection.query(sql, function (err, results, fields) {
+
+                        //console.log(result[22])
+                        let newJsonArray = []
+                        let banTests = JSON.parse(results[0].banTests).id;
+
+                        console.log(banTests)
+                        let tests = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let check = true;
+                            for (let j = 0; j < banTests.length; j++) {
+                                
+                                if (result[i].id == banTests[j]) {
+                                    check = false;
+                                    break;
+                                }
+                                
+                            }
+                           
+                            if (check){
+                                
+                                tests.push(result[i])
+                            }
+                                
+                            
+                        }  
+                        //console.log(tests) 
+                        res.json(tests);
+                    })
+                })
+            }
+        });
+
     },
     getData: (req, res) => {
         let json = {
@@ -268,7 +312,7 @@ module.exports = {
         let json = {
             anketa: [] // все анкеты id и анкета
         }
-        let sql = "SELECT id, anketaData, anketaResult FROM users WHERE 1";
+        let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             json.anketa = result;
@@ -295,7 +339,7 @@ module.exports = {
         const sql = "SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1";
         console.log(sql)
         connection.query(sql, function (error, results, fields) {
-            
+
             if (error || results == "") {
                 return res.redirect('/signin');
             } else {

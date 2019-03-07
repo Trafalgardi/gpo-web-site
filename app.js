@@ -31,18 +31,9 @@ app.use(cookieParser())
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 app.use(express.static(path.join(__dirname, 'fontawesome')));
-app.get('/', verifyTokenCookie, getHomePage);
-//app.get('/reg', reg);
 
-/* Creae API route */
-app.get('/index', (req, res) => {
-  res.render('index')
-})
-app.get('/api', (req, res) => {
-  res.json({
-      msg: "Welcome to NodeJS JWT Authentication Tutorial"
-  });
-});
+app.get('/', verifyTokenCookie, getHomePage);
+
 /** Create posts protected route */
 app.post('/api/posts', verifyToken, (req, res) => {
   jwt.verify(req.token, 'SuperSecRetKey', (err, authData)=>{
@@ -57,18 +48,6 @@ app.post('/api/posts', verifyToken, (req, res) => {
   });
 });
 
-app.get('/api/cookie', verifyTokenCookie, (req, res) => {
-  jwt.verify(req.token, 'SuperSecRetKey', (err, authData)=>{
-      if(err){
-          res.sendStatus(403);
-      }else{
-          res.json({
-              msg: "A new post is created",
-              authData
-          });
-      }
-  });
-});
 
 //User signin route - create a token and return to user
 app.post('/api/signin',  (req, res) => {
@@ -149,8 +128,8 @@ app.route('/homepage')
         if(err){
           res.redirect('signin');
         }else{
-          console.log()
-          res.render('homepage');
+         
+          res.render('homepage', {email: authData.user.email});
         }
     });
     
@@ -174,12 +153,27 @@ app.get('/403', function(req, res) {
 
 app.route('/opentests')
   .get(verifyTokenCookie, function(req, res){
-    res.render('opentests')
+    const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.render('opentests',{email: authData.user.email} );
+            }
+        });
   })
   
   app.route('/questionnaire')
   .get(verifyTokenCookie, function(req, res){
-    res.render('questionnaire')
+    const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.render('questionnaire',{email: authData.user.email} );
+            }
+        });
+    
   })
 app.get('/sign-out', function(req, res){
   res.clearCookie("token");

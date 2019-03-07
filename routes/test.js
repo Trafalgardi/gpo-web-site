@@ -44,6 +44,19 @@ module.exports = {
             if (err) {
                 res.sendStatus(403);
             } else {
+                
+                let sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
+                connection.query(sql, function (err, results, fields) {
+                    
+                    let bantTests = JSON.parse(results[0].banTests);
+                    bantTests.id.push(parseInt(body.id))
+                    console.log(JSON.stringify(bantTests))
+                    let sqlUPDATE = "UPDATE `users` SET `banTests`= '"+JSON.stringify(bantTests)+"' WHERE `users`.`id` ="+ authData.user.id;
+                    connection.query(sqlUPDATE, function (err, results, fields) {
+                        //console.log(sqlUPDATE)
+                        if (err) throw err;
+                    });
+                });
                 console.log("Данные ушли")
                 connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function (error, results, fields) {
                     if (error) throw error;
