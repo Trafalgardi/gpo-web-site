@@ -369,7 +369,7 @@ module.exports = {
         console.log(body)
 
         let dt = dateTime.create();
-        let formatted = dt.format('Y-m-d H:M:S');
+        let formatted = dt.format('d-m-Y H:M:S');
         // пароль пользователя
         let passwordFromUser = req.body.password;
         // создаем соль
