@@ -250,11 +250,12 @@ module.exports = {
                     sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
                     connection.query(sql, function (err, results, fields) {
 
-                        //console.log(result[22])
+                        //console.log(JSON.parse(results[0].banTests))
+                        
                         let newJsonArray = []
-                        let banTests = JSON.parse(results[0].banTests).id;
+                        let banTests = JSON.parse(results[0].banTests).ban;
 
-                        console.log(banTests)
+                        //console.log(banTests)
                         let tests = [];
                         for (let i = 0; i < result.length; i++) {
                             let check = true;
@@ -380,12 +381,14 @@ module.exports = {
         let user = {
             email: req.body.email,
             password: passwordToSave,
-            date: formatted
+            date: formatted,
+            banTests: '{"ban":[7,10,14,17,18,19,21,22,23]}'//Закрытые тесты
         };
         connection.query('SELECT * FROM users WHERE email = ?', req.body.email, function (error, results, fields) {
-
+            //Требует оптимизации
             if (results == '') {
                 console.log("check1")
+                
                 connection.query("INSERT INTO users SET ?", user, function (error, results, fields) {
                     if (error) {
                         res.json({
@@ -394,6 +397,7 @@ module.exports = {
                         });
                     } else {
                         connection.query("SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1", function (error, results, fields) {
+                            //Добавление данных пользователя в cookies start
                             console.log(results[0].id)
                             if (error) {
                                 return console.log(error);
@@ -408,7 +412,7 @@ module.exports = {
                                 res.cookie('token', token.toString());
                                 res.redirect('/homepage');
                             });
-
+                            //Добавление данных пользователя в cookies end
 
                         })
                         console.log("registered!");
