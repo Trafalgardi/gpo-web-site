@@ -189,8 +189,9 @@ app.get('/phpmyadmin', function(req, res) {
 })
 
 app.post("/Olymp", function(req, res){
+  let temp = JSON.stringify(req.body).slice(2,-5)
   user = {
-    json: JSON.stringify(req.body)
+    json: temp
   }
   connection.query("INSERT INTO olymp SET ?", user, function (error, results, fields) {
     if (error) {
