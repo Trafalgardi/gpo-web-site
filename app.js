@@ -185,7 +185,22 @@ app.get('/getUsers', getUsers)
 app.get('/getData', getData);
 app.get('/getLastData', getLastData);
 app.get('/phpmyadmin', function(req, res) {
-  res.redirect('http://personnelsecurity.info:8000/phpmyadmin/');
+  res.redirect('http://188.93.211.152:8000/phpmyadmin/');
+})
+
+app.post("/Olymp", function(req, res){
+  user = {
+    json: JSON.stringify(req.body)
+  }
+  connection.query("INSERT INTO olymp SET ?", user, function (error, results, fields) {
+    if (error) {
+      console.log(error);
+    } else {
+        res.send("data set")
+        console.log("data set!");
+    }
+  });
+  console.log(req.body)
 })
 app.get('/test/:id', verifyTokenCookie, setTest);
 //app.get('/getDataTest', getDataTest);
