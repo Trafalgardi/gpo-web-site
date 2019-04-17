@@ -27,9 +27,6 @@ module.exports = {
         let body = req.body; // Our body from post request
 
         let personnelData = {
-            firstName: body.firstName,
-            lastName: body.lastName,
-            secondName: body.secondName,
             gender: body.gender,
             age: body.age,
             registration: body.registration,

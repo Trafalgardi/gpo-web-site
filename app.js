@@ -9,13 +9,9 @@ const request = require('request');
 const cookieParser = require('cookie-parser')
 var app = express();
 
-
-var usersRouter = require('./routes/users');
-
 const {getHomePage, addData, getData, getLastData, signin,reg, getOpenTest,getUsers} = require('./routes/index');
 const {setTest, addDataTest, getDataTest, setAnketaCoef, updateTests} = require('./routes/test');
 const port = 3000;
-
 
 // configure middleware
 app.set('port', process.env.port || port); // set express to use this port

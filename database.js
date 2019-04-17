@@ -4,7 +4,7 @@ var pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'ckfdfvfkmwtdB1',
-    database: 'mydb'
+    database: 'RecommendationSystem'
 })
 function conn() {
     
