@@ -146,7 +146,7 @@ module.exports = {
             } else {
                 response = results;
                 response.questions = "Тест №" + response.test_id;
-                //console.log(response)
+                console.log(response)
                 res.json(response);
             }
         })
