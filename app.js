@@ -183,26 +183,7 @@ app.get('/getLastData', getLastData);
 app.get('/phpmyadmin', function(req, res) {
   res.redirect('http://188.93.211.152:8000/phpmyadmin/');
 })
-app.use(bodyParser.raw({
-  type: 'application/octet-stream',
-  limit: '50mb'
-}));
-app.post("/Olymp", function(req, res){
-  console.log(req.body)
-  let temp = JSON.stringify(req.body).slice(2,-5)
-  user = {
-    json: req.body
-  }
-  connection.query("INSERT INTO olymp SET ?", user, function (error, results, fields) {
-    if (error) {
-      console.log(error);
-    } else {
-        res.send("data set")
-        console.log("data set!");
-    }
-  });
-  console.log(req.body)
-})
+
 app.get('/test/:id', verifyTokenCookie, setTest);
 //app.get('/getDataTest', getDataTest);
 app.post('/getDataTest', getDataTest);
