@@ -147,7 +147,9 @@ module.exports = {
                 return res.render('error', { json });
             } else {
                 response = results;
-                
+                for (let i=0; i < response.length; i++){ 
+                    response[i].question = "Тест №" + response[i].test_id; 
+                    }
                 //console.log(response)
                 res.json(response);
             }
