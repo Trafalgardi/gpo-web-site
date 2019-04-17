@@ -50,7 +50,7 @@ module.exports = {
                     
                     let bantTests = JSON.parse(results[0].banTests);
                     console.log(JSON.stringify(bantTests))
-                    bantTests.id.push(body.id);
+                    bantTests.ban.push(body.id);
                     //console.log(JSON.stringify(bantTests))
                     let sqlUPDATE = "UPDATE `users` SET `banTests`= '"+JSON.stringify(bantTests)+"' WHERE `users`.`id` ="+ authData.user.id;
                     connection.query(sqlUPDATE, function (err, results, fields) {
