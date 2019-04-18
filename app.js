@@ -5,12 +5,12 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const connection = require('./database')
 const bcrypt = require('bcrypt');
-const request = require('request');
 const cookieParser = require('cookie-parser')
-var app = express();
+let app = express();
 
-const {getHomePage, addData, getData, getLastData, signin,reg, getOpenTest,getUsers} = require('./routes/index');
-const {setTest, addDataTest, getDataTest, setAnketaCoef, updateTests} = require('./routes/test');
+const { getHomePage, addData, getData, getLastData, signin,reg, getOpenTest,getUsers } = require('./routes/index');
+const { setTest, addDataTest, getDataTest, setAnketaCoef, updateTests } = require('./routes/test');
+
 const port = 3000;
 
 // configure middleware
@@ -29,6 +29,12 @@ app.use(express.static(path.join(__dirname, 'public'))); // configure express to
 app.use(express.static(path.join(__dirname, 'fontawesome')));
 
 app.get('/', verifyTokenCookie, getHomePage);
+
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
+app.use('/js', express.static(__dirname + '/node_modules/popper.js/dist/umd')); // redirect popper js 
+app.use('/js', express.static(__dirname + '/node_modules/holderjs')); // redirect Holder js
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap 
 
 /** Create posts protected route */
 app.post('/api/posts', verifyToken, (req, res) => {

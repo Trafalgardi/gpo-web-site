@@ -4,7 +4,7 @@ html(lang='en')
     meta(charset='utf-8')
     title Анкетирование
     // Bootstrap core CSS
-    link(rel='stylesheet', href='../stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
     // Custom styles for this template
     link(href='../stylesheets/form-validation.css', rel='stylesheet')
     link(href='../stylesheets/style.css', rel='stylesheet')
@@ -15,7 +15,7 @@ html(lang='en')
       .d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.shadow-sm
           h5.my-0.mr-md-auto.font-weight-normal СКБП
           h5.my-0.mr-md-auto.font-weight-normal #{email}
-          a.btn.btn-outline-primary(href="http://188.93.211.152/sign-out") Выход из системы  
+          a#signout.btn.btn-outline-primary(href="") Выход из системы   
     section.jumbotron.text-center
       .container
           h1.jumbotron-heading Этап анкетирования
@@ -773,9 +773,9 @@ html(lang='en')
       ==================================================
     // Placed at the end of the document so the pages load faster
     script.
-      window.jQuery || document.write('<script src="../javascripts/vendor/jquery-slim.min.js"><\\/script>')
-    script(src='../javascripts/vendor/popper.min.js')
-    script(src='../javascripts/bootstrap.min.js')
-    script(src='../javascripts/vendor/holder.min.js')
+      window.jQuery || document.write('<script src="/js/jquery.min.js"><\\/script>')
+    script(src='/js/bootstrap.min.js')
+    script(src='/js/popper.min.js')
+    script(src='/js/holder.min.js')
     script(src='../javascripts/main.js')
-    
+    script(src="../javascripts/signout.js")

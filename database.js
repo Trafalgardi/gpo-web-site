@@ -2,8 +2,8 @@ var mysql = require('mysql')
 var pool = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
-    user: 'root',
-    password: 'ckfdfvfkmwtdB1',
+    user: 'usrgpo',
+    password: 'vMETuklX1HC4vX1g', //fkx8ZepaJEtS2xy //vMETuklX1HC4vX1g MySql auth
     database: 'RecommendationSystem'
 })
 function conn() {
