@@ -25,14 +25,27 @@ module.exports = {
         let body = req.body; // Our body from post request
         console.log(req.body)
         let temp = Object.values(body);
-        let answers = {
-            data: []
-        };
-        for (let index = 0; index < temp.length - 1; index++) {
-
-            answers.data[index] = temp[index];
-
+        let answers = {}
+        if(req.body.id != 25 && req.body.id != 26){
+            answers = {
+                data: []
+            };
+            for (let index = 0; index < temp.length - 1; index++) {
+    
+                answers.data[index] = temp[index];
+    
+            }
+        }else if(req.body.id == 25){
+            answers = {
+                data: req.body.ans
+            }
+        }else if(req.body.id == 24){
+            answers = {
+                data: req.body
+            }
         }
+        
+        
         let dt = dateTime.create();
         let formatted = dt.format('Y-m-d H:M:S');
         //if(answers.data.length != body.size){

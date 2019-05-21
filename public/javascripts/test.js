@@ -290,7 +290,7 @@ function TakeInput(int) {
     console.log(elems) 
     jsonData[int].random = elems[0].value
     jsonData[int].timer = elems[1].value
-    for (let index = 2; index < 12; index++) {
+    for (let index = 3; index < 14; index++) {
         jsonData[int].answer.push(elems[index].value)
     }
     console.log(jsonData)
