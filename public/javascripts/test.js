@@ -288,10 +288,11 @@ function TakeInput(int) {
     let form = document.forms[0];
     let elems = form.elements;
     console.log(elems) 
-    jsonData[int].random = elems[0].value
+    jsonData[int].random = parseInt(elems[0].value)
     jsonData[int].timer = elems[1].value
-    for (let index = 3; index < 14; index++) {
-        jsonData[int].answer.push(elems[index].value)
+    for (let index = 3; index < 13; index++) {
+        jsonData[int].answer.push(parseInt(elems[index].value))
+
     }
     console.log(jsonData)
     if(int != 2) {

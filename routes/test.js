@@ -44,7 +44,7 @@ module.exports = {
                 data: req.body
             }
         }
-        
+        console.log(answers)
         
         let dt = dateTime.create();
         let formatted = dt.format('Y-m-d H:M:S');
