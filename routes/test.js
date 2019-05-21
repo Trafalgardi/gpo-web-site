@@ -37,7 +37,7 @@ module.exports = {
             }
         }else if(req.body.id == 25){
             answers = {
-                data: req.body.ans
+                data: JSON.parse(req.body.ans)
             }
         }else if(req.body.id == 24){
             answers = {

@@ -242,16 +242,16 @@ function noPatternNumber(int) {
 function AnswerTypeSix(int) {
     let content = "";
 
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="0" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="1" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="2" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="3" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="4" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="5" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="6" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="7" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="8" /></th>'
-    content += '<th scope="row"><input style="width: 50px;" type="text" name="9" /></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="0" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="1" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="2" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="3" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="4" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="5" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="6" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="7" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="8" required/></th>'
+    content += '<th scope="row"><input style="width: 50px;" type="text" name="9" required/></th>'
     
     Example1()
     document.getElementById("tHead").innerHTML = content;
