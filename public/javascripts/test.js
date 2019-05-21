@@ -53,6 +53,9 @@ function printTest(params, id) {
         case 7: 
         content += '<div class="row" id="ImagePatter"></div>'
             break;
+        case 8: 
+        content += imgForAll(json.data, json.answerDefault)
+            break;
         default:
             break;
     }
@@ -116,7 +119,17 @@ function allForAll(data, def){ //Когда разные ответы для в�
     }
     return content;
 }
-
+function imgForAll(data, def){ //Когда разные ответы для всех вопросов в картинках.
+    let content = '';
+    for (let i = 0; i < data.length; i++) {
+        content += '<div class="form-group">';
+        content += '    <img src="../' + data[i].img + '" alt="тут должна быть кратинка:)">';//<img src="URL" alt="альтернативный текст">
+        content += Answers(data[i].answers, i, def);
+        content += '</div>';
+        
+    }
+    return content;
+}
 function justAnswers(data, def) {
     let content = '';
     for (let i = 0; i < data.length; i++) {
