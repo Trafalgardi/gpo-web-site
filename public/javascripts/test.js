@@ -28,7 +28,6 @@ function printTest(params, id) {
         case 0: //Разные ответы на все тесты
         content += allForAll(json.data, json.answerDefault)
             break;
-
         case 1: 
         content += oneForAll(json.questions, json.answers, json.answerDefault) // 0 - answerDefault или dif или значение по умолчанию.
             break;
@@ -44,25 +43,42 @@ function printTest(params, id) {
         case 4: 
         content += htmlAnswers()
             break;
+
         case 5: 
         content += noPatternText(json.data)
             break;
+
         case 6: 
         content += '<div id="noPattern"></div>'
             break;
+
         case 7: 
         content += '<div class="row" id="ImagePatter"></div>'
             break;
+
         case 8: 
         content += imgForAll(json.data, json.answerDefault)
             break;
+
+        case 9: 
+        content += chooseN()
+            break;
+
+        case 10: 
+        content += htmlOnline(json.data)
+            break;
+
+        case 11: 
+        content += castom(json.data)
+            break;
+
         default:
             break;
     }
     
     if(json.type != 5 && json.type != 6 && json.type != 7){
-        content += '<div class="box-footer">';
-        content += '    <input type="submit" class="btn btn-primary" value="Отправить ответы"></input>';
+        content += '<div class="box-footer" style="text-align: center;">';
+        content += '    <input  type="submit" class="btn btn-primary" value="Отправить ответы"></input>';
         content += '</div>';
     }
    
@@ -130,6 +146,23 @@ function imgForAll(data, def){ //Когда разные ответы для в�
     }
     return content;
 }
+function chooseN() {
+    
+    let content = '';
+    content += '<div class="row" style="width: 1080px; margin-left: auto; margin-right: auto;">';
+    for (let i = 0; i < 5; i++) {
+        content += '<div class="form-group" style="margin: 0 10px; ">';
+        content += '    <label>Впишите вариант</label>';
+        content += '    <div>'
+        content += '        <input style="size: 50px; " name="inputFild_' + i + '" type="number" />';
+        content += '    </div>'
+        content += '</div>';
+        
+    }
+    content += '</div>';
+    console.log(content)
+    return content;
+}
 function justAnswers(data, def) {
     let content = '';
     for (let i = 0; i < data.length; i++) {
@@ -169,7 +202,75 @@ function htmlAnswers() {
         
     return content;
 }
+function htmlOnline(data) {
+    console.log(data)
+    let content = '';
+    for (let index = 0; index < data.length; index++) {
+        
+        content += '<div class="form-group">';
+        content += '    <div>'
+        for (let i = 0; i < data[index].question.length; i++) {
+            
+            content += "<p>"+data[index].question[i]+"</p>";
+            if(data[index].type == 2){
+                content += '<img src=" ' + data[index].img +'">'
+            }
+        }
+        if(data[index].type != 1) {
+            content += '<p></p><input style="size: 50px;" name="inputFild_' + index + '" type="text" />'
+        } else {
+            for (let x = 0; x < data[index].answer.length; x++) { //json.questions[i]
+                content += '    <div class="radio">'
+                content += '        <label>'
+                content += '            <input type="radio" name="optionsRadios_' + index + '" value=\'' + data[index].answer[x][0] + '\'>' + data[index].answer[x] // добавить защиту от дурака
+                content += '        </label>'
+                content += '    </div>'
+            }
+        }
+        content += '    </div>'
+        content += '</div>';
 
+    }
+    
+        
+    return content;
+}
+function castom(data) {
+    let content = "";
+    for (let i = 0; i < data.length; i++) {
+        
+        content += '<div style="text-align: center;" class="form-group">';
+        content += '    <p> Внимательно посмотрите на картинку</p>';
+        content += '    <img  src="' + data[i].img + '".</label>';
+        content +=  CreatQuestionsAndAnswers(data[i].question, data[i].answer, 0, i);
+        content += '</div>';
+        
+        
+    }
+    return content;
+}
+
+function CreatQuestionsAndAnswers(question, answer, def, forRadio) {
+    let content = "";
+    console.log(question.length)
+    for (let i = 0; i < question.length; i++) {
+        content += '<div class="form-group">';
+        content += '    <label>' + question[i] + '.</label>';
+        def = def < 0 || def >= question.length ? 0  : def;
+        for (let x = 0; x < answer[i].length; x++) {
+            let checked = x == def ? 'checked' : '';
+            content += '    <div class="radio">'
+            content += '        <label>'
+            content += '            <input type="radio" name="optionsRadios_' + forRadio + '_' + i + '" value=\'' + answer[i][x][0] + '\' ' + checked + ' >' + answer[i][x] // добавить защиту от дурака
+            content += '        </label>'
+            content += '    </div>'   
+        }
+        
+        content += '</div>';
+        
+    }
+    return content;
+}
 function Answers(parms, i, def) { //Мы передаём сюда массив ответов для вопроса, i номер вопроса, def - выбор значения по умолчанию
     let content = '';
     console.log(def)
