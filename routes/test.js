@@ -23,10 +23,11 @@ module.exports = {
     addDataTest: (req, res) => {
 
         let body = req.body; // Our body from post request
-        console.log(req.body)
+        //console.log("Body \n")
+        //console.log(req.body)
         let temp = Object.values(body);
         let answers = {}
-        if(req.body.id != 25 && req.body.id != 26){
+        if(req.body.id != 25 && req.body.id != 26 && req.body.id != 33){
             answers = {
                 data: []
             };
@@ -43,8 +44,25 @@ module.exports = {
             answers = {
                 data: req.body
             }
+        }else if(req.body.id == 33){
+            answers = {
+                data: []
+            };
+
+            for (let index = 0; index < 4; index++) {
+                tempArr = []
+                for (let i = 0; i < 10; i++) {
+                    let temp2 = req.body['checkbox_' + index +'_'+ i]
+                    tempArr.push(temp2)
+                    
+                }
+                answers.data.push(tempArr)
+                
+            }
+            
         }
-        console.log(answers)
+        //console.log("answers \n")
+        //console.log(answers)
         
         let dt = dateTime.create();
         let formatted = dt.format('Y-m-d H:M:S');
@@ -72,6 +90,7 @@ module.exports = {
                     });
                 });
                 console.log("Данные ушли")
+                console.log(answers)
                 connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function (error, results, fields) {
                     if (error) throw error;
                     res.render('post');

@@ -1,4 +1,5 @@
 let globalData = 0;
+let count = 0;
 function printTest(params, id) {
     //let js = JSON.stringify(result[0].data);
     console.log(params)
@@ -71,30 +72,91 @@ function printTest(params, id) {
         case 11: 
         content += castom(json.data)
             break;
-
+        case 12: 
+        content += checkBox(json)
+            break;
         default:
             break;
     }
     
-    if(json.type != 5 && json.type != 6 && json.type != 7){
+    if(json.type != 5 && json.type != 6 && json.type != 7 && json.type != 12){
         content += '<div class="box-footer" style="text-align: center;">';
         content += '    <input  type="submit" class="btn btn-primary" value="Отправить ответы"></input>';
         content += '</div>';
     }
-   
-
+    if(json.type == 12){
+        content += '<div id="btn" class="box-footer" style="text-align: center;">';
+        content += '    <input onclick="testController(0)"  type="button" class="btn btn-primary" value="Начать"></input>';
+        content += '</div>';
+    }
     content += '<div class="box-footer">';
     content += '    <input style="display:none" name="id" type="text" value="' + id + '"></input>';
     content += '</div>';
-
     document.getElementById('questions').innerHTML = content;
+
+    if(json.type == 12){
+        $("#q_1").show();
+    }
+
+    
+
+    
 
     //if(json.type == 3) $('.mask').mask(json.mask, {'translation': {0: {pattern: /d/}}});
     document.getElementById('testName').innerHTML = '<h1>' + json.name + '</h1>';
     if(json.type == 6) noPatternNumber(0);
     if(json.type == 7) Image(1, 1, 1);
 }
+function testController() {
+    switch (count) {
+        case 0:
+            $("#q_1").hide();
+            $("#a_1").show();
+            count++;
+            document.getElementById("btn").innerHTML = '<input onclick="testController('+count+')"  type="button" class="btn btn-primary" value="Следующий этап"></input>';
+            break;
+        case 1:
+            $("#q_2").show();
+            $("#a_1").hide();
+            count++;
+            document.getElementById("btn").innerHTML = '<input onclick="testController('+count+')"  type="button" class="btn btn-primary" value="Начать"></input>';    
+            break;
+        case 2:
+            $("#q_2").hide();
+            $("#a_2").show();
+            count++;
+            document.getElementById("btn").innerHTML = '<input onclick="testController('+count+')"  type="button" class="btn btn-primary" value="Следующий этап"></input>'; 
+            break;
 
+        case 3:
+            $("#q_3").show();
+            $("#a_2").hide();
+            count++;
+            document.getElementById("btn").innerHTML = '<input onclick="testController('+count+')"  type="button" class="btn btn-primary" value="Начать"></input>';
+            break;
+        case 4:
+            $("#q_3").hide();
+            $("#a_3").show();
+            count++;
+            document.getElementById("btn").innerHTML = '<input onclick="testController('+count+')"  type="button" class="btn btn-primary" value="Следующий этап"></input>'; 
+            break;
+        case 5:
+            $("#q_4").show();
+            $("#a_3").hide();
+            count++;
+            document.getElementById("btn").innerHTML = '<input onclick="testController('+count+')"  type="button" class="btn btn-primary" value="Начать"></input>';
+            break;
+        case 6:
+            $("#q_4").hide();
+            $("#a_4").show();
+            count++;
+            document.getElementById("btn").innerHTML = '<input  type="submit" class="btn btn-primary" value="Отправить ответы"></input>'; 
+            break;
+        default:
+            break;
+    }
+    
+}
 function creatTimer(time) {
 
     let timer = '';
@@ -249,7 +311,6 @@ function castom(data) {
     }
     return content;
 }
-
 function CreatQuestionsAndAnswers(question, answer, def, forRadio) {
     let content = "";
     console.log(question.length)
@@ -273,7 +334,6 @@ function CreatQuestionsAndAnswers(question, answer, def, forRadio) {
 }
 function Answers(parms, i, def) { //Мы передаём сюда массив ответов для вопроса, i номер вопроса, def - выбор значения по умолчанию
     let content = '';
-    console.log(def)
     def = def < 0 || def >= parms.length ? 0  : def;
     for (let x = 0; x < parms.length; x++) { //json.questions[i]
         let checked = x == def ? 'checked' : '';
@@ -285,7 +345,53 @@ function Answers(parms, i, def) { //Мы передаём сюда массив 
     }
     return content;
 }
+function checkBox(data) {
+    
+    let content = "";
+    for (let i = 0; i < data.answer.length; i++) {
+        
+        content += '<div id="q_'+(i+1)+'" style="text-align: left; display: none;" class="form-group">';
+        content +=  QuestionCheckBox(data.question[i]);
+        content += '</div>';
+        content += '<div id="a_'+(i+1)+'" style="text-align: left; display: none;" class="form-group">';
+        content +=  AnswersCheckBox(data.answer[i], i);
+        content += '</div>';
+        
+    }
+    return content;
+}
+function QuestionCheckBox(parms) {
+    let content = '';
+    for (let x = 0; x < parms.length; x++) { //json.questions[i]
+        
+        content += '    <div class="">'
+        content += '        <label>'
+        content += '            <p>' + parms[x] + '</p>'
+        content += '        </label>'
+        content += '    </div>'
+    }
+    return content;
+}
+function AnswersCheckBox(parms, question) {
+    let content = '';
+    for (let x = 0; x < parms.length; x++) { //json.questions[i]
+        
+        content += '    <div class="">'
+        content += '        <label>'
+        content += '            <input onclick="Check(this.name, this.checked)" type="checkbox" name="checkbox_'+question+'_' + x + '" value=\'y\'>' + parms[x]
+        content += '            <input style ="display : none" type="checkbox" id="checkbox_'+question+'_' + x + '" name="checkbox_'+question+'_' + x + '" value=\'n\' checked>'
+        content += '        </label>'
+        content += '    </div>'
+    }
+    
+    return content;
+}
+function Check(name, checked) {
 
+    console.log(name)
+    console.log(checked)
+    document.getElementById(name).checked = !checked;
+}
 function noPatternText(json) {
     
     let random = getRandomInt(0, 10);
