@@ -8,6 +8,7 @@ function printTest(params, id) {
     let json = JSON.parse(temp.substring(1, temp.length - 1))
     globalData = json;
     console.log(json)
+    
     if (json.time !== undefined && json.time > 0) {
         creatTimer(json.time)
     } else {

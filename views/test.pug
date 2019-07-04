@@ -8,15 +8,24 @@ html(lang='en')
     // Custom styles for this template
     link(href='../stylesheets/form-validation.css', rel='stylesheet')
     link(href='../stylesheets/style.css', rel='stylesheet')
+    link(href='../stylesheets/quiz.css', rel='stylesheet')
   body.bg-light
     
     .container
     h1#testName(style="text-align: center;")
     div#timer
     div#comment(style="width: 1280px; text-align: center; margin: 50px auto")
-    form#questions(action='addDataTest', method='post' style="width: 1080px; margin: auto;")
-     
-
+    //form#questions(action='addDataTest', method='post' style="width: 1080px; margin: auto;")quiz
+    form(action='addDataTest', method='post' style="width: 1080px; margin: auto;")
+      .quiz-container
+        #quiz
+        
+      .quiz-btn-container
+        button(type= "button")#previous Предыдущий вопрос
+        button(type= "button")#next Следующий вопрос
+        button(type= "submit")#submit Отправить ответы
+      #results
+      #info
     //
       Bootstrap core JavaScript
       ==================================================
@@ -27,13 +36,16 @@ html(lang='en')
     script(src='/js/popper.min.js')
     script(src='/js/holder.min.js')
     script(src='../javascripts/test.js')
+    script(src='../javascripts/testMain.js')
     script(src='../javascripts/jquery.simple.timer.js')
     script(src='../javascripts/jquery.timer.js')
     script(src='../javascripts/jquery.mask.js')
     
     script.
         
-        printTest('#{json}', '#{id}');
-
+        //printTest('#{json}', '#{id}');
+        var qwe = !{json};
+        checkType(qwe, '#{id}');
+        
         
 
