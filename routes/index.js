@@ -381,8 +381,9 @@ module.exports = {
             date: formatted,
             banTests: '{"ban":[7,10,14,17,18,19,21,22,23]}'//Закрытые тесты
         };
-        connection.query('SELECT * FROM users WHERE email = ?', req.body.email, function (error, results, fields) {
-            //Требует оптимизации
+        let sql  = 'SELECT `email` FROM `users` WHERE `email` = "' + req.body.email + "\""
+        console.log(sql)
+        connection.query(sql, function (error, results, fields) {
             if (results == '') {
                 console.log("check1")
                 
