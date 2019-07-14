@@ -19,7 +19,7 @@ html(lang='en')
       .container
           h1.jumbotron-heading Этап анкетирования
           p.lead.text-muted
-              | На данном этапе вам предстоит заполнить доставерную информацию о себе.
+              | На данном этапе вам предстоит заполнить информацию о себе.
           p
               a.btn.btn-primary.my-2(href='/homepage') На главную  
     .container
@@ -43,7 +43,7 @@ html(lang='en')
                     select#registration.custom-select.d-block.w-100(name='registration' required='')
                       option(value='гражданство РФ') гражданство РФ
                       option(value='двойное гражданство (РФ и др.)') двойное гражданство (РФ и др.)
-                      option(value='политический беженец (политическое убежище)') политический беженец (политическое убежище)
+                      //option(value='политический беженец (политическое убежище)') политический беженец (политическое убежище)
                       option(value='лицо без гражданство') лицо без гражданство
                       option(value='другое') другое
                 .row
@@ -73,7 +73,7 @@ html(lang='en')
                     
                       
               // Конец блока основная часть
-              h3 Меняли ли вы...
+              h3 Изменения персональных данных
               .change-block
                 //Начало первого блока (фамилия)
                 .row
@@ -432,16 +432,9 @@ html(lang='en')
               .education-block
                 h3 Базовое образование
                 p
-                  h6 Cреднее образование
-                .custom-control
-                  input#checkbox_0.custom-control-input(name="education_0", type='checkbox', value='Полное среднетехническое образование', onchange="checkBox('checkbox_at_0', this.checked, 'check_avr_0')")
-                  label.custom-control-label(for='checkbox_0' style="margin-left: 25px;") Полное среднетехническое образование
-                  #checkbox_at_0(style='display: none;')
-                    label  Средний балл
-                    input#check_avr_0.form-control(name="education_0_0", type='number', step="0.01")
-
-                p
                   h6 Высшее образование
+                
+
                 .custom-control
                   input#checkbox_1.custom-control-input(name="education_1", type='checkbox', value='Бакалавриат', onchange="checkBox('checkbox_at_1', this.checked, 'check_avr_1')" )
                   label.custom-control-label(for='checkbox_1' style='margin-left: 25px;') Бакалавриат
@@ -460,6 +453,13 @@ html(lang='en')
                   #checkbox_at_3(style='display: none;')
                     label  Средний балл
                     input#check_avr_3.form-control(name="education_3_0", type='number', step="0.01")
+                    //ОСТОРОЖНО ОЧЕНЬ ПЛОХОЙ КОД
+                .custom-control
+                  input#checkbox_0.custom-control-input(name="education_0", type='checkbox', value='Подготовка кадров высшей квалификации', onchange="checkBox('checkbox_at_0', this.checked, 'check_avr_0')" )
+                  label.custom-control-label(for='checkbox_0' style='margin-left: 25px;') Подготовка кадров высшей квалификации
+                  #checkbox_at_0(style='display: none;')
+                    label  Средний балл
+                    input#check_avr_1.form-control(name="education_0_0", type='number', step="0.01")
 
                 p
                   h6 Направление подготовки
@@ -590,11 +590,11 @@ html(lang='en')
                             option(value='медицинских наук') медицинских наук
                             option(value='биологических наук') биологических наук
                             option(value='географических наук') географических наук
-                            option(value='геолого – минералогических наук') геолого – минералогических наук
-                            option(value='сельскохозяйственные науки') сельскохозяйственные науки
+                            option(value='геолого - минералогических наук') геолого - минералогических наук
+                            option(value='сельскохозяйственных наук') сельскохозяйственных наук
                             option(value='химических наук') химических наук
                             option(value='военных наук') военных наук
-                            option(value='искусствоведения') искусствоведения
+                            option(value='искусствоведческих наук') искусствоведческих наук
                             option(value='исторических наук') исторических наук
                             option(value='культурологии') культурологии
                             option(value='политологических наук') политологических наук
@@ -616,11 +616,11 @@ html(lang='en')
                             option(value='медицинских наук') медицинских наук
                             option(value='биологических наук') биологических наук
                             option(value='географических наук') географических наук
-                            option(value='геолого – минералогических наук') геолого – минералогических наук
-                            option(value='сельскохозяйственные науки') сельскохозяйственные науки
+                            option(value='геолого - минералогических наук') геолого - минералогических наук
+                            option(value='сельскохозяйственных наук') сельскохозяйственных наук
                             option(value='химических наук') химических наук
                             option(value='военных наук') военных наук
-                            option(value='искусствоведения') искусствоведения
+                            option(value='искусствоведческих наук') искусствоведческих наук
                             option(value='исторических наук') исторических наук
                             option(value='культурологии') культурологии
                             option(value='политологических наук') политологических наук
