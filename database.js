@@ -21,7 +21,6 @@ function conn() {
             if (err.code === 'ECONNREFUSED') {
                 console.error('Database connection was refused.')
                 
-
             }
         }
         if (connection) connection.release()
