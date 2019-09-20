@@ -2,9 +2,9 @@ const connection = require('../database')
 const dateTime = require('node-datetime');
 let bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const pdf = require('html-pdf');
 
-
-
+const pdfTemplate = require('./documents');
 
 module.exports = {
 
@@ -15,15 +15,11 @@ module.exports = {
             if (err) {
                 res.send(err);
             } else {
-                res.render('homepage',{email: authData.user.email} );
+                res.render('homepage', { email: authData.user.email });
             }
         });
-        
-
     },
     addData: (req, res) => {
-
-
         let body = req.body; // Our body from post request
 
         let personnelData = {
@@ -41,9 +37,7 @@ module.exports = {
             cause: ''
         };
 
-
         for (let i = 0; i < 8; i++) {
-
             swapJson.Name = body['change_' + i + '_0'];
             swapJson.check = body['change_' + i + '_1'];
             swapJson.cause = causeSwap(i);
@@ -249,7 +243,7 @@ module.exports = {
                     connection.query(sql, function (err, results, fields) {
 
                         //console.log(JSON.parse(results[0].banTests))
-                        
+
                         let newJsonArray = []
                         let banTests = JSON.parse(results[0].banTests).ban;
 
@@ -258,21 +252,21 @@ module.exports = {
                         for (let i = 0; i < result.length; i++) {
                             let check = true;
                             for (let j = 0; j < banTests.length; j++) {
-                                
+
                                 if (result[i].id == banTests[j]) {
                                     check = false;
                                     break;
                                 }
-                                
+
                             }
-                           
-                            if (check){
-                                
+
+                            if (check) {
+
                                 tests.push(result[i])
                             }
-                                
-                            
-                        }  
+
+
+                        }
                         //console.log(tests) 
                         res.json(tests);
                     })
@@ -382,12 +376,12 @@ module.exports = {
             date: formatted,
             banTests: '{"ban":[7,10,14,17,18,19,21,22,23]}'//Закрытые тесты
         };
-        let sql  = 'SELECT `email` FROM `users` WHERE `email` = "' + req.body.email + "\""
+        let sql = 'SELECT `email` FROM `users` WHERE `email` = "' + req.body.email + "\""
         console.log(sql)
         connection.query(sql, function (error, results, fields) {
             if (results == '') {
                 console.log("check1")
-                
+
                 connection.query("INSERT INTO users SET ?", user, function (error, results, fields) {
                     if (error) {
                         res.json({
@@ -423,8 +417,58 @@ module.exports = {
             }
 
         });
-    }
-
+    },
+    getResults: (req, res) => {
+        if (req.body.email_address != undefined) {
+            let email_list = req.body.email_address.toString().split(',');
+            email_list = email_list.map(function (element) {
+                return "'" + element.trim() + "'";
+            });
+            connection.query("SELECT * FROM users WHERE email IN (" + email_list.join(',') + ")", function (users_error, results, fields) {
+                if (users_error) {
+                    console.log(users_error);
+                    throw users_error;
+                } else {
+                    if (results.length > 0) {
+                        users_list = results;
+                        var users_tests = [];
+                        Promise.all(users_list.map(function (user) {
+                            var promise = new Promise(function(resolve) {
+                                connection.query("SELECT tests.id, tests.name, user_tests.result FROM user_tests JOIN tests ON user_tests.test_id=tests.id WHERE user_id='" + user.id + "'",function(tests_error, tests_list) {
+                                    if (tests_error) {
+                                        console.log(tests_error);
+                                        throw tests_error;
+                                    } else {
+                                        resolve(tests_list);
+                                    }
+                                });
+                            });
+                            return promise.then(function(result) {
+                                if (result.length > 0) {
+                                    users_tests.push({
+                                        user: user,
+                                        tests: result,
+                                    });
+                                }
+                            });
+                        })).then(function() {
+                            pdf.create(pdfTemplate({users_tests}), {}).toFile(`${__dirname}/result.pdf`, (err) => {
+                                if(err) {
+                                    res.send(Promise.reject());
+                                }
+                        
+                                res.sendFile(`${__dirname}/result.pdf`);
+                            });
+                        });
+                    } else {
+                        return res.redirect('/results');
+                    }
+                }
+            });
+        } else {
+            return res.redirect('/results');
+        }
+    },
 }
 
 
