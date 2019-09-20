@@ -27,24 +27,24 @@ module.exports = {
         //console.log(req.body)
         let temp = Object.values(body);
         let answers = {}
-        if (req.body.id != 25 && req.body.id != 26 && req.body.id != 33) {
+        if(req.body.id != 25 && req.body.id != 26 && req.body.id != 33){
             answers = {
                 data: []
             };
             for (let index = 0; index < temp.length - 1; index++) {
-
+    
                 answers.data[index] = temp[index];
-
+    
             }
-        } else if (req.body.id == 25) {
+        }else if(req.body.id == 25){
             answers = {
                 data: JSON.parse(req.body.ans)
             }
-        } else if (req.body.id == 24) {
+        }else if(req.body.id == 24){
             answers = {
                 data: req.body
             }
-        } else if (req.body.id == 33) {
+        }else if(req.body.id == 33){
             answers = {
                 data: []
             };
@@ -52,18 +52,18 @@ module.exports = {
             for (let index = 0; index < 4; index++) {
                 tempArr = []
                 for (let i = 0; i < 10; i++) {
-                    let temp2 = req.body['checkbox_' + index + '_' + i]
+                    let temp2 = req.body['checkbox_' + index +'_'+ i]
                     tempArr.push(temp2)
-
+                    
                 }
                 answers.data.push(tempArr)
-
+                
             }
-
+            
         }
         //console.log("answers \n")
         //console.log(answers)
-
+        
         let dt = dateTime.create();
         let formatted = dt.format('Y-m-d H:M:S');
         //if(answers.data.length != body.size){
@@ -75,15 +75,15 @@ module.exports = {
             if (err) {
                 res.sendStatus(403);
             } else {
-
+                
                 let sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
                 connection.query(sql, function (err, results, fields) {
-
+                    
                     let bantTests = JSON.parse(results[0].banTests);
                     console.log(JSON.stringify(bantTests))
                     bantTests.ban.push(body.id);
                     //console.log(JSON.stringify(bantTests))
-                    let sqlUPDATE = "UPDATE `users` SET `banTests`= '" + JSON.stringify(bantTests) + "' WHERE `users`.`id` =" + authData.user.id;
+                    let sqlUPDATE = "UPDATE `users` SET `banTests`= '"+JSON.stringify(bantTests)+"' WHERE `users`.`id` ="+ authData.user.id;
                     connection.query(sqlUPDATE, function (err, results, fields) {
                         //console.log(sqlUPDATE)
                         if (err) throw err;
@@ -162,11 +162,11 @@ module.exports = {
             result: 0,
             date: ''
         }
-
+        
         let response = {};
         let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`'
-            + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = ' + req.body.id;
-
+            + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = '+req.body.id;
+        
         //let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`'
         //    + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = '+req.body.id;
         connection.query(sql, function (error, results, fields) {
@@ -180,9 +180,9 @@ module.exports = {
                 return res.render('error', { json });
             } else {
                 response = results;
-                for (let i = 0; i < response.length; i++) {
-                    response[i].question = "Тест №" + response[i].test_id;
-                }
+                for (let i=0; i < response.length; i++){ 
+                    response[i].question = "Тест №" + response[i].test_id; 
+                    }
                 //console.log(response)
                 res.json(response);
             }
