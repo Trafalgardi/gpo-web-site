@@ -2,7 +2,7 @@ doctype html
 html(lang='en')
   head
     meta(charset='utf-8')
-    title Начальная страница
+    title Выгрузка данных
     // Bootstrap core CSS
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     // Custom styles for this template
@@ -13,9 +13,9 @@ html(lang='en')
       h5.my-0.mr-md-auto.font-weight-normal #{email}
       a#signout.btn.btn-outline-primary(href="") Выход из системы   
     .pricing-header.px-3.py-3.pt-md-5.pb-md-4.mx-auto.text-center
-      h1.display-4 Введите e-mail адреса
+      h1.display-4 Введите e-mail адреса тестируемых
       p.lead
-        | Через запятую для которых нужно получить результаты
+        | Через запятую, для которых нужно получить результаты
     .container
         form(action='getResultsPDF', method='post').text-center
             textarea.form-control(name="email_address", cols="30", rows="10")

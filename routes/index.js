@@ -235,7 +235,7 @@ module.exports = {
                 res.sendStatus(403);
             } else {
                 //console.log(authData)
-                let sql = "SELECT `id`, `name` FROM `tests` WHERE 1"
+                let sql = "SELECT `id`, `name`, `questions` FROM `tests` WHERE 1"
                 connection.query(sql, function (err, result, fields) {
                     if (err) throw err;
 
@@ -252,20 +252,15 @@ module.exports = {
                         for (let i = 0; i < result.length; i++) {
                             let check = true;
                             for (let j = 0; j < banTests.length; j++) {
-
                                 if (result[i].id == banTests[j]) {
                                     check = false;
                                     break;
                                 }
-
                             }
 
                             if (check) {
-
                                 tests.push(result[i])
                             }
-
-
                         }
                         //console.log(tests) 
                         res.json(tests);

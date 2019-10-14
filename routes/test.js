@@ -7,7 +7,7 @@ module.exports = {
         //let sql = 'SELECT JSON_MERGE(JSON_OBJECT("testName", name), questions) as data FROM tests WHERE id='+req.params.id;
         let sql = 'SELECT `questions` as data FROM `tests` WHERE id=' + req.params.id;
 
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             //console.log(result[0].data)
             if (result[0] === undefined || result[0].data === undefined) {
@@ -23,8 +23,8 @@ module.exports = {
     addDataTest: (req, res) => {
 
         let body = req.body; // Our body from post request
-        //console.log("Body \n")
-        //console.log(req.body)
+        console.log("Body \n")
+        console.log(req.body)
         let temp = Object.values(body);
         let answers = {}
         if (req.body.id != 25 && req.body.id != 26 && req.body.id != 33) {
@@ -77,21 +77,21 @@ module.exports = {
             } else {
 
                 let sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
-                connection.query(sql, function (err, results, fields) {
+                connection.query(sql, function(err, results, fields) {
 
                     let bantTests = JSON.parse(results[0].banTests);
                     console.log(JSON.stringify(bantTests))
                     bantTests.ban.push(body.id);
                     //console.log(JSON.stringify(bantTests))
                     let sqlUPDATE = "UPDATE `users` SET `banTests`= '" + JSON.stringify(bantTests) + "' WHERE `users`.`id` =" + authData.user.id;
-                    connection.query(sqlUPDATE, function (err, results, fields) {
+                    connection.query(sqlUPDATE, function(err, results, fields) {
                         //console.log(sqlUPDATE)
                         if (err) throw err;
                     });
                 });
                 console.log("Данные ушли")
                 console.log(answers)
-                connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function (error, results, fields) {
+                connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function(error, results, fields) {
                     if (error) throw error;
                     res.render('post');
                     //res.send("Данные записанны!\n" + JSON.stringify(data));UPDATE UserTests SET result= 0 WHERE id=1
@@ -118,9 +118,9 @@ module.exports = {
         }
         sql += ' ELSE `result` END WHERE 1';
         console.log(sql)
-        //sql = UPDATE `user_tests` SET `result`= CASE WHEN `id`=2 THEN '0.1' WHEN `id`=3 THEN '0.2' WHEN `id`=4 THEN '0.3' ELSE `result` END WHERE 1
+            //sql = UPDATE `user_tests` SET `result`= CASE WHEN `id`=2 THEN '0.1' WHEN `id`=3 THEN '0.2' WHEN `id`=4 THEN '0.3' ELSE `result` END WHERE 1
 
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             console.log(result)
         });
@@ -140,7 +140,7 @@ module.exports = {
         }
         sql += ' ELSE `anketaResult` END WHERE 1';
         console.log(sql)
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             console.log(result)
         });
@@ -164,12 +164,12 @@ module.exports = {
         }
 
         let response = {};
-        let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`'
-            + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = ' + req.body.id;
+        let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`' +
+            'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = ' + req.body.id;
 
         //let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`'
         //    + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = '+req.body.id;
-        connection.query(sql, function (error, results, fields) {
+        connection.query(sql, function(error, results, fields) {
 
             if (error) {
                 console.log("check1")
