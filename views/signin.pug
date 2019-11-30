@@ -3,6 +3,13 @@ html(lang='en')
   head
     meta(charset='utf-8')
     title Начальная страница
+    // Global site tag (gtag.js) - Google Analytics
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-153501513-1')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-153501513-1');
     // Bootstrap core CSS
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     // Custom styles for this template
@@ -58,6 +65,7 @@ html(lang='en')
           a.txt3(href='./reg')
             |  Регистрация
           p.mt-1.mb-3.text-muted &copy; 2017-2020
+      
     //
       Bootstrap core JavaScript
       ==================================================
@@ -81,3 +89,4 @@ html(lang='en')
     script(src='../vendor/countdowntime/countdowntime.js')
     // ===============================================================================================
     script(src='../js/main.js')
+    script(src='../javascripts/googleAnal.js')

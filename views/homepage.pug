@@ -7,6 +7,13 @@ html(lang='en')
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     // Custom styles for this template
     link(href='../stylesheets/homepage.css', rel='stylesheet')
+    // Global site tag (gtag.js) - Google Analytics
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-153501513-1')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-153501513-1');
 
   body
     .d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.shadow-sm
