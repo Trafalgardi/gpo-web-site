@@ -9,21 +9,60 @@ html(lang='en')
     link(href='../stylesheets/form-validation.css', rel='stylesheet')
     link(href='../stylesheets/style.css', rel='stylesheet')
     link(href='../stylesheets/signin.css', rel='stylesheet')
-  body.bg-light.text-center
-    form.form-signin(name='reg' method="post")
-        img.mb-4(src='./smartphone.svg' alt='' width='72' height='72')
-        h1.h3.mb-3.font-weight-normal Введите свои данные
-        label.sr-only(for='inputEmail') Email
-        input#inputEmail.form-control(name='email' type='email' placeholder='Email' required='' autofocus='')
-        label.sr-only(for='inputPassword') Пароль
-        input#inputPassword1.form-control(name='password' type='password' placeholder='Пароль' required='')
-        h5#message(style='color: red')
-        button#btn.btn.btn-lg.btn-primary.btn-block(type='submit') Регистрация
-        p
-          a(href='./signin') Вход
-        p.mt-5.mb-3.text-muted &copy; 2017-2019
+    // ===============================================================================================
+    link(rel='icon', type='image/png', href='images/icons/favicon.ico')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../fonts/iconic/css/material-design-iconic-font.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/animate/animate.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/css-hamburgers/hamburgers.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/animsition/css/animsition.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/select2/select2.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/daterangepicker/daterangepicker.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../css/util.css')
+    link(rel='stylesheet', type='text/css', href='../css/main.css')
+    // ===============================================================================================
 
 
+.limiter
+  .container-login100
+    .wrap-login100
+      form.login100-form.validate-form(onsubmit='return validateForm()' name='reg' method="post")
+        span.login100-form-title.p-b-26
+          | Регистрация
+        //span.login100-form-title.p-b-48
+        //  i.zmdi.zmdi-account-add
+        .wrap-input100.validate-input(data-validate='Valid email is: a@b.c')
+          input#mail.input100(type='text', name='email')
+          span.focus-input100(data-placeholder='Email')
+        .wrap-input100.validate-input(data-validate='Enter password')
+          span.btn-show-pass
+            i.zmdi.zmdi-eye
+          input#password.input100(onchange='validatePassword();', type='password', name='password', required='')
+          span.focus-input100(data-placeholder='Password')
+        #validatePassword.wrap-input100(data-validate="Password don't match")
+          span.btn-show-pass
+            i.zmdi.zmdi-eye
+          input#confirmPassword.input100(onchange='validatePassword();', type='password', required='')
+          span.focus-input100(data-placeholder='Confirm password')
+        .container-login100-form-btn
+          .wrap-login100-form-btn
+            .login100-form-bgbtn
+            button#buttonSignUp.login100-form-btn
+              | Регистрация
+        .text-center.p-t-20
+          span.txt3.text-muted
+            | Уже есть аккаун?
+          a.txt3(href='./signin')
+            |  Вход
+          p.mt-1.mb-3.text-muted &copy; 2017-2020
     //
       Bootstrap core JavaScript
       ==================================================
@@ -34,3 +73,16 @@ html(lang='en')
     script(src='/js/popper.min.js')
     script(src='/js/holder.min.js')
     script(src='../javascripts/reg.js')
+
+    // ===============================================================================================
+    script(src='../vendor/jquery/jquery-3.2.1.min.js')
+    // ===============================================================================================
+    script(src='../vendor/animsition/js/animsition.min.js')
+    script(src='../vendor/select2/select2.min.js')
+    // ===============================================================================================
+    script(src='../vendor/daterangepicker/moment.min.js')
+    script(src='../vendor/daterangepicker/daterangepicker.js')
+    // ===============================================================================================
+    script(src='../vendor/countdowntime/countdowntime.js')
+    // ===============================================================================================
+    script(src='../js/main.js')
