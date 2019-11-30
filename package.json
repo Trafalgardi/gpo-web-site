@@ -15,7 +15,6 @@
     "event-stream": "^3.3.5",
     "express": "^4.17.1",
     "holderjs": "^2.9.6",
-    "html-pdf": "^2.2.0",
     "http-errors": "~1.6.2",
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
@@ -24,8 +23,7 @@
     "popper.js": "^1.16.0",
     "pug": "^2.0.4",
     "request": "^2.88.0",
-    "serve-favicon": "^2.5.0",
-    "swig": "^1.4.2"
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
