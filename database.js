@@ -3,7 +3,7 @@ var pool = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
     user: 'usrgpo',
-    password: 'PhyGyisHNsboc2DU', //fkx8ZepaJEtS2xy //vMETuklX1HC4vX1g MySql auth  vMETuklX1HC4vX1g
+    password: 'PhyGyisHNs}{2DU', //fkx8ZepaJEtS2xy //vMETuklX1HC4vX1g MySql auth  vMETuklX1HC4vX1g
     database: 'RecommendationSystem'
 })
 function conn() {
