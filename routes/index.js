@@ -53,6 +53,7 @@ module.exports = {
             }
             return cause;
         }
+
         function education() {
             let education = {
                 //"Полное среднетехническое образование": "0",
@@ -67,8 +68,7 @@ module.exports = {
                     "Техническое": "false",
                     "Гуманитарное": "false"
                 },
-                "Ученая степень":
-                {
+                "Ученая степень": {
                     "Кандитат наук": "false",
                     "Доктор наук": "false",
                     "PhD": "false"
@@ -100,6 +100,7 @@ module.exports = {
             }
             return education;
         }
+
         function driveLicense() {
             let driveLicenseJSON = {
                 experience: 0,
@@ -114,6 +115,7 @@ module.exports = {
             }
             return driveLicenseJSON;
         }
+
         function militaryService() {
             let militaryServiceJSON = {
                 "Отношение к воинской обязанности": body['militarySelect'],
@@ -218,7 +220,7 @@ module.exports = {
             } else {
                 let sql = "UPDATE users SET anketaData='" + JSON.stringify(data) + "' WHERE id='" + authData.user.id + "'";
                 console.log(sql)
-                connection.query(sql, function (err, result, fields) {
+                connection.query(sql, function(err, result, fields) {
                     if (err) throw err;
                     res.render('post');
                     //res.send("Данные записанны!\n" + JSON.stringify(data));
@@ -236,11 +238,11 @@ module.exports = {
             } else {
                 //console.log(authData)
                 let sql = "SELECT `id`, `name`, `questions` FROM `tests` WHERE 1"
-                connection.query(sql, function (err, result, fields) {
+                connection.query(sql, function(err, result, fields) {
                     if (err) throw err;
 
                     sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
-                    connection.query(sql, function (err, results, fields) {
+                    connection.query(sql, function(err, results, fields) {
 
                         //console.log(JSON.parse(results[0].banTests))
 
@@ -270,18 +272,61 @@ module.exports = {
         });
 
     },
+    getOpenCases: (req, res) => {
+        const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                //console.log(authData)
+                let sql = "SELECT `id`, `name`, `questions` FROM `cases` WHERE 1"
+                connection.query(sql, function(err, result, fields) {
+                    if (err) throw err;
+
+                    sql = "SELECT `banCases` FROM `users` WHERE id = " + authData.user.id
+                    connection.query(sql, function(err, results, fields) {
+
+                        //console.log(JSON.parse(results[0].banTests))
+
+                        let newJsonArray = []
+                        let banCases = JSON.parse(results[0].banCases).ban;
+
+                        //console.log(banTests)
+                        let cases = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let check = true;
+                            for (let j = 0; j < banCases.length; j++) {
+                                if (result[i].id == banCases[j]) {
+                                    check = false;
+                                    break;
+                                }
+                            }
+
+                            if (check) {
+                                cases.push(result[i])
+                            }
+                        }
+                        //console.log(tests) 
+                        res.json(cases);
+                    })
+                })
+            }
+        });
+
+    },
     getData: (req, res) => {
         let json = {
             anketa: [], // все анкеты id и анкета
-            newTests: [] //где result = -1
+            newTests: [], //где result = -1
+            newCases: [] //где result = -1
         }
         let sql = "SELECT id, anketaData FROM users WHERE anketaResult = -1";
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             json.anketa = result;
-            sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`'
-                + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
-            connection.query(sql, function (error, results, fields) {
+            sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`' +
+                'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
+            connection.query(sql, function(error, results, fields) {
                 if (error) {
                     console.log("check1")
                     let json = {
@@ -291,7 +336,21 @@ module.exports = {
                     return res.render('error', { json });
                 } else {
                     json.newTests = results;
-                    res.json(json)
+                    sql = 'SELECT `user_cases`.`id`, `user_cases`.`user_id`, `user_cases`.`case_id`, `user_cases`.`answers`' +
+                        'FROM `cases` JOIN `user_cases` ON `user_cases`.`case_id` = `cases`.`id` AND `user_cases`.`result` = -1';
+                    connection.query(sql, function(error, results, fields) {
+                        if (error) {
+                            console.log("check2")
+                            let json = {
+                                status: false,
+                                message: 'there are some error with query'
+                            }
+                            return res.render('error', { json });
+                        } else {
+                            json.newCases = results;
+                            res.json(json)
+                        }
+                    })
                 }
             })
         });
@@ -301,7 +360,7 @@ module.exports = {
             anketa: [] // все анкеты id и анкета
         }
         let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             json.anketa = result;
             res.json(json)
@@ -309,7 +368,7 @@ module.exports = {
     },
     getLastData: (req, res) => {
         let sql = "SELECT json FROM data WHERE 1 ORDER BY ID DESC LIMIT 1";
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
             res.json(result);
@@ -326,12 +385,12 @@ module.exports = {
         //SELECT * FROM users WHERE email = 'theremandram@gmail.com' LIMIT 1
         const sql = "SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1";
         console.log(sql)
-        connection.query(sql, function (error, results, fields) {
+        connection.query(sql, function(error, results, fields) {
 
             if (error || results == "") {
                 return res.redirect('/signin');
             } else {
-                const passworFromBD = results[0].password;//если чо то result[0]....
+                const passworFromBD = results[0].password; //если чо то result[0]....
                 console.log(passworFromForm + '\n' + passworFromBD)
                 if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
                     if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
@@ -369,22 +428,22 @@ module.exports = {
             email: req.body.email,
             password: passwordToSave,
             date: formatted,
-            banTests: '{"ban":[7,10,14,17,18,19,21,22,23]}'//Закрытые тесты
+            banTests: '{"ban":[7,10,14,17,18,19,21,22,23]}' //Закрытые тесты
         };
         let sql = 'SELECT `email` FROM `users` WHERE `email` = "' + req.body.email + "\""
         console.log(sql)
-        connection.query(sql, function (error, results, fields) {
+        connection.query(sql, function(error, results, fields) {
             if (results == '') {
                 console.log("check1")
 
-                connection.query("INSERT INTO users SET ?", user, function (error, results, fields) {
+                connection.query("INSERT INTO users SET ?", user, function(error, results, fields) {
                     if (error) {
                         res.json({
                             status: error,
                             message: "there is some error with query"
                         });
                     } else {
-                        connection.query("SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1", function (error, results, fields) {
+                        connection.query("SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1", function(error, results, fields) {
                             //Добавление данных пользователя в cookies start
                             console.log(results[0].id)
                             if (error) {
@@ -416,10 +475,10 @@ module.exports = {
     getResults: (req, res) => {
         if (req.body.email_address != undefined) {
             let email_list = req.body.email_address.toString().split(',');
-            email_list = email_list.map(function (element) {
+            email_list = email_list.map(function(element) {
                 return "'" + element.trim() + "'";
             });
-            connection.query("SELECT * FROM users WHERE email IN (" + email_list.join(',') + ")", function (users_error, results, fields) {
+            connection.query("SELECT * FROM users WHERE email IN (" + email_list.join(',') + ")", function(users_error, results, fields) {
                 if (users_error) {
                     console.log(users_error);
                     throw users_error;
@@ -427,9 +486,9 @@ module.exports = {
                     if (results.length > 0) {
                         users_list = results;
                         var users_tests = [];
-                        Promise.all(users_list.map(function (user) {
+                        Promise.all(users_list.map(function(user) {
                             var promise = new Promise(function(resolve) {
-                                connection.query("SELECT tests.id, tests.name, user_tests.result FROM user_tests JOIN tests ON user_tests.test_id=tests.id WHERE user_id='" + user.id + "'",function(tests_error, tests_list) {
+                                connection.query("SELECT tests.id, tests.name, user_tests.result FROM user_tests JOIN tests ON user_tests.test_id=tests.id WHERE user_id='" + user.id + "'", function(tests_error, tests_list) {
                                     if (tests_error) {
                                         console.log(tests_error);
                                         throw tests_error;
@@ -447,11 +506,11 @@ module.exports = {
                                 }
                             });
                         })).then(function() {
-                            pdf.create(pdfTemplate({users_tests}), {}).toFile(`${__dirname}/result.pdf`, (err) => {
-                                if(err) {
+                            pdf.create(pdfTemplate({ users_tests }), {}).toFile(`${__dirname}/result.pdf`, (err) => {
+                                if (err) {
                                     res.send(Promise.reject());
                                 }
-                        
+
                                 res.sendFile(`${__dirname}/result.pdf`);
                             });
                         });
@@ -465,5 +524,3 @@ module.exports = {
         }
     },
 }
-
-

@@ -8,8 +8,9 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 let app = express();
 
-const { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getUsers, getResults } = require('./routes/index');
+const { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getOpenCases, getUsers, getResults } = require('./routes/index');
 const { setTest, addDataTest, getDataTest, setAnketaCoef, updateTests } = require('./routes/test');
+const { setCase, addDataCase, getDataCase, updateCases } = require('./routes/case');
 
 const port = 3000;
 
@@ -61,12 +62,12 @@ app.post('/api/signin', (req, res) => {
     //SELECT * FROM users WHERE email = 'theremandram@gmail.com' LIMIT 1
     const sql = "SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1";
     console.log(sql)
-    connection.query(sql, function (error, results, fields) {
+    connection.query(sql, function(error, results, fields) {
         console.log(results[0].id)
         if (error) {
             return console.log(error);
         }
-        const passworFromBD = results[0].password;//если чо то result[0]....
+        const passworFromBD = results[0].password; //если чо то result[0]....
         console.log(passworFromForm + '\n' + passworFromBD)
         if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
             if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
@@ -100,12 +101,13 @@ function verifyToken(req, res, next) {
         res.sendStatus(403);
     }
 }
+
 function verifyTokenCookie(req, res, next) {
     const cookie = req.cookies;
     if (cookie.token != '' && cookie.token != undefined) {
         req.token = cookie.token;
         console.log('печеньки существуют')
-        //call next middleware
+            //call next middleware
         next();
     } else {
         console.log('печеньки не существуют')
@@ -125,7 +127,7 @@ app.route('/homepage')
     })
 
 app.route('/reg')
-    .get(function (req, res) {
+    .get(function(req, res) {
         res.render('reg');
     })
     .post(reg)
@@ -136,12 +138,12 @@ app.route('/signin')
     })
     .post(signin)
 
-app.get('/403', function (req, res) {
+app.get('/403', function(req, res) {
     res.render('403');
 })
 
 app.route('/opentests')
-    .get(verifyTokenCookie, function (req, res) {
+    .get(verifyTokenCookie, function(req, res) {
         const token = req.cookies.token;
         jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
             if (err) {
@@ -151,9 +153,19 @@ app.route('/opentests')
             }
         })
     })
-
+app.route('/opencases')
+    .get(verifyTokenCookie, function(req, res) {
+        const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.render('opencase', { email: authData.user.email });
+            }
+        })
+    })
 app.route('/questionnaire')
-    .get(verifyTokenCookie, function (req, res) {
+    .get(verifyTokenCookie, function(req, res) {
         const token = req.cookies.token;
         jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
             if (err) {
@@ -163,28 +175,34 @@ app.route('/questionnaire')
             }
         })
     })
-app.get('/sign-out', function (req, res) {
+app.get('/sign-out', function(req, res) {
     res.clearCookie("token");
     res.redirect('homepage');
 })
 app.get('/api/getOpenTests', getOpenTest);
+app.get('/api/getOpenCases', getOpenCases);
 app.post('/addData', addData);
 app.get('/getUsers', getUsers)
 app.get('/getData', getData);
 app.get('/getLastData', getLastData);
-app.get('/phpmyadmin', function (req, res) {
+app.get('/phpmyadmin', function(req, res) {
     res.redirect('http://188.93.211.152:8000/phpmyadmin/');
 })
+
+app.get('/case/:id', verifyTokenCookie, setCase);
+app.post('/getDataCase', getDataCase);
+app.post('/case/addDataCase', addDataCase);
+app.post('/case/updateCases', updateCases); //Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
 
 app.get('/test/:id', verifyTokenCookie, setTest);
 //app.get('/getDataTest', getDataTest);
 app.post('/getDataTest', getDataTest);
 app.post('/test/addDataTest', addDataTest);
-app.post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
+app.post('/test/updateTests', updateTests); //Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
 app.post('/setAnketaCoef', setAnketaCoef); //Обновление столбца tests в таблице users(Коэф. анкеты)
 
 app.route('/results')
-    .get(verifyTokenCookie, function (req, res) {
+    .get(verifyTokenCookie, function(req, res) {
         const token = req.cookies.token;
         jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
             if (err) {
