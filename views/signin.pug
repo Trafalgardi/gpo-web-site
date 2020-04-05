@@ -3,30 +3,69 @@ html(lang='en')
   head
     meta(charset='utf-8')
     title Начальная страница
+    // Global site tag (gtag.js) - Google Analytics
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-153501513-1')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-153501513-1');
     // Bootstrap core CSS
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     // Custom styles for this template
     link(href='../stylesheets/form-validation.css', rel='stylesheet')
     link(href='../stylesheets/style.css', rel='stylesheet')
     link(href='../stylesheets/signin.css', rel='stylesheet')
-  body.bg-light.text-center
-    form.form-signin(method="post" action="/signin")
-        img.mb-4(src='./smartphone.svg' alt='' width='72' height='72')
-        h1.h3.mb-3.font-weight-normal Введите свои данные
-        label.sr-only( for='inputEmail') Email
-        input#inputEmail.form-control(name = 'email' type='email' placeholder='Email' required='' autofocus='')
-        label.sr-only(for='inputPassword') Password
-        input#inputPassword.form-control(name = 'password' type='password' placeholder='Пароль' required='')
-        //.checkbox.mb-3
-            label
-            input(type='checkbox' value='remember-me')
-            |  Запомнить меня
-        button.btn.btn-lg.btn-primary.btn-block(type='submit') Вход
-        p
-          a(href='./reg') Регистрация
-        p.mt-5.mb-3.text-muted &copy; 2017-2019
+    // ===============================================================================================
+    link(rel='icon', type='image/png', href='images/icons/favicon.ico')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../fonts/iconic/css/material-design-iconic-font.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/animate/animate.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/css-hamburgers/hamburgers.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/animsition/css/animsition.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/select2/select2.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../vendor/daterangepicker/daterangepicker.css')
+    // ===============================================================================================
+    link(rel='stylesheet', type='text/css', href='../css/util.css')
+    link(rel='stylesheet', type='text/css', href='../css/main.css')
+    // ===============================================================================================
 
 
+.limiter
+  .container-login100
+    .wrap-login100
+      form.login100-form.validate-form(method="post" action="/signin")
+        span.login100-form-title.p-b-26
+          | Вход
+        //span.login100-form-title.p-b-48
+        //  i.zmdi.zmdi-sign-in
+        .wrap-input100.validate-input(data-validate='Valid email is: a@b.c')
+          input#mail.input100(type='text', name='email')
+          span.focus-input100(data-placeholder='Email')
+        .wrap-input100.validate-input(data-validate='Enter password')
+          span.btn-show-pass
+            i.zmdi.zmdi-eye
+          input#password.input100(type='password', name='password', required='')
+          span.focus-input100(data-placeholder='Password')
+        .container-login100-form-btn
+          .wrap-login100-form-btn
+            .login100-form-bgbtn
+            button#buttonSignUp.login100-form-btn
+              | Вход
+        .text-center.p-t-20
+          span.txt3.text-muted
+            | Нет аккаунта?
+          a.txt3(href='./reg')
+            |  Регистрация
+          p.mt-1.mb-3.text-muted &copy; 2017-2020
+      
     //
       Bootstrap core JavaScript
       ==================================================
@@ -37,3 +76,17 @@ html(lang='en')
     script(src='/js/popper.min.js')
     script(src='/js/holder.min.js')
     script(src='../javascripts/reg.js')
+
+    // ===============================================================================================
+    script(src='../vendor/jquery/jquery-3.2.1.min.js')
+    // ===============================================================================================
+    script(src='../vendor/animsition/js/animsition.min.js')
+    script(src='../vendor/select2/select2.min.js')
+    // ===============================================================================================
+    script(src='../vendor/daterangepicker/moment.min.js')
+    script(src='../vendor/daterangepicker/daterangepicker.js')
+    // ===============================================================================================
+    script(src='../vendor/countdowntime/countdowntime.js')
+    // ===============================================================================================
+    script(src='../js/main.js')
+    script(src='../javascripts/googleAnal.js')
