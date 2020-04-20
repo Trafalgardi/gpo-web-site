@@ -236,36 +236,53 @@ module.exports = {
             if (err) {
                 res.sendStatus(403);
             } else {
-                //console.log(authData)
-                let sql = "SELECT `id`, `name`, `questions` FROM `tests` WHERE 1"
-                connection.query(sql, function(err, result, fields) {
+                let sql = "SELECT `id`, `name`, `questions`, `category_id` FROM `tests` WHERE 1 ORDER BY `category_id` ASC"
+                connection.query(sql, function(err, resultsTest, fields) {
                     if (err) throw err;
 
                     sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
                     connection.query(sql, function(err, results, fields) {
+                        if (err) throw err;
 
-                        //console.log(JSON.parse(results[0].banTests))
-
-                        let newJsonArray = []
                         let banTests = JSON.parse(results[0].banTests).ban;
 
-                        //console.log(banTests)
-                        let tests = [];
-                        for (let i = 0; i < result.length; i++) {
+                        let tests = {};
+                        for (let i = 0; i < resultsTest.length; i++) {
                             let check = true;
                             for (let j = 0; j < banTests.length; j++) {
-                                if (result[i].id == banTests[j]) {
+                                if (resultsTest[i].id == banTests[j]) {
                                     check = false;
                                     break;
                                 }
                             }
 
                             if (check) {
-                                tests.push(result[i])
+                                let id = resultsTest[i].category_id;
+                                if (id === null) id = -1;
+
+                                if (tests[id] !== undefined)
+                                    tests[id].push(resultsTest[i]);
+                                else
+                                    tests[id] = [resultsTest[i]];
                             }
                         }
-                        //console.log(tests) 
-                        res.json(tests);
+
+                        let sql = "SELECT * FROM `test_categories` WHERE 1"
+                        connection.query(sql, function(err, resultsCats, fields) {
+                            if (err) throw err;
+
+                            resultsCats.forEach
+
+                            resultsCats.forEach(function(item, index, object) {
+                                if (tests[item.id] === undefined)
+                                    object.splice(index, 1);
+                            });
+
+                            res.json({
+                                categories: resultsCats,
+                                tests
+                            });
+                        })
                     })
                 })
             }
@@ -357,12 +374,12 @@ module.exports = {
     },
     getUsers: (req, res) => {
         let json = {
-            anketa: [] // все анкеты id и анкета
+            users: [] // все анкеты id и анкета
         }
         let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
         connection.query(sql, function(err, result, fields) {
             if (err) throw err;
-            json.anketa = result;
+            json.users = result;
             res.json(json)
         });
     },
@@ -375,40 +392,13 @@ module.exports = {
         });
     },
     signin: (req, res) => {
-
-        const passworFromForm = req.body.password;
-        let user = {
-            id: 0,
-            email: ""
-        }
-
-        //SELECT * FROM users WHERE email = 'theremandram@gmail.com' LIMIT 1
-        const sql = "SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1";
-        console.log(sql)
-        connection.query(sql, function(error, results, fields) {
-
-            if (error || results == "") {
-                return res.redirect('/signin');
+        module.exports.createToken(req.body.email, req.body.password, (success, token) => {
+            if (success) {
+                res.cookie('token', token);
+                res.redirect('/homepage');
             } else {
-                const passworFromBD = results[0].password; //если чо то result[0]....
-                console.log(passworFromForm + '\n' + passworFromBD)
-                if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
-                    if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
-                        console.log("Passwords match")
-                        user.id = results[0].id
-                        user.email = results[0].email
-                        jwt.sign({ user }, 'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
-                            res.cookie('token', token.toString());
-                            res.redirect('/homepage');
-                        });
-
-
-                    } else {
-                        res.redirect('/homepage');
-                    }
-                }
+                res.redirect('/signin');
             }
-
         });
     },
     reg: (req, res) => {
@@ -450,11 +440,9 @@ module.exports = {
                                 return console.log(error);
                             }
                             user = {
-                                id: 0,
-                                email: ""
+                                id: results[0].id,
+                                email: results[0].email
                             }
-                            user.id = results[0].id
-                            user.email = results[0].email
                             jwt.sign({ user }, 'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
                                 res.cookie('token', token.toString());
                                 res.redirect('/homepage');
@@ -470,6 +458,33 @@ module.exports = {
                 res.render('error', { error: { message: "Данный email уже заригистрирован!", status: "Ошибка при регистрации" } })
             }
 
+        });
+    },
+    createToken(email, password, callback) {
+        const passworFromForm = password;
+        let user = {
+            id: 0,
+            email: ""
+        }
+        const sql = "SELECT * FROM users WHERE email = '" + email + "' LIMIT 1";
+        connection.query(sql, function(error, results, fields) {
+            if (error || results == "") {
+                callback(false);
+            } else {
+                const passworFromBD = results[0].password; //если чо то result[0]....
+                console.log(passworFromForm + '\n' + passworFromBD)
+                if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
+                    if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
+                        user.id = results[0].id
+                        user.email = results[0].email
+                        jwt.sign({ user }, 'SuperSecRetKey', { expiresIn: 60 * 60 * 24 }, (err, token) => {
+                            callback(true, token.toString(), results[0]);
+                        });
+                    } else {
+                        callback(false);
+                    }
+                }
+            }
         });
     },
     getResults: (req, res) => {
