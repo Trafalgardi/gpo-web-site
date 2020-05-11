@@ -1,4 +1,5 @@
 var connection = require('../database')
+const {TestExecution} = require('./TestProcessing/TestProcessing.js')
 const dateTime = require('node-datetime');
 const jwt = require('jsonwebtoken');
 module.exports = {
@@ -90,8 +91,9 @@ module.exports = {
                     });
                 });
                 console.log("Данные ушли")
-                console.log(answers)
-                connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function(error, results, fields) {
+                //console.log(answers);
+                let testResult = TestExecution(body.id, answers.data);
+                connection.query("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), testResult, formatted], function(error, results, fields) {
                     if (error) throw error;
                     res.render('post');
                     //res.send("Данные записанны!\n" + JSON.stringify(data));UPDATE UserTests SET result= 0 WHERE id=1
