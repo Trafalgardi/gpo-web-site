@@ -6,12 +6,17 @@ const jwt = require('jsonwebtoken');
 const connection = require('./database');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+const ClientAPI = require('./routes/ClientElectron/ClientAPI')
 let app = express();
 
 const { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getUsers, getResults } = require('./routes/index');
 const { setTest, addDataTest, getDataTest, setAnketaCoef, updateTests } = require('./routes/test');
 
+//import ClientApi from "./"
+
 const port = 3000;
+
+
 
 // configure middleware
 app.set('port', process.env.port || port); // set express to use this port
@@ -34,6 +39,10 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redi
 app.use('/js', express.static(__dirname + '/node_modules/popper.js/dist/umd')); // redirect popper js 
 app.use('/js', express.static(__dirname + '/node_modules/holderjs')); // redirect Holder js
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap 
+
+//start ClientAPI
+ClientAPI.Init(app);
+//end ClientAPI
 
 /** Create posts protected route */
 app.post('/api/posts', verifyToken, (req, res) => {
