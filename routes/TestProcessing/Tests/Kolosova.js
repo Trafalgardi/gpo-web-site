@@ -1,7 +1,4 @@
-function Check(x, y) {
-	return x.toLowerCase() === y.toLowerCase();
-}
-
+const {Check} = require('../CheckString');
 module.exports = {
     Kolosova: (answers) => {
         var result = 0;
