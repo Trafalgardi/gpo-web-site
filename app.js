@@ -10,7 +10,7 @@ const ClientAPI = require('./routes/ClientElectron/ClientAPI')
 let app = express();
 
 const { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getResults } = require('./routes/index');
-const { setTest, addDataTest, getDataTest, setAnketaCoef, updateTests } = require('./routes/test');
+const { setTest, addDataTest, setAnketaCoef } = require('./routes/test');
 
 //import ClientApi from "./"
 
@@ -186,10 +186,8 @@ app.get('/phpmyadmin', function (req, res) {
 })
 
 app.get('/test/:id', verifyTokenCookie, setTest);
-//app.get('/getDataTest', getDataTest);
-app.post('/getDataTest', getDataTest);
+
 app.post('/test/addDataTest', addDataTest);
-app.post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)
 app.post('/setAnketaCoef', setAnketaCoef); //Обновление столбца tests в таблице users(Коэф. анкеты)
 
 app.route('/results')

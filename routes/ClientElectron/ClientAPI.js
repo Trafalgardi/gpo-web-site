@@ -6,11 +6,27 @@ const TOKEN_SECRET_KEY = 'SuperSecRetKey'
 const TITLE = '/client/';
 const AUTHORIZATION_LINK = TITLE + 'authorization';
 const GET_USERS_LINK = TITLE + "getUsers";
+const GET_USERS_TESTS_LINK = TITLE + "getUserTests";
+
 
 function template(token, body, res){
     let response = {};
 
     res.json(response);
+}
+
+function ParseRequest(req, res, callback, rule = null){
+    let token = req.headers.access_token;
+    if (rule != null && CheckRule(token, rule) == false){
+        let response = {
+            success: false,
+            error: "Не достаточно прав!",
+        }
+        console.log(response);
+        res.json(response);
+        return;
+    }
+    callback(token, req.body, res);
 }
 
 function CheckRule(token, targetRule){
@@ -98,15 +114,9 @@ function Authorization(token, body, res){
     
 }
 
-function GetUser(token, body, res){
+function GetUsers(token, body, res){
     let response = {
         success: false,
-    }
-    if (CheckRule(token, "user") == false){
-        console.log("Не достаточно прав!")
-        response.error = "Не достаточно прав!"
-        res.json(response);
-        return;
     }
     response.anketa = [];
     let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
@@ -119,12 +129,53 @@ function GetUser(token, body, res){
 }
 
 
-function ParseRequest(req, res, callback){
-    callback(req.headers.access_token, req.body, res);
+
+
+function GetUserTests(token, body, res) {
+    let response = {
+        success: false,
+    }
+    
+    let data = {
+        id: '',
+        user_id: 0,
+        test_id: 0,
+        questions: [],
+        answers: [],
+        result: 0,
+        date: ''
+    }
+
+    let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`' +
+        'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = ' + body.id;
+
+    //let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `tests`.`questions`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`'
+    //    + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = '+req.body.id;
+    connection.query(sql, function(error, results, fields) {
+
+        if (error) {
+            console.log("check1")
+            let json = {
+                status: false,
+                message: 'there are some error with query'
+            }
+            return res.render('error', { json });
+        } else {
+            response.success = true;
+            response.data = results;
+            for (let i = 0; i < response.length; i++) {
+                response[i].question = "Тест №" + response[i].test_id;
+            }
+            //console.log(response)
+            res.json(response);
+        }
+    })
+
 }
 module.exports = {
     Init: (app) => {
         app.post(AUTHORIZATION_LINK, (req, res) => ParseRequest(req, res, Authorization));
-        app.get(GET_USERS_LINK, (req, res) => ParseRequest(req, res, GetUser));
+        app.get(GET_USERS_LINK, (req, res) => ParseRequest(req, res, GetUsers, "user"));
+        app.post(GET_USERS_TESTS_LINK, (req, res) => ParseRequest(req, res, GetUserTests, "user"));
     }
 }
