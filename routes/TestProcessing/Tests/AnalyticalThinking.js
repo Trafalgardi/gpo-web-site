@@ -1,5 +1,5 @@
 module.exports = {
-    AnalyticalThinking: (answers) => {
+    AnalyticalThinking(answers) {
         var result = 0;
     
         if (answers.length < 8){

@@ -1,14 +1,13 @@
 const {Check} = require('../CheckString');
 module.exports = {
-    Kolosova(answers) {
+    Prokhorov(answers) {
         var result = 0;
         for (var i = 0; i < answers.length; i++) {
-            if (Check(answers[i][0], "а"))
-                result += 2;
-            else if (Check(answers[i][0], "б"))
+            if (Check(answers[i], "да"))
                 result += 1;
         }
-        result /= 20;
+    
+        result = 1 - result / 9;
         return result;
     }
 }

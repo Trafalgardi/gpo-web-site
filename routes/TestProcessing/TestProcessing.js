@@ -1,5 +1,21 @@
 const {Kolosova} = require("./Tests/Kolosova");
 const {Ryahovsky} = require("./Tests/Ryahovsky");
+const {Shubert} = require("./Tests/Shubert");
+const {Nemov} = require("./Tests/Nemov");
+const {Prokhorov} = require("./Tests/Prokhorov");
+const {Rean} = require("./Tests/Rean");
+const {Madduh} = require("./Tests/Madduh");
+const {Munsterberg} = require("./Tests/Munsterberg");
+const {UspekhElersa} = require("./Tests/UspekhElersa");
+const {NeudachiElersa} = require("./Tests/NeudachiElersa");
+const {Nemchin} = require("./Tests/Nemchin");
+const {HolmsRage} = require("./Tests/HolmsRage");
+const {PSM25} = require("./Tests/PSM25");
+const {Goroh} = require("./Tests/Goroh");
+const {VisualMemoryWords} = require("./Tests/VisualMemoryWords");
+const {VisualMemoryNumbers} = require("./Tests/VisualMemoryNumbers");
+const {AnalyticalThinking} = require("./Tests/AnalyticalThinking");
+
 
 module.exports = {
 	TestExecution: (testId, answers) => {

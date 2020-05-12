@@ -1,6 +1,6 @@
 const {Check} = require('../CheckString');
 module.exports = {
-    Ryahovsky: (answers) => {
+    Ryahovsky(answers) {
         var result = 0;
 
         for (var i = 0; i < answers.length; i++) {
