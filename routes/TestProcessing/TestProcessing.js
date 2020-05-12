@@ -1,3 +1,4 @@
+//#region require Test
 const {Kolosova} = require("./Tests/Kolosova");
 const {Ryahovsky} = require("./Tests/Ryahovsky");
 const {Shubert} = require("./Tests/Shubert");
@@ -15,7 +16,11 @@ const {Goroh} = require("./Tests/Goroh");
 const {VisualMemoryWords} = require("./Tests/VisualMemoryWords");
 const {VisualMemoryNumbers} = require("./Tests/VisualMemoryNumbers");
 const {AnalyticalThinking} = require("./Tests/AnalyticalThinking");
-
+const {ProjectiveReactiveThinking} = require("./Tests/ProjectiveReactiveThinking");
+const {SpatialThinking} = require("./Tests/SpatialThinking");
+const {AnalyticalIntuitiveThinking} = require("./Tests/AnalyticalIntuitiveThinking");
+const {ProductiveReproductiveThinking} = require("./Tests/ProductiveReproductiveThinking");
+//#endregion
 
 module.exports = {
 	TestExecution: (testId, answers) => {

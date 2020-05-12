@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const ClientAPI = require('./routes/ClientElectron/ClientAPI')
 let app = express();
 
-const { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getUsers, getResults } = require('./routes/index');
+const { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getResults } = require('./routes/index');
 const { setTest, addDataTest, getDataTest, setAnketaCoef, updateTests } = require('./routes/test');
 
 //import ClientApi from "./"
@@ -178,7 +178,7 @@ app.get('/sign-out', function (req, res) {
 })
 app.get('/api/getOpenTests', getOpenTest);
 app.post('/addData', addData);
-app.get('/getUsers', getUsers)
+
 app.get('/getData', getData);
 app.get('/getLastData', getLastData);
 app.get('/phpmyadmin', function (req, res) {

@@ -296,17 +296,6 @@ module.exports = {
             })
         });
     },
-    getUsers: (req, res) => {
-        let json = {
-            anketa: [] // все анкеты id и анкета
-        }
-        let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
-        connection.query(sql, function (err, result, fields) {
-            if (err) throw err;
-            json.anketa = result;
-            res.json(json)
-        });
-    },
     getLastData: (req, res) => {
         let sql = "SELECT json FROM data WHERE 1 ORDER BY ID DESC LIMIT 1";
         connection.query(sql, function (err, result, fields) {
