@@ -44,7 +44,18 @@ app.route('/homepage')
             if (err) {
                 res.redirect('signin');
             } else {
-                res.render('homepage', { email: authData.user.email });
+                const sql = "SELECT * FROM users WHERE email = '" + authData.user.email + "' LIMIT 1";
+                connection.query(sql, function(error, results, fields) {
+                    if (error || results == "") {
+                        res.redirect('signin');
+                    } else {
+                        if (results[0].anketaData === null) {
+                            res.redirect('questionnaire');
+                        } else {
+                            res.render('homepage', { email: authData.user.email });
+                        }
+                    }
+                });
             }
         })
     })

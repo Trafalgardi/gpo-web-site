@@ -184,6 +184,7 @@ module.exports = {
 
         let data = {
             personnelData: personnelData,
+            leaderId: body["leader_id"],
             swap: swap,
             drive: driveLicense(),
             education: education(),
@@ -271,15 +272,33 @@ module.exports = {
                         connection.query(sql, function(err, resultsCats, fields) {
                             if (err) throw err;
 
-                            resultsCats.forEach
+                            let cats = {};
+                            resultsCats.forEach(function(item) {
+                                if (item.id === null) item.id = -1;
+                                if (item.parent_id === null) item.parent_id = -1;
 
-                            resultsCats.forEach(function(item, index, object) {
-                                if (tests[item.id] === undefined)
-                                    object.splice(index, 1);
+                                if (cats[item.parent_id] !== undefined)
+                                    cats[item.parent_id].push(item);
+                                else
+                                    cats[item.parent_id] = [item];
                             });
 
+                            cats[-1].forEach(function(item) {
+                                removeEmptyCats(item, -1);
+                            });
+
+                            function removeEmptyCats(item, parent) {
+                                if (tests[item.id] === undefined && cats[item.id] === undefined)
+                                    cats[parent].splice(index, 1);
+
+                                if (cats[item.id] !== undefined)
+                                    cats[item.id].forEach(function(item) {
+                                        removeEmptyCats(item, item.id);
+                                    });
+                            }
+
                             res.json({
-                                categories: resultsCats,
+                                categories: cats,
                                 tests
                             });
                         })

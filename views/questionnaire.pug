@@ -760,8 +760,13 @@ html(lang='en')
                                     option(value='10') Более 10 лет
                               // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                               // Конец блока про стаж
-                              hr.mb-4
-                              button#submit.btn.btn-primary.btn-lg.btn-block(type='submit') Отправить данные
+              .basis-block
+                .row
+                  .col-md-12.mb-3
+                    label(for='leaderID') Ссылка на ваш профиль в  Leader-ID
+                    input#leaderID.form-control(name='leader_id' type='text', placeholder='https://leader-id.ru/', value='', required='')
+              hr.mb-4
+              button#submit.btn.btn-primary.btn-lg.btn-block(type='submit') Отправить данные
       
       footer.my-5.pt-5.text-muted.text-center.text-small
         p.mb-1 © 2017-2018 Burning Knight
