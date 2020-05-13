@@ -1,16 +1,16 @@
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon')
-const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
-const connection = require('./database');
-const bcrypt = require('bcrypt');
-const cookieParser = require('cookie-parser');
-const ClientAPI = require('./routes/ClientElectron/ClientAPI')
+import express from 'express';
+import path from 'path';
+import favicon from 'serve-favicon';
+import bodyParser from 'body-parser';
+import jwt from 'jsonwebtoken';
+import connection from '../database.js';
+import bcrypt from 'bcrypt';
+import cookieParser from 'cookie-parser';
+import ClientAPI from '../routes/ClientElectron/ClientAPI';
 let app = express();
 
-const { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getResults } = require('./routes/index');
-const { setTest, addDataTest, setAnketaCoef } = require('./routes/test');
+import { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getResults } from '../routes/index';
+import { setTest, addDataTest, setAnketaCoef } from '../routes/test';
 
 //import ClientApi from "./"
 
@@ -20,7 +20,7 @@ const port = 3000;
 
 // configure middleware
 app.set('port', process.env.port || port); // set express to use this port
-app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
+app.set('views', path.join(__dirname, '../views')); // set express to look in this folder to render our view
 app.set('view engine', 'pug');
 app.use(bodyParser.json()); // parse form data client
 app.use(bodyParser.urlencoded({
@@ -28,17 +28,17 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser())
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
-app.use(express.static(path.join(__dirname, 'fontawesome')));
+app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, '../public'))); // configure express to use public folder
+app.use(express.static(path.join(__dirname, '../fontawesome')));
 
 app.get('/', verifyTokenCookie, getHomePage);
 
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
-app.use('/js', express.static(__dirname + '/node_modules/popper.js/dist/umd')); // redirect popper js 
-app.use('/js', express.static(__dirname + '/node_modules/holderjs')); // redirect Holder js
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap 
+app.use('/js', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
+app.use('/js', express.static(path.join(__dirname, '../node_modules/jquery/dist'))); // redirect JS jQuery
+app.use('/js', express.static(path.join(__dirname, '../node_modules/popper.js/dist/umd'))); // redirect popper js 
+app.use('/js', express.static(path.join(__dirname, '../node_modules/holderjs'))); // redirect Holder js
+app.use('/css', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap 
 
 //start ClientAPI
 ClientAPI.Init(app);
@@ -46,7 +46,7 @@ ClientAPI.Init(app);
 
 /** Create posts protected route */
 app.post('/api/posts', verifyToken, (req, res) => {
-    jwt.verify(req.token, 'SuperSecRetKey', (err, authData) => {
+    jwt.verify(req['token'], 'SuperSecRetKey', (err, authData) => {
         if (err) {
             res.sendStatus(403);
         } else {
@@ -124,7 +124,7 @@ function verifyTokenCookie(req, res, next) {
 
 app.route('/homepage')
     .get(verifyTokenCookie, (req, res) => {
-        jwt.verify(req.token, 'SuperSecRetKey', (err, authData) => {
+        jwt.verify(req['token'], 'SuperSecRetKey', (err, authData) => {
             if (err) {
                 res.redirect('signin');
             } else {
