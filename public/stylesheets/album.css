@@ -31,3 +31,19 @@ footer {
 footer p {
   margin-bottom: .25rem;
 }
+
+.test-item .text {
+  background-color: #55595c;
+  color: #eceeef;
+  font-weight: bold;
+  font-family: Arial, Helvetica, Open Sans, sans-serif, monospace;
+  font-size: 17pt;
+  text-align: center;
+  min-height: 225px;
+  display: flex;
+  align-items: center;
+ }
+ 
+ .test-item .text p {
+  margin: 0;
+ }

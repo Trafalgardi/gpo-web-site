@@ -182,6 +182,7 @@ module.exports = {
 
         let data = {
             personnelData: personnelData,
+            leaderId: body["leader_id"],
             swap: swap,
             drive: driveLicense(),
             education: education(),
@@ -234,41 +235,75 @@ module.exports = {
             if (err) {
                 res.sendStatus(403);
             } else {
-                //console.log(authData)
-                let sql = "SELECT `id`, `name`, `questions` FROM `tests` WHERE 1"
-                connection.query(sql, function (err, result, fields) {
+                let sql = "SELECT `id`, `name`, `questions`, `category_id` FROM `tests` WHERE 1 ORDER BY `category_id` ASC"
+                connection.query(sql, function(err, resultsTest, fields) {
                     if (err) throw err;
 
                     sql = "SELECT `banTests` FROM `users` WHERE id = " + authData.user.id
-                    connection.query(sql, function (err, results, fields) {
+                    connection.query(sql, function(err, results, fields) {
+                        if (err) throw err;
 
-                        //console.log(JSON.parse(results[0].banTests))
-
-                        let newJsonArray = []
                         let banTests = JSON.parse(results[0].banTests).ban;
 
-                        //console.log(banTests)
-                        let tests = [];
-                        for (let i = 0; i < result.length; i++) {
+                        let tests = {};
+                        for (let i = 0; i < resultsTest.length; i++) {
                             let check = true;
                             for (let j = 0; j < banTests.length; j++) {
-                                if (result[i].id == banTests[j]) {
+                                if (resultsTest[i].id == banTests[j]) {
                                     check = false;
                                     break;
                                 }
                             }
 
                             if (check) {
-                                tests.push(result[i])
+                                let id = resultsTest[i].category_id;
+                                if (id === null) id = -1;
+
+                                if (tests[id] !== undefined)
+                                    tests[id].push(resultsTest[i]);
+                                else
+                                    tests[id] = [resultsTest[i]];
                             }
                         }
-                        //console.log(tests) 
-                        res.json(tests);
+
+                        let sql = "SELECT * FROM `test_categories` WHERE 1"
+                        connection.query(sql, function(err, resultsCats, fields) {
+                            if (err) throw err;
+
+                            let cats = {};
+                            resultsCats.forEach(function(item) {
+                                if (item.id === null) item.id = -1;
+                                if (item.parent_id === null) item.parent_id = -1;
+
+                                if (cats[item.parent_id] !== undefined)
+                                    cats[item.parent_id].push(item);
+                                else
+                                    cats[item.parent_id] = [item];
+                            });
+
+                            cats[-1].forEach(function(item) {
+                                removeEmptyCats(item, -1);
+                            });
+
+                            function removeEmptyCats(item, parent) {
+                                if (tests[item.id] === undefined && cats[item.id] === undefined)
+                                    cats[parent].splice(index, 1);
+
+                                if (cats[item.id] !== undefined)
+                                    cats[item.id].forEach(function(item) {
+                                        removeEmptyCats(item, item.id);
+                                    });
+                            }
+
+                            res.json({
+                                categories: cats,
+                                tests
+                            });
+                        })
                     })
                 })
             }
         });
-
     },
     getData: (req, res) => {
         let json = {

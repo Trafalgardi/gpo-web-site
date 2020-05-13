@@ -1,6 +1,7 @@
 var connection = require('../database')
 const dateTime = require('node-datetime');
 const jwt = require('jsonwebtoken');
+const {CaseDefinition} = require('./CaseProcessing/CaseProcessing.js')
 module.exports = {
     setCase: (req, res) => {
         //var idTest = require('../tests/question_'+req.params.id+'.json');
@@ -53,7 +54,9 @@ module.exports = {
                 });
                 console.log("Данные ушли")
                 console.log(answers)
-                connection.query("INSERT INTO user_cases VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), -1, formatted], function(error, results, fields) {
+                let caseResult = CaseDefinition(body.id, answers);
+                console.log("res: " + caseResult)
+                connection.query("INSERT INTO user_cases VALUES (?,?,?,?,?,?);", [0, authData.user.id, body.id, JSON.stringify(answers), caseResult, formatted], function(error, results, fields) {
                     if (error) throw error;
                     res.render('post');
                     //res.send("Данные записанны!\n" + JSON.stringify(data));UPDATE UserTests SET result= 0 WHERE id=1
