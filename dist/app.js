@@ -15,6 +15,7 @@ const ClientAPI_1 = __importDefault(require("../routes/ClientElectron/ClientAPI"
 let app = express_1.default();
 const index_1 = require("../routes/index");
 const test_1 = require("../routes/test");
+const case_js_1 = require("../routes/case.js");
 //import ClientApi from "./"
 const port = 3000;
 // configure middleware
@@ -35,6 +36,24 @@ app.use('/js', express_1.default.static(path_1.default.join(__dirname, '../node_
 app.use('/js', express_1.default.static(path_1.default.join(__dirname, '../node_modules/popper.js/dist/umd'))); // redirect popper js 
 app.use('/js', express_1.default.static(path_1.default.join(__dirname, '../node_modules/holderjs'))); // redirect Holder js
 app.use('/css', express_1.default.static(path_1.default.join(__dirname, '../node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap 
+//cases start
+app.get('/api/getOpenCases', index_1.getOpenCases);
+app.route('/opencases')
+    .get(verifyTokenCookie, function (req, res) {
+    const token = req.cookies.token;
+    jsonwebtoken_1.default.verify(token, 'SuperSecRetKey', (err, authData) => {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.render('opencase', { email: authData.user.email });
+        }
+    });
+});
+app.get('/case/:id', verifyTokenCookie, case_js_1.setCase);
+app.post('/case/addDataCase', case_js_1.addDataCase);
+app.post('/case/updateCases', case_js_1.updateCases);
+//cases end
 //start ClientAPI
 ClientAPI_1.default.Init(app);
 //end ClientAPI

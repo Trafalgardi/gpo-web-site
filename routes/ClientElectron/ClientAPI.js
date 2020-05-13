@@ -3,6 +3,7 @@ const dateTime = require('node-datetime');
 const jwt = require('jsonwebtoken');
 let bcrypt = require('bcrypt');
 const TOKEN_SECRET_KEY = 'SuperSecRetKey'
+
 const TITLE = '/client/';
 const AUTHORIZATION_LINK = TITLE + 'authorization';
 const GET_USERS_LINK = TITLE + "getUsers";

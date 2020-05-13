@@ -358,7 +358,8 @@ module.exports = {
             email: req.body.email,
             password: passwordToSave,
             date: formatted,
-            banTests: '{"ban":[7,10,14,17,18,19,21,22,23]}'//Закрытые тесты
+            banTests: '{"ban":[7,10,14,17,18,19,21,22,23]}', //Закрытые тесты
+            banCases: '{"ban": []}'
         };
         let sql = 'SELECT `email` FROM `users` WHERE `email` = "' + req.body.email + "\""
         console.log(sql)
@@ -401,6 +402,51 @@ module.exports = {
             }
 
         });
+    },
+    getOpenCases: (req, res) => {
+        const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                //console.log(authData)
+                let sql = "SELECT id, name, questions FROM cases WHERE 1"
+                connection.query(sql, function(err, result, fields) {
+                    if (err) throw err;
+
+                    sql = "SELECT banCases FROM users WHERE id = " + authData.user.id
+                    console.log(sql);
+                    connection.query(sql, function(err, results, fields) {
+                        
+                        
+                        //console.log(JSON.parse(results[0].banTests))
+
+                        let newJsonArray = []
+                       
+                        let banCases = JSON.parse(results[0].banCases).ban;
+
+                        //console.log(banTests)
+                        let cases = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let check = true;
+                            for (let j = 0; j < banCases.length; j++) {
+                                if (result[i].id == banCases[j]) {
+                                    check = false;
+                                    break;
+                                }
+                            }
+
+                            if (check) {
+                                cases.push(result[i])
+                            }
+                        }
+                        //console.log(tests) 
+                        res.json(cases);
+                    })
+                })
+            }
+        });
+
     },
     getResults: (req, res) => {
         if (req.body.email_address != undefined) {

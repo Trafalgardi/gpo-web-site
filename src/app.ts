@@ -9,9 +9,9 @@ import cookieParser from 'cookie-parser';
 import ClientAPI from '../routes/ClientElectron/ClientAPI';
 let app = express();
 
-import { getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getResults } from '../routes/index';
+import {getOpenCases, getHomePage, addData, getData, getLastData, signin, reg, getOpenTest, getResults } from '../routes/index';
 import { setTest, addDataTest, setAnketaCoef } from '../routes/test';
-
+import {setCase, addDataCase, updateCases} from '../routes/case.js';
 //import ClientApi from "./"
 
 const port = 3000;
@@ -39,6 +39,25 @@ app.use('/js', express.static(path.join(__dirname, '../node_modules/jquery/dist'
 app.use('/js', express.static(path.join(__dirname, '../node_modules/popper.js/dist/umd'))); // redirect popper js 
 app.use('/js', express.static(path.join(__dirname, '../node_modules/holderjs'))); // redirect Holder js
 app.use('/css', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap 
+
+//cases start
+app.get('/api/getOpenCases', getOpenCases);
+app.route('/opencases')
+    .get(verifyTokenCookie, function(req, res) {
+        const token = req.cookies.token;
+        jwt.verify(token, 'SuperSecRetKey', (err, authData) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.render('opencase', { email: authData.user.email });
+            }
+        })
+    })
+
+app.get('/case/:id', verifyTokenCookie, setCase);
+app.post('/case/addDataCase', addDataCase);
+app.post('/case/updateCases', updateCases);
+//cases end
 
 //start ClientAPI
 ClientAPI.Init(app);
