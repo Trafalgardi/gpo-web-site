@@ -172,10 +172,18 @@ function GetUserTests(token, body, res) {
     })
 
 }
+
+function post(app, link, func){
+    app.post(link, func);
+}
+
+function get(app, link, func){
+    app.get(link, func);
+}
 module.exports = {
     Init: (app) => {
-        app.post(AUTHORIZATION_LINK, (req, res) => ParseRequest(req, res, Authorization));
-        app.get(GET_USERS_LINK, (req, res) => ParseRequest(req, res, GetUsers, "user"));
-        app.post(GET_USERS_TESTS_LINK, (req, res) => ParseRequest(req, res, GetUserTests, "user"));
+        post(app, AUTHORIZATION_LINK, (req, res) => ParseRequest(req, res, Authorization, "any"));
+        get(app, GET_USERS_LINK, (req, res) => ParseRequest(req, res, GetUsers, "user"));
+        post(app, GET_USERS_TESTS_LINK, (req, res) => ParseRequest(req, res, GetUserTests, "user"));
     }
 }
