@@ -38,40 +38,42 @@ function checkPassword(params) {
         numbersBool = false;
     }
 }*/
-function checkPassword() {
+function checkPassword(){
     const pass1 = document.getElementById('inputPassword1').value
     const pass2 = document.getElementById('inputPassword2').value
     const email = document.getElementById('inputEmail').value
     let validation = false;
-    document.getElementById('btn').classList.add("disabled");
-    if (pass1 === pass2) {
+    document.getElementById('btn').classList.add( "disabled" );
+    if(pass1 === pass2){
         validation = true;
         document.getElementById('message').innerHTML = ''
-        if (email != null && pass1 != null && pass2 != null || email != '' && pass1 != '' && pass2 != '') {
-            document.getElementById('btn').classList.remove("disabled");
+        if(email != null && pass1 != null && pass2 != null || email != '' && pass1 != '' && pass2 != ''){
+            document.getElementById('btn').classList.remove( "disabled" );
         }
-    } else {
+    }else {
         validation = false;
-        document.getElementById('message').innerText = 'Пароли не совпадают!'
-        document.getElementById('btn').classList.add("disabled");
+        document.getElementById('message').innerText = 'Пароли не совподают!'
+        document.getElementById('btn').classList.add( "disabled" );
     }
     console.log(validation)
-
+    
 }
-
-function signin() {
+function signin(){
     const email = document.getElementById('inputEmail').value
     const pass = document.getElementById('inputPassword').value
-    if (email != null && pass != null && pass != '' && email != '') {
+    if(email != null && pass != null && pass != '' && email != ''){
         let xhr = new XMLHttpRequest();
         let json = JSON.stringify({
             'email': email,
             'password': pass
         });
-        xhr.open("POST", '/signin', true)
+        xhr.open("POST", '/api/signin', true)
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
+        
         // Отсылаем объект в формате JSON и с Content-Type application/json
         xhr.send(json);
     }
+
+
 }
+

@@ -2,12 +2,12 @@ var mysql = require('mysql')
 var pool = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
-    user: 'root', //'usrgpo',
-    password: '', //PhyGyisHNs}{2DU //fkx8ZepaJEtS2xy //vMETuklX1HC4vX1g MySql auth  vMETuklX1HC4vX1g
+    user: 'usrgpo',
+    password: 'PhyGyisHNs}{2DU', //fkx8ZepaJEtS2xy //vMETuklX1HC4vX1g MySql auth  vMETuklX1HC4vX1g
     database: 'RecommendationSystem'
 })
-
 function conn() {
+    
 
     pool.getConnection((err, connection) => {
         console.log("Database connected!");
@@ -20,7 +20,7 @@ function conn() {
             }
             if (err.code === 'ECONNREFUSED') {
                 console.error('Database connection was refused.')
-
+                
 
             }
         }
