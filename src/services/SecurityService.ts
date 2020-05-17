@@ -24,6 +24,7 @@ export default class SecurityService {
      static verifyToken(token: string): string | null {
           if (token == null || token == "" || token === undefined) return null;
           try{
+              
                let error: any, data: any = jwt.verify(token, this.TOKEN_SECRET_KEY);
                if (error) {
                    console.log(error);

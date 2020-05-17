@@ -22,8 +22,15 @@ const WebClientRoute = {
             .post('/signup', (req, res) => {
             autCtrl.signUp(req, res);
         })
-            .use(autCtrl.verification)
             .get('/', (req, res) => {
+            res.redirect('/page/homepage');
+        })
+            .use('/page', function timeLog(req, res, next) {
+            console.log('Time: ', Date.now());
+            next();
+        })
+            .use('/page', autCtrl.verification)
+            .get('/page/homepage', (req, res) => {
             res.render('homepage');
         });
     }

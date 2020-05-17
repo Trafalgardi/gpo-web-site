@@ -23,10 +23,19 @@ const WebClientRoute: IAppRoute = {
                 autCtrl.signUp(req, res);
             })
 
-            .use(autCtrl.verification)
             .get('/', (req: Request, res: Response) => {
+                res.redirect('/page/homepage');
+            })
+
+            .use('/page', function timeLog(req, res, next) {
+                console.log('Time: ', Date.now());
+                next();
+            })
+
+            .use('/page', autCtrl.verification)
+
+            .get('/page/homepage', (req: Request, res: Response) => {
                 res.render('homepage');
-                
             })
            
     }

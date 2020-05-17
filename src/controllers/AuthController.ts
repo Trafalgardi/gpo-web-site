@@ -2,13 +2,13 @@ import App from "../app";
 import WebClientDataProvider from "../providers/WebClientDataProvider";
 import { Request, Response, NextFunction } from 'express'
 import SecurityService from "../services/SecurityService";
+
+const COOKIE_TOKEN: string = 'token';
 export default class AuthController {
-    private readonly COOKIE_TOKEN: string;
 
     private webClientDataProvider: WebClientDataProvider;
     constructor(private app: App) {
         this.webClientDataProvider = this.app.providers.user;
-        this.COOKIE_TOKEN = 'token';
     }
 
     async selectUser(req: Request, res: Response) {
@@ -21,7 +21,7 @@ export default class AuthController {
         let email = req.body.email;
         let password = req.body.password;
         let token = await this.webClientDataProvider.signUp(email, password);
-        res.cookie(this.COOKIE_TOKEN, token);
+        res.cookie(COOKIE_TOKEN, token);
         //res.redirect('/homepage') 
         res.json(token);
     }
@@ -33,7 +33,7 @@ export default class AuthController {
         
         function throwError(){
             //res.json(errorMsg)
-            res.redirect('/signin', 401)
+            res.redirect('/signin')
         }
         if (login == null || login == undefined){
             throwError();
@@ -41,12 +41,13 @@ export default class AuthController {
         }
 
         let user = await this.webClientDataProvider.selectUser(login);
-        if (user == null){
+       
+        if (user == null || user.password == ''){
             throwError();
             return;
         }
         
-        let isValidPassword = SecurityService.validatePassword(password, user.passwordHash);
+        let isValidPassword = SecurityService.validatePassword(password, user.password);
         if (isValidPassword == false){
             throwError();
             return;
@@ -57,18 +58,19 @@ export default class AuthController {
             email: user.email
         }
         let token = SecurityService.generateToken(payload);
-        res.cookie(this.COOKIE_TOKEN, token);
+        res.cookie(COOKIE_TOKEN, token);
         res.redirect('/homepage'); //TODO: homepage
     }
 
-    verification(req: Request, res: Response, next: NextFunction){
+    async verification(req: Request, res: Response, next: NextFunction){
         let cookies = req.cookies;
-        if (cookies == undefined){
+        if (cookies == null || cookies == undefined){
             res.redirect('/signin');
             return;
         }
         //console.log(this.COOKIE_TOKEN) //TODO: COOKIE_TOKEN
-        let token = cookies['token'];
+
+        let token = cookies[COOKIE_TOKEN];
         let isTokenValid = SecurityService.verifyToken(token) != null;
         
         if (isTokenValid){

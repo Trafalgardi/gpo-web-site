@@ -6,7 +6,7 @@ import SecurityService from "../services/SecurityService";
 */
 export default class WebClientDataProvider extends DataProviderBase {
 
-    async selectUser(email: string) : Promise<{id: number, email: string, passwordHash: string}> | null {
+    async selectUser(email: string) : Promise<{id: number, email: string, password: string}> | null {
         const sql = "SELECT `id`, `email`, `password` FROM users WHERE email = '" + email + "' LIMIT 1";
         try {
             let rows = await this.query(sql);
