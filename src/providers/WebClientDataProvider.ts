@@ -53,6 +53,20 @@ export default class WebClientDataProvider extends DataProviderBase {
        
     }
 
+    async setAnketa(anketa: string, user_id: number): Promise<boolean>{
+        const sql = this.dbController.format("UPDATE users SET anketaData=? WHERE id=?", [anketa, user_id]);
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return false;
+            }
+            return true;
+        } catch (error) {
+            console.log(error)
+            return false;
+        }
+
+    }
 
 
 

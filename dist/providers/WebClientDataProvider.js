@@ -64,5 +64,21 @@ class WebClientDataProvider extends DataProviderBase_1.default {
             }
         });
     }
+    setAnketa(anketa, user_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = this.dbController.format("UPDATE users SET anketaData=? WHERE id=?", [anketa, user_id]);
+            try {
+                const rows = yield this.query(sql);
+                if (rows == null || rows.length == 0) {
+                    return false;
+                }
+                return true;
+            }
+            catch (error) {
+                console.log(error);
+                return false;
+            }
+        });
+    }
 }
 exports.default = WebClientDataProvider;

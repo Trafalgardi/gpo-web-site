@@ -5,10 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("../app"));
 const AuthController_1 = __importDefault(require("../controllers/AuthController"));
+const AnketaController_1 = __importDefault(require("../controllers/AnketaController"));
+const SecurityService_1 = __importDefault(require("../services/SecurityService"));
 const WebClientRoute = {
     createRouter(router) {
         let app = app_1.default.Instance;
-        let autCtrl = new AuthController_1.default(app);
+        const autCtrl = new AuthController_1.default(app);
+        const anketaCtrl = new AnketaController_1.default(app);
         return router()
             .get('/signin', (req, res) => {
             res.render('signin');
@@ -32,9 +35,26 @@ const WebClientRoute = {
             console.log('Time: ', Date.now());
             next();
         })
-            .use('/page', autCtrl.verification)
+            .use('/page', (req, res, next) => {
+            autCtrl.verification(req, res, next);
+        })
             .get('/page/homepage', (req, res) => {
-            res.render('homepage');
+            let token = req.cookies.token;
+            let payload = SecurityService_1.default.verifyToken(token);
+            res.render('homepage', { email: payload.email });
+        })
+            .get('/page/opentests', (req, res) => {
+        })
+            .post('/page/setAnketaData', (req, res) => {
+            anketaCtrl.setAnketaData(req, res);
+        })
+            .post('/page/getAnketaData', (req, res) => {
+            anketaCtrl.getAnketaData(req, res);
+        })
+            .get('/page/questionnaire', (req, res) => {
+            let token = req.cookies.token;
+            let payload = SecurityService_1.default.verifyToken(token);
+            res.render('questionnaire', { email: payload.email });
         });
     }
 };
