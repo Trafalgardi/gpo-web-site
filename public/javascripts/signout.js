@@ -1,1 +1,0 @@
-document.getElementById("signout").href = "http://"+window.location.host+"/sign-out";
