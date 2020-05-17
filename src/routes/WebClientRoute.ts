@@ -72,7 +72,12 @@ const WebClientRoute: IAppRoute = {
                 let payload = SecurityService.verifyToken(token);
                 res.render('questionnaire', {email: payload.email});
             })
-        // .get('/test/:id', verifyTokenCookie, setTest);
+            .get('/page/test/:id', (req: Request, res: Response) => {
+                testCtrl.getTest(req, res);
+            })
+            .post('/page/test/setDataTest', (req: Request, res: Response) => {
+                testCtrl.setDataTest(req, res);
+            })
         // .post('/getDataTest', getDataTest);
         // .post('/test/addDataTest', addDataTest);
         // .post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)

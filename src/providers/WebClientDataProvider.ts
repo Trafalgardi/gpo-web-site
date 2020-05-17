@@ -81,8 +81,8 @@ export default class WebClientDataProvider extends DataProviderBase {
             return null;
         }   
     }
-    async getIdBanTests(id: number): Promise<number[]> | null{
-        const sql = "SELECT `banTests` FROM `users` WHERE id = " + id;
+    async getIdBanTests(user_id: number): Promise<number[]> | null{
+        const sql = "SELECT `banTests` FROM `users` WHERE id = " + user_id;
         try {
             const rows = await this.query(sql);
             if (rows == null || rows.length == 0){
@@ -107,6 +107,50 @@ export default class WebClientDataProvider extends DataProviderBase {
             console.log(error)
             return null;
         }   
+    }
+    async getTest(id:number): Promise<any> | null{
+        const sql = 'SELECT `questions` as data FROM `tests` WHERE id=' + id;
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return null;
+            }
+            return rows;
+        } catch (error) {
+            console.log(error)
+            return null;
+        }   
+    }
+    async setDataTest():Promise<any> | null{
+         
+    }
+    async insertUserTest(user_id: number, test_id: number, answers: string, testResult: number):Promise<any> | null{
+        let dt = dateTime.create();
+        let formatted = dt.format('Y-m-d H:M:S');
+        const sql = this.dbController.format("INSERT INTO user_tests VALUES (?,?,?,?,?,?);", [0, user_id, test_id, answers, testResult, formatted])
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return null;
+            }
+            return rows;
+        } catch (error) {
+            console.log(error)
+            return null;
+        } 
+    }
+    async updateBanUserTest(user_id: number, banTests: string):Promise<boolean>{
+        const sql = "UPDATE `users` SET `banTests`= '" + banTests + "' WHERE `users`.`id` =" + user_id;
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return false;
+            }
+            return true;
+        } catch (error) {
+            console.log(error)
+            return false;
+        }  
     }
 
 }

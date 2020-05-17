@@ -63,6 +63,12 @@ const WebClientRoute = {
             let token = req.cookies.token;
             let payload = SecurityService_1.default.verifyToken(token);
             res.render('questionnaire', { email: payload.email });
+        })
+            .get('/page/test/:id', (req, res) => {
+            testCtrl.getTest(req, res);
+        })
+            .post('/page/test/setDataTest', (req, res) => {
+            testCtrl.setDataTest(req, res);
         });
     }
 };
