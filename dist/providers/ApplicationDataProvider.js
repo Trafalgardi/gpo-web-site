@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserDataProviders_1 = __importDefault(require("./UserDataProviders"));
 const DatabaseController_1 = __importDefault(require("../db/DatabaseController"));
+const ClientDataProviders_1 = __importDefault(require("./ClientDataProviders"));
 class ApplicationDataProvider {
     constructor() {
         let host = 'localhost';
@@ -23,12 +23,12 @@ class ApplicationDataProvider {
         });
         return items.length > 0 ? items[0] : null;
     }
-    get user() {
-        return this.getInstanceProvider(UserDataProviders_1.default);
+    get client() {
+        return this.getInstanceProvider(ClientDataProviders_1.default);
     }
     getProviders() {
         return [
-            UserDataProviders_1.default
+            ClientDataProviders_1.default
         ];
     }
 }
