@@ -28,7 +28,7 @@ export default class WebClientDataProvider extends DataProviderBase {
             email: email,
             password: passwordHash,
             date: date,
-            banTests: '{"ban":[]}', //Закрытые тесты TODO: Добавить удалённые тесты
+            banTests: '{"ban":[7,10,14,17,18,19,21,22,23,26,32,33]}', //Закрытые тесты TODO: Добавить удалённые тесты
             banCases: '{"ban": []}' //Закрытые кейсы
         };
         let user = await this.selectUser(email);

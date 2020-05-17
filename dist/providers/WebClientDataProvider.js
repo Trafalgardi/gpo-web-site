@@ -40,7 +40,7 @@ class WebClientDataProvider extends DataProviderBase_1.default {
                 email: email,
                 password: passwordHash,
                 date: date,
-                banTests: '{"ban":[]}',
+                banTests: '{"ban":[7,10,14,17,18,19,21,22,23,26,32,33]}',
                 banCases: '{"ban": []}'
             };
             let user = yield this.selectUser(email);
