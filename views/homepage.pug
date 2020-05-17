@@ -1,0 +1,66 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Начальная страница
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    // Custom styles for this template
+    link(href='../stylesheets/homepage.css', rel='stylesheet')
+    // Global site tag (gtag.js) - Google Analytics
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-153501513-1')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-153501513-1');
+
+  body
+    .d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.shadow-sm
+      h5.my-0.mr-md-auto.font-weight-normal СКБП
+      h5.my-0.mr-md-auto.font-weight-normal #{email}
+      a#signout.btn.btn-outline-primary(href="") Выход из системы   
+    .pricing-header.px-3.py-3.pt-md-5.pb-md-4.mx-auto.text-center
+      h1.display-4 Система кадровой безопасности предприятия
+      p.lead
+        | Добро пожаловать!
+        user#userName
+        |  На данный момент вам доступно два этапа: тестирование,
+        |       анкетирование. Вам необходимо пройти данные этапы. Для начала нажмите на кнопку под этапом.
+    .container
+      .card-deck.mb-3.text-center
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Анкетирование
+          .card-body
+            ul.list-unstyled.mt-3.mb-4
+              li Заполните все данные
+
+            a.btn.btn-lg.btn-block.btn-outline-primary(href="/questionnaire") Начать
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Тестирование
+          .card-body
+            ul.list-unstyled.mt-3.mb-4
+              li Пройдите все доступные тесты
+
+            a.btn.btn-lg.btn-block.btn-outline-primary(href="/opentests") Начать
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Кейсы
+          .card-body
+            ul.list-unstyled.mt-1.mb-3
+              li Выведите проблемы и пути их решения
+
+            a.btn.btn-lg.btn-block.btn-outline-primary(href="/opencases") Начать
+
+    //
+      Bootstrap core JavaScript
+      ==================================================
+    // Placed at the end of the document so the pages load faster
+    script.
+      window.jQuery || document.write('<script src="/js/jquery.min.js"><\\/script>')
+    script(src='/js/bootstrap.min.js')
+    script(src='/js/popper.min.js')
+    script(src='/js/holder.min.js')
+    script(src="../javascripts/signout.js")

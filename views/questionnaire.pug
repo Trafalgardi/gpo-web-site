@@ -1,0 +1,790 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Анкетирование
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    // Custom styles for this template
+    link(href='../stylesheets/form-validation.css', rel='stylesheet')
+    link(href='../stylesheets/style.css', rel='stylesheet')
+    // Global site tag (gtag.js) - Google Analytics
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-153501513-1')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-153501513-1');
+    
+  body.bg-light
+    header
+      .d-flex.flex-column.flex-md-row.align-items-center.px-md-4.mb-3.bg-white.border-bottom.shadow-sm
+          h5.my-0.mr-md-auto.font-weight-normal СКБП
+          h5.my-0.mr-md-auto.font-weight-normal #{email}
+          a#signout.btn.btn-outline-primary(href="") Выход из системы   
+    section.jumbotron.text-center
+      .container
+          h1.jumbotron-heading Этап анкетирования
+          p.lead.text-muted
+              | На данном этапе вам предстоит заполнить информацию о себе.
+          p
+              a.btn.btn-primary.my-2(href='/homepage') На главную  
+    .container
+      .row
+        .col-md-12.order-md-1
+          form.needs-validation(action='addData', method='post')
+            .resume-block
+              h3 Основная часть
+              .basis-block
+                .row
+                  .col-md-4.mb-3
+                    label(for='gender') Пол
+                    select#gender.custom-select.d-block.w-100(name='gender' required='')
+                      option(value='Мужской') Мужской
+                      option(value='Женский') Женский
+                  .col-md-4.mb-3
+                    label(for='age') Возраст
+                    input#age.form-control(name='age' type='number', placeholder='', value='', required='')
+                  .col-md-4.mb-3
+                    label(for='registration') Гражданство
+                    select#registration.custom-select.d-block.w-100(name='registration' required='')
+                      option(value='гражданство РФ') гражданство РФ
+                      option(value='двойное гражданство (РФ и др.)') двойное гражданство (РФ и др.)
+                      //option(value='политический беженец (политическое убежище)') политический беженец (политическое убежище)
+                      option(value='лицо без гражданство') лицо без гражданство
+                      option(value='другое') другое
+                .row
+                  .col-9.mb-3.offset-md-1
+                    label(for='sp') Семейное положение
+                    select#sp.form-control(name='sp')
+                      option(value='замужем/женат', selected='selected') замужем/женат
+                      option(value='вдова/вдовец') вдова/вдовец
+                      option(value='не замужем/ холост') не замужем/ холост
+                      option(value='в разводе') в разводе
+                      option(value='сожительство') сожительство
+                  .col-md-9.mb-3.offset-md-1
+                    label(for='children') Есть ли у вас есть дети?
+                    select#deti.form-control(name='children', onchange="show(this.value, 'childrenBox')")
+                      option(value='true') Да
+                      option(value='false', selected='selected') Нет
+                  
+                  #childrenBox.col-md-9.mb-3.offset-md-1(style='display: none')
+                    label(for='detiInput', name='detiInput') Пожалуйста укажите сколько у вас детей
+                    input.form-control(name='childrenNumber', type="number", max = '10', min = '1', onchange="child(this.value)")
+                    p
+                      h4 Пожалуйста заполнити информацию по каждому ребенку
+                    
+                    #innerChildren.col-md-9.mb-3.offset-md-1
+                    
+                        
+                    
+                      
+              // Конец блока основная часть
+              h3 Изменения персональных данных
+              .change-block
+                //Начало первого блока (фамилия)
+                .row
+                  .col-md-5.mb-3
+                    input(name="change_0_0" value="Фамилия" style="display: none;")
+                    label(for='change_0_1') Вы меняли фамилию?
+                    select#change_1.custom-select.d-block.w-100(name='change_0_1', required='', onchange="show(this.value, 'cause_0')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+
+                  .col-md-6.mb-3#cause_0(style="display: none;")
+                    p По какой причине?
+                    .custom-control  
+                      input#changeCheckBox_0.custom-control-input(name='change_0_1_0', type='checkbox', value='в целях безопасности', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_0') в целях безопасности
+                      #changeCheckBox_0_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_0_2.form-control(name='change_0_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_1.custom-control-input(name='change_0_1_1', type='checkbox', value='в связи с вступлением в брак', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_1') в связи с вступлением в брак
+                      #changeCheckBox_1_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_1_2.form-control(name='change_0_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_2.custom-control-input(name='change_0_1_2', type='checkbox', value='усыновлен/удочерена', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_2') усыновлен/удочерена
+                      #changeCheckBox_2_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_2_2.form-control(name='change_0_1_2_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_3.custom-control-input(name='change_0_1_3', type='checkbox', value='по собственному желанию', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_3') по собственному желанию
+                      #changeCheckBox_3_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_3_2.form-control(name='change_0_1_3_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_4.custom-control-input(name='change_0_1_4', type='checkbox', value='иные причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_4') иные причины
+                      #changeCheckBox_4_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_4_2.form-control(name='change_0_1_4_1', type='number')
+                //конце первого блока (Фамилия)
+
+                //начало второго блока(имя)
+                .row
+
+                  .col-md-5.mb-3
+                    input(name="change_1_0" value="Имя" style="display: none;")
+                    label(for='change_1_1') Вы меняли имя?
+                    select#change_3.custom-select.d-block.w-100(name='change_1_1' required='', onchange="show(this.value, 'cause_1')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+                  .col-md-6.mb-3#cause_1(style="display: none;")
+                    p По какой причине?
+                    .custom-control  
+                      input#changeCheckBox_5.custom-control-input(name='change_1_1_0', type='checkbox', value='в целях безопасности', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_5') в целях безопасности
+                      #changeCheckBox_5_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_5_2.form-control(name='change_1_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_6.custom-control-input(name='change_1_1_1', type='checkbox', value='усыновлен/удочерена', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_6') усыновлен/удочерена
+                      #changeCheckBox_6_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_6_2.form-control(name='change_1_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_7.custom-control-input(name='change_1_1_2', type='checkbox', value='по собственному желанию', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_7') по собственному желанию
+                      #changeCheckBox_7_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_7_2.form-control(name='change_1_1_2_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_8.custom-control-input(name='change_1_1_3', type='checkbox', value='иные причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_8') иные причины
+                      #changeCheckBox_8_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_8_2.form-control(name='change_1_1_3_1', type='number')
+                        
+                //Конец второго блока (имя)
+
+                .row
+                  .col-md-5.mb-3
+                    input(name="change_2_0" value="Отчество" style="display: none;")
+                    label(for='change_2_1') Вы меняли отчество?
+                    select#change_5.custom-select.d-block.w-100(name='change_2_1', required='', onchange="show(this.value, 'cause_2')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+
+                  .col-md-6.mb-3#cause_2(style="display: none;")
+                    p По какой причине
+                    .custom-control  
+                      input#changeCheckBox_9.custom-control-input(name='change_2_1_0', type='checkbox', value='в целях безопасности', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_9') в целях безопасности
+                      #changeCheckBox_9_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_9_2.form-control(name='change_2_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_10.custom-control-input(name='change_2_1_1', type='checkbox', value='усыновлен/удочерена', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_10') усыновлен/удочерена
+                      #changeCheckBox_10_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_10_2.form-control(name='change_2_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_11.custom-control-input(name='change_2_1_2', type='checkbox', value='по собственному желанию', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_11') по собственному желанию
+                      #changeCheckBox_11_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_11_2.form-control(name='change_2_1_2_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_12.custom-control-input(name='change_2_1_3', type='checkbox', value='иные причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_12') иные причины
+                      #changeCheckBox_12_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_12_2.form-control(name='change_2_1_3_1', type='number')
+                .row
+                  .col-md-5.mb-3
+                    input(name="change_3_0" value="Дата рождения" style="display: none;")
+                    label(for='change_3_1') Вы меняли дату рождения?
+                    select#change_7.custom-select.d-block.w-100(name='change_3_1', required='', onchange="show(this.value, 'cause_3')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+
+                  .col-md-6.mb-3#cause_3(style="display: none;")
+                    p По какой причине
+                    .custom-control  
+                      input#changeCheckBox_13.custom-control-input(name='change_3_1_0', type='checkbox', value='в целях безопасности', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_13') в целях безопасности
+                      #changeCheckBox_13_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_13_2.form-control(name='change_3_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_14.custom-control-input(name='change_3_1_1', type='checkbox', value='ошибка оператора или регистратора', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_14') ошибка оператора или регистратора
+                      #changeCheckBox_14_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_14_2.form-control(name='change_3_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_15.custom-control-input(name='change_3_1_2', type='checkbox', value='по собственному желанию', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_15') по собственному желанию
+                      #changeCheckBox_15_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_15_2.form-control(name='change_3_1_2_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_16.custom-control-input(name='change_3_1_3', type='checkbox', value='иные причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_16') иные причины
+                      #changeCheckBox_16_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_16_2.form-control(name='change_3_1_3_1', type='number')
+                .row
+                  .col-md-5.mb-3
+                    input(name="change_4_0" value="Место регистрации" style="display: none;")
+                    label(for='change_4_1') Вы меняли место регистрации?
+                    select#change_9.custom-select.d-block.w-100(name='change_4_1', required='', onchange="show(this.value, 'cause_4')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+
+                  .col-md-6.mb-3#cause_4(style="display: none;")
+                    p По какой причине
+                    .custom-control  
+                      input#changeCheckBox_17.custom-control-input(name='change_4_1_0', type='checkbox', value='в целях безопасности', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_17') в целях безопасности
+                      #changeCheckBox_17_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_17_2.form-control(name='change_4_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_18.custom-control-input(name='change_4_1_1', type='checkbox', value='в связи с покупкой жилья', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_18') в связи с покупкой жилья
+                      #changeCheckBox_18_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_18_2.form-control(name='change_4_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_19.custom-control-input(name='change_4_1_2', type='checkbox', value='в связи со сменой работы', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_19') в связи со сменой работы
+                      #changeCheckBox_19_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_19_2.form-control(name='change_4_1_2_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_20.custom-control-input(name='change_4_1_3', type='checkbox', value='в связи с состоянием здоровья', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_20') в связи с состоянием здоровья
+                      #changeCheckBox_20_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_20_2.form-control(name='change_4_1_3_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_21.custom-control-input(name='change_4_1_4', type='checkbox', value='семейные обстоятельства', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_21') семейные обстоятельства
+                      #changeCheckBox_21_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_21_2.form-control(name='change_4_1_4_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_22.custom-control-input(name='change_4_1_5', type='checkbox', value='личные цели', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_22') личные цели
+                      #changeCheckBox_22_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_22_2.form-control(name='change_4_1_5_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_23.custom-control-input(name='change_4_1_6', type='checkbox', value='иные причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_23') иные причины
+                      #changeCheckBox_23_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_23_2.form-control(name='change_4_1_6_1', type='number')
+
+                .row
+                  .col-md-5.mb-3
+                    input(name="change_5_0" value="Место жительства" style="display: none;")
+                    label(for='change_5_1') Вы меняли место жительства?
+                    select#change_11.custom-select.d-block.w-100(name='change_5_1', required='', onchange="show(this.value, 'cause_5')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+
+                  .col-md-6.mb-3#cause_5(style="display: none;")
+                    p По какой причине
+                    .custom-control  
+                      input#changeCheckBox_24.custom-control-input(name='change_5_1_0', type='checkbox', value='в целях безопасности', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_24') в целях безопасности
+                      #changeCheckBox_24_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_24_2.form-control(name='change_5_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_25.custom-control-input(name='change_5_1_1', type='checkbox', value='в связи с покупкой жилья', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_25') в связи с покупкой жилья
+                      #changeCheckBox_25_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_25_2.form-control(name='change_5_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_26.custom-control-input(name='change_5_1_2', type='checkbox', value='в связи со сменой работы', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_26') в связи со сменой работы
+                      #changeCheckBox_26_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_26_2.form-control(name='change_5_1_2_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_27.custom-control-input(name='change_5_1_3', type='checkbox', value='в связи с состоянием здоровья', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_27') в связи с состоянием здоровья
+                      #changeCheckBox_27_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_27_2.form-control(name='change_5_1_3_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_28.custom-control-input(name='change_5_1_4', type='checkbox', value='семейные обстоятельства', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_28') семейные обстоятельства
+                      #changeCheckBox_28_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_28_2.form-control(name='change_5_1_4_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_29.custom-control-input(name='change_5_1_5', type='checkbox', value='личные цели', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_29') личные цели
+                      #changeCheckBox_29_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_29_2.form-control(name='change_5_1_5_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_30.custom-control-input(name='change_5_1_6', type='checkbox', value='иные причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_30') иные причины
+                      #changeCheckBox_30_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_30_2.form-control(name='change_5_1_6_1', type='number')
+                .row
+                  .col-md-5.mb-3
+                    input(name="change_6_0" value="Номер мобильного телефона" style="display: none;")
+                    label(for='change_6_1') Вы меняли номер мобильного телефона?
+                    select#change_13.custom-select.d-block.w-100(name='change_6_1', required='', onchange="show(this.value, 'cause_6')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+
+                  .col-md-6.mb-3#cause_6(style="display: none;")
+                    p По какой причине
+                    .custom-control  
+                      input#changeCheckBox_31.custom-control-input(name='change_6_1_0', type='checkbox', value='в целях безопасности', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_31') в целях безопасности
+                      #changeCheckBox_31_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_31_2.form-control(name='change_6_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_32.custom-control-input(name='change_6_1_1', type='checkbox', value='в связи с переездом в другой регион/страну', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_32') в связи с переездом в другой регион/страну
+                      #changeCheckBox_32_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_32_2.form-control(name='change_6_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_33.custom-control-input(name='change_6_1_2', type='checkbox', value='в связи с потерей сим. карты', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_33') в связи с потерей сим. карты
+                      #changeCheckBox_33_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_33_2.form-control(name='change_6_1_2_1',type='number')
+                    .custom-control  
+                      input#changeCheckBox_34.custom-control-input(name='change_6_1_3', type='checkbox', value='личные цели', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_34') личные цели
+                      #changeCheckBox_34_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_34_2.form-control(name='change_6_1_3_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_35.custom-control-input(name='change_6_1_4', type='checkbox', value='иные причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_35') иные причины
+                      #changeCheckBox_35_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_35_2.form-control(name='change_6_1_4_1', type='number')
+
+                .row
+                  .col-md-5.mb-3
+                    input(name="change_7_0" value="E-mail" style="display: none;")
+                    label(for='change_7_1') Вы меняли e-mail?
+                    select#change_15.custom-select.d-block.w-100(name='change_7_1', required='', onchange="show(this.value, 'cause_7')")
+                      option(value='true') Да
+                      option(selected='', value='false') Нет
+
+                  .col-md-6.mb-3#cause_7(style="display: none;")
+                    p По какой причине
+                    .custom-control  
+                      input#changeCheckBox_36.custom-control-input(name='change_7_1_0', type='checkbox', value='личная и корпоративная почта', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_36') личная и корпоративная почта
+                      #changeCheckBox_36_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_36_2.form-control(name='change_7_1_0_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_37.custom-control-input(name='change_7_1_1', type='checkbox', value='в связи с работой в разных организациях', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_37') в связи с работой в разных организациях
+                      #changeCheckBox_37_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_37_2.form-control(name='change_7_1_1_1', type='number')
+                    .custom-control
+                      input#changeCheckBox_38.custom-control-input(name='change_7_1_2', type='checkbox', value='спам/бан', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_38') спам/бан
+                      #changeCheckBox_38_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_38_2.form-control(name='change_7_1_2_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_39.custom-control-input(name='change_7_1_3', type='checkbox', value='утеря пароля и невозможность его восстановления', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_39') утеря пароля и невозможность его восстановления
+                      #changeCheckBox_39_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_39_2.form-control(name='change_7_1_3_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_40.custom-control-input(name='change_7_1_4', type='checkbox', value='в связи с необходимостью создания нескольких аккаунтов в социальной сети', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_40') в связи с необходимостью создания нескольких аккаунтов в социальной сети
+                      #changeCheckBox_40_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_40_2.form-control(name='change_7_1_4_1', type='number')
+                    .custom-control  
+                      input#changeCheckBox_41.custom-control-input(name='change_7_1_5', type='checkbox', value='другие причины', onchange="changed(this)")
+                      label.custom-control-label(for='changeCheckBox_41') другие причины
+                      #changeCheckBox_41_1(style='display: none; margin-left: 20px;')
+                        label  Укажите сколько раз вы меняли по этой причине
+                        input#changeCheckBox_41_2.form-control(name='change_7_1_5_1', type='number')
+
+              // Конец блока меняли ли вы...
+              h3 Водительское удостоверение
+              .row.driver-block
+                .col-md-5.mb-3
+                  label(for='drive_0') Имеете ли вы водительское удостоверение?
+                  select#drive_0.custom-select.d-block.w-100(required='', onchange='checkSelect(document.getElementById("drive_0").value)', name="drive")
+                    option(value='Да') Да
+                    option(selected='', value='Нет') Нет
+                #innerDrive    
+                  
+              // Конец блока про водительское удостоверение
+
+              .education-block
+                h3 Базовое образование
+                p
+                  h6 Высшее образование
+                
+
+                .custom-control
+                  input#checkbox_1.custom-control-input(name="education_1", type='checkbox', value='Бакалавриат', onchange="checkBox('checkbox_at_1', this.checked, 'check_avr_1')" )
+                  label.custom-control-label(for='checkbox_1' style='margin-left: 25px;') Бакалавриат
+                  #checkbox_at_1(style='display: none;')
+                    label  Средний балл
+                    input#check_avr_1.form-control(name="education_1_0", type='number', step="0.01")
+                .custom-control
+                  input#checkbox_2.custom-control-input(name="education_2", type='checkbox', value='Магистратура', onchange="checkBox('checkbox_at_2', this.checked, 'check_avr_2')" )
+                  label.custom-control-label(for='checkbox_2' style="margin-left: 25px;") Магистратура
+                  #checkbox_at_2(style='display: none;')
+                    label  Средний балл
+                    input#check_avr_2.form-control(name="education_2_0", type='number', step="0.01")
+                .custom-control
+                  input#checkbox_3.custom-control-input(name="education_3", type='checkbox', value='Специалитет', onchange="checkBox('checkbox_at_3', this.checked, 'check_avr_3')" )
+                  label.custom-control-label(for='checkbox_3' style="margin-left: 25px;") Специалитет
+                  #checkbox_at_3(style='display: none;')
+                    label  Средний балл
+                    input#check_avr_3.form-control(name="education_3_0", type='number', step="0.01")
+                    //ОСТОРОЖНО ОЧЕНЬ ПЛОХОЙ КОД
+                .custom-control
+                  input#checkbox_0.custom-control-input(name="education_0", type='checkbox', value='Подготовка кадров высшей квалификации', onchange="checkBox('checkbox_at_0', this.checked, 'check_avr_0')" )
+                  label.custom-control-label(for='checkbox_0' style='margin-left: 25px;') Подготовка кадров высшей квалификации
+                  #checkbox_at_0(style='display: none;')
+                    label  Средний балл
+                    input#check_avr_1.form-control(name="education_0_0", type='number', step="0.01")
+
+                p
+                  h6 Направление подготовки
+                .custom-control
+                  input#checkbox_4.custom-control-input(name="education_4", type='checkbox', value='Гуманитарное' )
+                  label.custom-control-label(for='checkbox_4' style='margin-left: 25px;') Гуманитарное
+                  
+                .custom-control
+                  input#checkbox_5.custom-control-input(name="education_5", type='checkbox', value='Педагогическое' )
+                  label.custom-control-label(for='checkbox_5' style="margin-left: 25px;") Педагогическое
+                  
+                .custom-control
+                  input#checkbox_6.custom-control-input(name="education_6", type='checkbox', value='В области управления' )
+                  label.custom-control-label(for='checkbox_6' style="margin-left: 25px;") В области управления
+
+                .custom-control
+                  input#checkbox_7.custom-control-input(name="education_7", type='checkbox', value='Управление проектами' )
+                  label.custom-control-label(for='checkbox_7' style="margin-left: 25px;") Управление проектами
+
+                .custom-control
+                  input#checkbox_8.custom-control-input(name="education_8", type='checkbox', value='Техническое' )
+                  label.custom-control-label(for='checkbox_8' style="margin-left: 25px;") Техническое
+
+                p
+                  h6 Ученая степень
+                .custom-control
+                  input#checkbox_9.custom-control-input(name="education_9", type='checkbox', value='Кандитат наук' )
+                  label.custom-control-label(for='checkbox_9' style='margin-left: 25px;') Кандитат наук
+                  
+                .custom-control
+                  input#checkbox_10.custom-control-input(name="education_10", type='checkbox', value='Доктор наук' )
+                  label.custom-control-label(for='checkbox_10' style="margin-left: 25px;") Доктор наук
+                  
+                .custom-control
+                  input#checkbox_11.custom-control-input(name="education_11", type='checkbox', value='PhD' )
+                  label.custom-control-label(for='checkbox_11' style="margin-left: 25px;") PhD
+                p
+                  h6 Проходили ли вы профессиональную переподготовку?
+                .custom-control
+                  select#prof.custom-select.d-block.w-100(name="education_12", style='margin-bottom: 20px;' onchange='check(this.value)')
+                    option(value='Да') Да
+                    option(value='Нет', selected='selected') Нет
+                  #hide(style="display: none;")
+                    p
+                      h6 По какому направлению
+                    .custom-control
+                      input#prof_0.custom-control-input(name="education_14", type='checkbox', value='Гуманитарное' )
+                      label.custom-control-label(for='prof_0' style="margin-left: 25px;") Гуманитарное
+                      
+                    .custom-control
+                      input#prof_1.custom-control-input(name="education_15", type='checkbox', value='Педагогическое' )
+                      label.custom-control-label(for='prof_1' style="margin-left: 25px;") Педагогическое
+                      
+                    .custom-control
+                      input#prof_2.custom-control-input(name="education_16", type='checkbox', value='В области управления' )
+                      label.custom-control-label(for='prof_2' style="margin-left: 25px;") В области управления
+    
+                    .custom-control
+                      input#prof_3.custom-control-input(name="education_17", type='checkbox', value='Управление проектами' )
+                      label.custom-control-label(for='prof_3' style="margin-left: 25px;") Управление проектами
+
+                    .custom-control
+                      input#prof_4.custom-control-input(name="education_18", type='checkbox', value='Техническое' )
+                      label.custom-control-label(for='prof_4' style="margin-left: 25px;") Техническое
+
+              // Конец блока про образование
+              p
+                h3 Отношение к воинской обязанности
+              .row.military-block
+                .col-md-6.mb-3
+                  label(for='militarySelectId') Отношение к воинской обязанности
+                  select#militarySelectId.custom-select.d-block.w-100(name='militarySelect', onchange='military(this.value)')
+                    option(value='Невоеннообязанный', selected='selected') Невоеннообязанный
+                    option(value='Военнообязанный') Военнообязанный
+                #notMilitary.col-md-6.mb-3
+                  label(for='notMilitarySelectId') По какой причине?
+                  select#notMilitarySelectId.form-control(name='notMilitarySelect')
+                    option(value='нет', selected='') Выберети из списка...
+                    option(value='по медицинским показателям') по медицинским показателям
+                    option(value='наличие непогашенной судимости') наличие непогашенной судимости
+                    option(value='другое') другое
+                #yesMilitary.col-md-6.mb-3(style='display: none;')
+                  div
+                    label(for='yesMilitarySelectId') Военнообязанный
+                    select#yesMilitarySelectId.form-control(name='yesMilitarySelect', onchange='militaryAge(this.value)')
+                      option(value='нет', selected='') Выберети из списка...
+                      option(value='прошедшие военную службу по контракту') прошедший военную службу по контракту
+                      option(value='прошедшие срочную военную службу') прошедшие военную службу
+                      option(value='прошедшие альтернативную гражданскую службу') прошедшие альтернативную гражданскую службу
+                      option(value='призывного возраста') призывного возраста
+                      option(value='другое') другое
+                #yesMilitaryRankId.col-md-6.mb-3(style='display: none;')
+                  label(for='yesMilitaryRankSelectId') Воинское звания
+                  select#yesMilitaryRankSelectId.form-control(name='yesMilitaryRankSelect')
+                    option(value='нет', selected='') Выберети из списка...
+                    option(value='солдаты/матросы') солдаты/матросы
+                    option(value='сержанты/старшины') сержанты/старшины
+                    option(value='прапорщики/мичманы') прапорщики/мичманы
+                    option(value='младший офицерский состав') младший офицерский состав
+                    option(value='Старший офицерский состав') Старший офицерский состав
+                    option(value='Высший офицерский состав') Высший офицерский состав
+                
+              // Конец военного блока
+              h3 Иностранные языки
+              .row.languages-block
+                .col-md-12
+                  button#firstbtn.btn.btn-primary(type='button', onclick='languageAdd(this)')
+                    i.fa.fa-plus(aria-hidden='true')
+                    |  Добавить
+                  #innerLanguage.row
+                  input#innerNumber(name="langNubmer",style='display: none', value='-1') 
+                  // Конец языкового блока
+              h3 Учёная степень
+              .row.academic-degree-block
+                .col-md-12
+                  // <a href="#" class="btn btn-primary academic-degree-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                  #academic_degree_items
+                    #academic_degree_item_1.academic-degree-item
+                      .row
+                        .form-group.label-inline.col-md-6
+                          label(for='academic_degree_doc_id_1') Доктор наук
+                          select#academic_degree_doc_id_1.form-control.academic_degree_doc(name='academic_degree_doc_1', style='padding-left: 150px;')
+                            option(value='', disabled='', selected='') ---
+                            option(value='архитектурных наук') архитектурных наук
+                            option(value='технических наук') технических наук
+                            option(value='физико-математических') физико-математических
+                            option(value='ветеринарных наук') ветеринарных наук
+                            option(value='медицинских наук') медицинских наук
+                            option(value='биологических наук') биологических наук
+                            option(value='географических наук') географических наук
+                            option(value='геолого - минералогических наук') геолого - минералогических наук
+                            option(value='сельскохозяйственных наук') сельскохозяйственных наук
+                            option(value='химических наук') химических наук
+                            option(value='военных наук') военных наук
+                            option(value='искусствоведческих наук') искусствоведческих наук
+                            option(value='исторических наук') исторических наук
+                            option(value='культурологии') культурологии
+                            option(value='политологических наук') политологических наук
+                            option(value='психологических наук') психологических наук
+                            option(value='социологических наук') социологических наук
+                            option(value='филологических наук') филологических наук
+                            option(value='философских наук') философских наук
+                            option(value='экономических наук') экономических наук
+                            option(value='юридических наук') юридических наук
+                            option(value='педагогических наук') педагогических наук
+                        .form-group.label-inline.col-md-6
+                          label(for='academic_degree_candidate_id_1') Кандидат наук
+                          select#academic_degree_candidate_id_1.form-control.action-change(name='academic_degree_candidate_1', style='padding-left: 150px;')
+                            option(value='', disabled='', selected='') ---
+                            option(value='архитектурных наук') архитектурных наук
+                            option(value='технических наук') технических наук
+                            option(value='физико-математических') физико-математических
+                            option(value='ветеринарных наук') ветеринарных наук
+                            option(value='медицинских наук') медицинских наук
+                            option(value='биологических наук') биологических наук
+                            option(value='географических наук') географических наук
+                            option(value='геолого - минералогических наук') геолого - минералогических наук
+                            option(value='сельскохозяйственных наук') сельскохозяйственных наук
+                            option(value='химических наук') химических наук
+                            option(value='военных наук') военных наук
+                            option(value='искусствоведческих наук') искусствоведческих наук
+                            option(value='исторических наук') исторических наук
+                            option(value='культурологии') культурологии
+                            option(value='политологических наук') политологических наук
+                            option(value='психологических наук') психологических наук
+                            option(value='социологических наук') социологических наук
+                            option(value='филологических наук') филологических наук
+                            option(value='философских наук') философских наук
+                            option(value='экономических наук') экономических наук
+                            option(value='юридических наук') юридических наук
+                            option(value='педагогических наук') педагогических наук
+                      // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                      // Конец блока ученной степени
+                      h3 Опыт работы
+                      .row.work_experience-block
+                        .col-md-12
+                          // <a href="#" class="btn btn-primary work_experience-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                          #work_experience_items
+                              #work_experience_item_1.work_experience-item
+                                .form-group.label-inline.col-md-6(style='padding-left: 0px;')
+                                  label(for='work_experience_id') Имеется ли у вас опыт работы?
+                                  select#work_experience_id.form-control.work_experience(name='work_experience', style='padding-left: 350px;')
+                                    option(value='нет', selected='selected') нет
+                                    option(value='да') да
+                      // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                      // Конец блока про опыт
+                      h3 Стаж
+                      .row.experience-block
+                        .col-md-12
+                          // <a href="#" class="btn btn-primary experience-link"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                          #experience_items
+                            #experience_item_1.experience-item
+                              .row
+                                .form-group.label-inline.col-md-6
+                                  label(for='experience_id_1') Общий стаж
+                                  select#experience_id_1.form-control.experience(name='experience_0', style='padding-left: 220px;')
+                                    option(value='0', selected='selected') нет
+                                    option(value='1') 1 год
+                                    option(value='2') 2 года
+                                    option(value='3') 3 года
+                                    option(value='4') 4 года
+                                    option(value='5') 5 лет
+                                    option(value='6') 6 лет
+                                    option(value='7') 7 лет
+                                    option(value='8') 8 лет
+                                    option(value='9') 9 лет
+                                    option(value='10') Более 10 лет
+                                .form-group.label-inline.col-md-6
+                                  label(for='experience_id_2') По специальности
+                                  select#experience_id_2.form-control.action-change(name='experience_1', style='padding-left: 220px;')
+                                    option(value='0', selected='selected') нет
+                                    option(value='1') 1 год
+                                    option(value='2') 2 года
+                                    option(value='3') 3 года
+                                    option(value='4') 4 года
+                                    option(value='5') 5 лет
+                                    option(value='6') 6 лет
+                                    option(value='7') 7 лет
+                                    option(value='8') 8 лет
+                                    option(value='9') 9 лет
+                                    option(value='10') Более 10 лет
+                                .form-group.label-inline.col-md-6
+                                  label(for='experience_id_3') Управленческий стаж
+                                  select#experience_id_3.form-control.action-change(name='experience_2', style='padding-left: 220px;')
+                                    option(value='0', selected='selected') нет
+                                    option(value='1') 1 год
+                                    option(value='2') 2 года
+                                    option(value='3') 3 года
+                                    option(value='4') 4 года
+                                    option(value='5') 5 лет
+                                    option(value='6') 6 лет
+                                    option(value='7') 7 лет
+                                    option(value='8') 8 лет
+                                    option(value='9') 9 лет
+                                    option(value='10') Более 10 лет
+                                .form-group.label-inline.col-md-6
+                                  label(for='experience_id_4') Педагогический стаж
+                                  select#experience_id_4.form-control.action-change(name='experience_3', style='padding-left: 220px;')
+                                    option(value='0', selected='selected') нет
+                                    option(value='1') 1 год
+                                    option(value='2') 2 года
+                                    option(value='3') 3 года
+                                    option(value='4') 4 года
+                                    option(value='5') 5 лет
+                                    option(value='6') 6 лет
+                                    option(value='7') 7 лет
+                                    option(value='8') 8 лет
+                                    option(value='9') 9 лет
+                                    option(value='10') Более 10 лет
+                                .form-group.label-inline.col-md-6
+                                  label(for='experience_id_5') Управление проектами
+                                  select#experience_id_5.form-control.action-change(name='experience_4', style='padding-left: 220px;')
+                                    option(value='0', selected='selected') нет
+                                    option(value='1') 1 год
+                                    option(value='2') 2 года
+                                    option(value='3') 3 года
+                                    option(value='4') 4 года
+                                    option(value='5') 5 лет
+                                    option(value='6') 6 лет
+                                    option(value='7') 7 лет
+                                    option(value='8') 8 лет
+                                    option(value='9') 9 лет
+                                    option(value='10') Более 10 лет
+                                .form-group.label-inline.col-md-6
+                                  label(for='experience_id_6') Не по специальности
+                                  select#experience_id_6.form-control.action-change(name='experience_5', style='padding-left: 220px;')
+                                    option(value='0', selected='selected') нет
+                                    option(value='1') 1 год
+                                    option(value='2') 2 года
+                                    option(value='3') 3 года
+                                    option(value='4') 4 года
+                                    option(value='5') 5 лет
+                                    option(value='6') 6 лет
+                                    option(value='7') 7 лет
+                                    option(value='8') 8 лет
+                                    option(value='9') 9 лет
+                                    option(value='10') Более 10 лет
+                                .form-group.label-inline.col-md-6
+                                  label(for='experience_id_7') Рабочие специальности
+                                  select#experience_id_7.form-control.action-change(name='experience_6', style='padding-left: 220px;')
+                                    option(value='0', selected='selected') нет
+                                    option(value='1') 1 год
+                                    option(value='2') 2 года
+                                    option(value='3') 3 года
+                                    option(value='4') 4 года
+                                    option(value='5') 5 лет
+                                    option(value='6') 6 лет
+                                    option(value='7') 7 лет
+                                    option(value='8') 8 лет
+                                    option(value='9') 9 лет
+                                    option(value='10') Более 10 лет
+                              // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
+                              // Конец блока про стаж
+              .basis-block
+                .row
+                  .col-md-12.mb-3
+                    label(for='leaderID') Ссылка на ваш профиль в  Leader-ID
+                    input#leaderID.form-control(name='leader_id' type='text', placeholder='https://leader-id.ru/', value='', required='')
+              hr.mb-4
+              button#submit.btn.btn-primary.btn-lg.btn-block(type='submit') Отправить данные
+      
+      footer.my-5.pt-5.text-muted.text-center.text-small
+        p.mb-1 © 2017-2018 Burning Knight
+        ul.list-inline
+          li.list-inline-item
+            a(href='#') Privacy
+          li.list-inline-item
+            a(href='#') Terms
+          li.list-inline-item
+            a(href='#') Support
+    //
+      Bootstrap core JavaScript
+      ==================================================
+    // Placed at the end of the document so the pages load faster
+    script.
+      window.jQuery || document.write('<script src="/js/jquery.min.js"><\\/script>')
+    script(src='/js/bootstrap.min.js')
+    script(src='/js/popper.min.js')
+    script(src='/js/holder.min.js')
+    script(src='../javascripts/main.js')
+    script(src="../javascripts/signout.js")

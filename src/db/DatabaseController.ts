@@ -5,19 +5,20 @@ export default class DatabaseController{
     public get Pool(): mysql.Pool{
         return this.pool;
     }
-    constructor(host: string, database: string, user: string, password: string){
+    constructor(host: string, db: string, user: string, password: string){
         this.pool = mysql.createPool({
             connectionLimit: 10,
             host: host,
             user: user,
             password: password,
-            database: database
+            database: db
         })
         this.conn();
     }
 
     private conn() {
         this.pool.getConnection((err: mysql.MysqlError, connection: mysql.PoolConnection) => {
+            
             console.log("Database connected!");
             if (err) {
                 if (err.code === 'PROTOCOL_CONNECTION_LOST') {

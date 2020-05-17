@@ -4,14 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const UserDataProviders_1 = __importDefault(require("./UserDataProviders"));
-const database_1 = __importDefault(require("../db/database"));
+const DatabaseController_1 = __importDefault(require("../db/DatabaseController"));
 class ApplicationDataProvider {
     constructor() {
-        let host;
-        let database;
-        let user;
-        let password;
-        let pool = new database_1.default(host, database, user, password).Pool;
+        let host = 'localhost';
+        let database = 'RecommendationSystem';
+        let user = 'usrgpo';
+        let password = 'PhyGyisHNs}{2DU';
+        let pool = new DatabaseController_1.default(host, database, user, password).Pool;
         this.storage = this.getProviders()
             .map(provider => new provider(pool));
     }

@@ -1,7 +1,10 @@
+import bodyParser from 'body-parser';
 import ApplicationDataProvider from "./providers/ApplicationDataProvider";
 import IAppConfig from "./configs/IAppConfig";
 import express from 'express'
 import AppRoutes from "./routes/AppRoutes";
+import cookieParser from 'cookie-parser';
+
 export default class App {
   private static mInstance: App;
   public static get Instance(): App {
@@ -21,7 +24,13 @@ export default class App {
   }
 
   run(): void {
-    
+  
+    this.expApp.set('port', process.env.port || this.config.port); // set express to use this port
+    this.expApp.use(bodyParser.json()); // parse form data client
+    this.expApp.use(bodyParser.urlencoded({
+        extended: true
+    }));
+    this.expApp.use(cookieParser())
 
     this.dataProvireds = new ApplicationDataProvider();
 

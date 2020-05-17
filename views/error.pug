@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  .cover-container.d-flex.w-100.h-100.p-3.mx-auto.flex-column
+    header.masthead.mb-auto
+      .inner
+        h3.masthead-brand Registration error
+        
+    main.inner.cover(role='main')
+      h1.cover-heading=error.status
+      p.lead
+        | #{error.message}
+      p.lead
+        a.btn.btn-lg.btn-secondary(href='/reg') Вернуться назад
+    footer.mastfoot.mt-auto
+      .inner
+        p
+          
+
