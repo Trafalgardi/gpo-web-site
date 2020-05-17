@@ -10,7 +10,6 @@ const WebClientRoute: IAppRoute = {
 
         return router()
             .get('/signin', (req: Request, res: Response) => {
-                
                 res.render('signin');
             })
             .post('/signin', (req: Request, res: Response) => {
