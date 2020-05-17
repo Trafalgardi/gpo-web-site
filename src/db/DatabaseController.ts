@@ -5,6 +5,10 @@ export default class DatabaseController{
     public get Pool(): mysql.Pool{
         return this.pool;
     }
+    private connection: mysql.PoolConnection;
+    public format(sql: string, values: any[], stringifyObjects? : boolean, timeZone?: string){
+        return this.connection.format(sql, values, stringifyObjects, timeZone)
+    }
     constructor(host: string, db: string, user: string, password: string){
         this.pool = mysql.createPool({
             connectionLimit: 10,
@@ -31,7 +35,10 @@ export default class DatabaseController{
                     console.error('Database connection was refused.')
                 }
             }
-            if (connection) connection.release(); 
+            if (connection) {
+                connection.release(); 
+                this.connection = connection;
+            }
         });
     }
 }

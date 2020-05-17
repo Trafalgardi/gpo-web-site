@@ -10,9 +10,9 @@ export default class ApplicationDataProvider{
         let database = 'RecommendationSystem';
         let user = 'usrgpo';
         let password = 'PhyGyisHNs}{2DU'; //fkx8ZepaJEtS2xy //vMETuklX1HC4vX1g MySql auth  vMETuklX1HC4vX1g
-        let pool = new DatabaseController(host, database, user, password).Pool;
+        let dbController = new DatabaseController(host, database, user, password);
         this.storage = this.getProviders()
-            .map(provider => new provider(pool));
+            .map(provider => new provider(dbController));
     }
 
     getInstanceProvider(type: any) : any | null{

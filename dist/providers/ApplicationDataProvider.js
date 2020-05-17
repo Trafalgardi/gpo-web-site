@@ -12,9 +12,9 @@ class ApplicationDataProvider {
         let database = 'RecommendationSystem';
         let user = 'usrgpo';
         let password = 'PhyGyisHNs}{2DU';
-        let pool = new DatabaseController_1.default(host, database, user, password).Pool;
+        let dbController = new DatabaseController_1.default(host, database, user, password);
         this.storage = this.getProviders()
-            .map(provider => new provider(pool));
+            .map(provider => new provider(dbController));
     }
     getInstanceProvider(type) {
         let items = this.storage.filter(provider => {

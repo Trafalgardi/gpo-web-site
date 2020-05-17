@@ -10,7 +10,11 @@ const UserRoute = {
         let app = app_1.default.Instance;
         let AutCtrl = new AuthController_1.default(app);
         return router()
-            .get('/', (req, res) => {
+            .post('/selectUser', (req, res) => {
+            AutCtrl.selectUser(req, res);
+        })
+            .post('/regUser', (req, res) => {
+            AutCtrl.regUser(req, res);
         });
     }
 };
