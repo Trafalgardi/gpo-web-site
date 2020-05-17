@@ -1,0 +1,32 @@
+{
+  "name": "gpo-web-site",
+  "version": "1.0.0",
+  "description": "Enterprise Security System",
+  "main": "index.ts",
+  "dependencies": {
+    "@types/mysql": "^2.15.11",
+    "express": "^4.16.4",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "compile": "tsc",
+    "dev": "nodemon -e ts  --exec \"npm run compile\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trafalgardi/gpo-web-site.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trafalgardi/gpo-web-site/issues"
+  },
+  "homepage": "https://github.com/Trafalgardi/gpo-web-site#readme"
+}
