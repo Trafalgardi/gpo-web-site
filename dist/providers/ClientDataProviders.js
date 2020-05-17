@@ -31,26 +31,32 @@ class ClientDataProviders extends DataProviderBase_1.default {
         });
     }
     getUsers() {
-        let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
-        this.dbConnection.query(sql, function (error, results, fields) {
-            if (error || results == "") {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
+            try {
+                let rows = yield this.query(sql);
+                if (rows == "") {
+                    return null;
+                }
+                let data = [];
+                for (let i = 0; i < rows.length; i++) {
+                    const element = rows[i];
+                    let item = {
+                        id: element.id,
+                        email: element.email,
+                        date: element.date,
+                        anketaData: element.anketaData,
+                        anketaResult: element.anketaResult
+                    };
+                    data.push(item);
+                }
+                return data;
+            }
+            catch (e) {
+                console.log(e);
                 return null;
             }
-            let data = [results[0].length];
-            for (let i = 0; i < results[0].length; i++) {
-                const element = results[0][i];
-                let item = {
-                    id: element.id,
-                    email: element.email,
-                    date: element.date,
-                    anketaData: element.anketaData,
-                    anketaResult: element.anketaResult
-                };
-                data.push(item);
-            }
-            return data;
         });
-        return null;
     }
     getUserTests(userId) {
         let data;

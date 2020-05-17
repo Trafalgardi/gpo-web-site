@@ -4,34 +4,34 @@ import util from 'util';
 
 export default class ClientDataProviders extends DataProviderBase {
 
-    async selectUser(login: string): | null | Promise<{ rules: string, passwordHash: string }> { // 
+    async selectUser(login: string): Promise<{ rules: string, passwordHash: string }> | null  { // 
         const sql = "SELECT `rules`, `password` FROM `client_users` WHERE `login`='" + login + "' LIMIT 1";
-        try{
+        try {
             let rows = await this.query(sql);
             let data = rows[0];
-            if (data == ""){
+            if (data == "") {
                 return null;
             }
             return { rules: data.rules, passwordHash: data.password };
 
         }
-        catch(e){
+        catch (e) {
             console.log(e);
             return null;
         }
     }
 
-    getUsers(): [{ id: number, email: string, date: string, anketaData: any, anketaResult: number }] | null {
+    async getUsers(): Promise<any[]> | null {
         let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
-        this.dbConnection.query(sql, function (error: MysqlError, results: any, fields: FieldInfo[]) {
-            if (error || results == "") {
+        try {
+            let rows = await this.query(sql)
+            if (rows == "") {
                 return null;
             }
+            let data: any[] = []
 
-            let data = [results[0].length];
-
-            for (let i = 0; i < results[0].length; i++) {
-                const element = results[0][i];
+            for (let i = 0; i < rows.length; i++) {
+                const element = rows[i];
                 let item = {
                     id: element.id,
                     email: element.email,
@@ -43,8 +43,11 @@ export default class ClientDataProviders extends DataProviderBase {
             }
 
             return data;
-        });
-        return null;
+        }
+        catch (e) {
+            console.log(e)
+            return null;
+        }
     }
 
     getUserTests(userId: number): any {

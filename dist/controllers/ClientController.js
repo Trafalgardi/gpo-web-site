@@ -12,10 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SecurityService_1 = __importDefault(require("../services/SecurityService"));
+const ClientRules_1 = require("../Enums/ClientRules");
 class ClientController {
     constructor(app) {
         this.app = app;
         this.clientDataProvider = this.app.providers.client;
+    }
+    checkToken(req, res, next, targetRules) {
+        let token = req.headers['access_token'];
+        let payload = SecurityService_1.default.verifyToken(token);
+        let isValid = false;
+        if (payload != null) {
+            let rulesString = payload.rules;
+            let currentRules = ClientRules_1.ClientRules[rulesString];
+            isValid = currentRules >= targetRules;
+        }
+        if (isValid) {
+            next();
+        }
+        else {
+            res.json({ msg: "Ошибка авторизации", error: 401 });
+        }
+        console.log("isValidUser: " + isValid);
     }
     authorization(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -43,14 +61,11 @@ class ClientController {
             res.json(token);
         });
     }
-    checkToken(req, res, next) {
-        let isValid = true;
-        if (isValid) {
-            next();
-        }
-        else {
-            res.sendStatus(406);
-        }
+    GetUsers(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let users = yield this.clientDataProvider.getUsers();
+            res.json(users);
+        });
     }
 }
 exports.default = ClientController;

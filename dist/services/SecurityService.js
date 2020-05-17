@@ -19,12 +19,20 @@ class SecurityService {
         return token;
     }
     static verifyToken(token) {
-        let error, data = jsonwebtoken_1.default.verify(token, this.TOKEN_SECRET_KEY);
-        if (error) {
-            console.log(error);
+        if (token == null || token == "" || token === undefined)
+            return null;
+        try {
+            let error, data = jsonwebtoken_1.default.verify(token, this.TOKEN_SECRET_KEY);
+            if (error) {
+                console.log(error);
+                return null;
+            }
+            return data;
+        }
+        catch (e) {
+            console.log(e);
             return null;
         }
-        return data;
     }
 }
 SecurityService.TOKEN_SECRET_KEY = 'SuperSecRetKey';
