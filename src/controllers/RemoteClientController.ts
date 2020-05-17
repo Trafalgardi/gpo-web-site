@@ -1,13 +1,13 @@
 import App from "../app";
-import ClientDataProviders from "../providers/ClientDataProviders";
+import RemoteClientDataProviders from "../providers/RemoteClientDataProviders";
 import { Request, Response, NextFunction } from 'express'
 import SecurityService from "../services/SecurityService";
 import { ClientRules } from "../Enums/ClientRules";
 
-export default class ClientController {
-    private clientDataProvider: ClientDataProviders;
+export default class RemouteClientController {
+    private clientDataProvider: RemoteClientDataProviders;
     constructor(private app: App) {
-        this.clientDataProvider = this.app.providers.client;
+        this.clientDataProvider = this.app.providers.remoteClient;
     }
 
     checkToken(req: Request, res: Response, next: NextFunction, targetRules: ClientRules) {
@@ -59,7 +59,7 @@ export default class ClientController {
 
         let token = SecurityService.generateToken(payload);
 
-        res.json(token);
+        res.json({token: token, rules: user.rules});
     }
 
     async getUsers(req: Request, res: Response) {

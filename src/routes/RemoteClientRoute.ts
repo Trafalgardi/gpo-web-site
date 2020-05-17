@@ -1,14 +1,14 @@
 import IAppRoute from "../configs/IAppRoute";
 import App from "../app";
-import ClientController from "../controllers/ClientController";
+import RemouteClientController from "../controllers/RemoteClientController";
 import {Request, Response, NextFunction} from 'express'
 import { ClientRules } from "../Enums/ClientRules";
 
-const ClientRoute: IAppRoute = {
+const RemoteClientRoute: IAppRoute = {
     createRouter(router: any){
         let app = App.Instance;
 
-        let clientController = new ClientController(app);
+        let clientController = new RemouteClientController(app);
 
         return router()
             .post('/authorization', (req: Request, res: Response) =>{
@@ -28,4 +28,4 @@ const ClientRoute: IAppRoute = {
     }
 }
 
-export default ClientRoute;
+export default RemoteClientRoute;

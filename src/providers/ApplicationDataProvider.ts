@@ -1,7 +1,7 @@
 import DataProviderBase from "./DataProviderBase";
 import UserDataProvider from "./UserDataProviders";
 import DatabaseController from "../db/DatabaseController";
-import ClientDataProviders from "./ClientDataProviders";
+import RemoteClientDataProviders from "./RemoteClientDataProviders";
 
 export default class ApplicationDataProvider{
     private storage: DataProviderBase[];
@@ -25,13 +25,18 @@ export default class ApplicationDataProvider{
         return items.length > 0 ? items[0] : null;
     }
 
-    get client(): ClientDataProviders{
-        return this.getInstanceProvider(ClientDataProviders);
+    get remoteClient(): RemoteClientDataProviders{
+        return this.getInstanceProvider(RemoteClientDataProviders);
+    }
+
+    get user(): UserDataProvider{
+        return this.getInstanceProvider(UserDataProvider);
     }
     
     private getProviders(): any[]{
         return [
-            ClientDataProviders
+            RemoteClientDataProviders,
+            UserDataProvider
         ]
     }
 }

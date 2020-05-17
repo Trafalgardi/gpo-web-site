@@ -2,7 +2,7 @@ import DataProviderBase from "./DataProviderBase";
 import { MysqlError, FieldInfo } from "mysql";
 import util from 'util';
 
-export default class ClientDataProviders extends DataProviderBase {
+export default class RemoteClientDataProviders extends DataProviderBase {
 
     async selectUser(login: string): Promise<{ rules: string, passwordHash: string }> | null { // 
         const sql = "SELECT `rules`, `password` FROM `client_users` WHERE `login`='" + login + "' LIMIT 1";

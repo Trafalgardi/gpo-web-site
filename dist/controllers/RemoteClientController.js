@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const SecurityService_1 = __importDefault(require("../services/SecurityService"));
 const ClientRules_1 = require("../Enums/ClientRules");
-class ClientController {
+class RemouteClientController {
     constructor(app) {
         this.app = app;
-        this.clientDataProvider = this.app.providers.client;
+        this.clientDataProvider = this.app.providers.remoteClient;
     }
     checkToken(req, res, next, targetRules) {
         let token = req.headers['access_token'];
@@ -75,4 +75,4 @@ class ClientController {
         });
     }
 }
-exports.default = ClientController;
+exports.default = RemouteClientController;

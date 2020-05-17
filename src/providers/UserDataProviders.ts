@@ -1,10 +1,12 @@
 import DataProviderBase from "./DataProviderBase";
-
+/*
+    Данный класс предназначен для пользователей сайта
+*/
 export default class UserDataProvider extends DataProviderBase{
-    select(){
+    
+    async regUser(){
 
     }
-    create(){
-        
-    }
+
+    
 }
