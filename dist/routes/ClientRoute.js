@@ -17,8 +17,11 @@ const ClientRoute = {
             .use((req, res, next) => {
             clientController.checkToken(req, res, next, ClientRules_1.ClientRules.user);
         })
-            .post('/getUsers', (req, res) => {
-            clientController.GetUsers(req, res);
+            .get('/getUsers', (req, res) => {
+            clientController.getUsers(req, res);
+        })
+            .post('/getUserTests', (req, res) => {
+            clientController.getUserTests(req, res);
         });
     }
 };

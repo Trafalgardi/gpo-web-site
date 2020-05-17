@@ -17,8 +17,11 @@ const ClientRoute: IAppRoute = {
             .use((req: Request, res: Response, next: NextFunction) => {
                 clientController.checkToken(req, res, next, ClientRules.user)
             })
-            .post('/getUsers', (req: Request, res: Response) =>{
-                clientController.GetUsers(req, res);
+            .get('/getUsers', (req: Request, res: Response) =>{
+                clientController.getUsers(req, res);
+            })
+            .post('/getUserTests', (req: Request, res: Response) =>{
+                clientController.getUserTests(req, res);
             })
             
 

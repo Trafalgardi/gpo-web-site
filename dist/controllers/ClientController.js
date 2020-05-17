@@ -61,9 +61,16 @@ class ClientController {
             res.json(token);
         });
     }
-    GetUsers(req, res) {
+    getUsers(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let users = yield this.clientDataProvider.getUsers();
+            res.json(users);
+        });
+    }
+    getUserTests(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let userId = req.body.user_id;
+            let users = yield this.clientDataProvider.getUserTests(userId);
             res.json(users);
         });
     }

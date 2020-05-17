@@ -4,7 +4,7 @@ import util from 'util';
 
 export default class ClientDataProviders extends DataProviderBase {
 
-    async selectUser(login: string): Promise<{ rules: string, passwordHash: string }> | null  { // 
+    async selectUser(login: string): Promise<{ rules: string, passwordHash: string }> | null { // 
         const sql = "SELECT `rules`, `password` FROM `client_users` WHERE `login`='" + login + "' LIMIT 1";
         try {
             let rows = await this.query(sql);
@@ -22,7 +22,7 @@ export default class ClientDataProviders extends DataProviderBase {
     }
 
     async getUsers(): Promise<any[]> | null {
-        let sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
+        const sql = "SELECT id, email, date, anketaData, anketaResult FROM users WHERE 1";
         try {
             let rows = await this.query(sql)
             if (rows == "") {
@@ -50,38 +50,21 @@ export default class ClientDataProviders extends DataProviderBase {
         }
     }
 
-    getUserTests(userId: number): any {
+    async getUserTests(userId: number): Promise<any[]> | null {
+        const sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`' +
+            'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = ' + userId;
+        try {
+            let rows = await this.query(sql)
+            if (rows == "") {
+                return null;
+            }
 
-        let data: {
-            id: string,
-            user_id: number,
-            test_id: number,
-            questions: [],
-            answers: [],
-            result: number,
-            date: string
+            return rows;
+        }
+        catch (e) {
+            console.log(e)
+            return null;
         }
 
-        let sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`, `user_tests`.`result`, `user_tests`.`date`' +
-            'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` != -1 AND `user_tests`.`user_id` = ' + userId;
-        //this.dbConnection.query(sql, function (error: MysqlError, results: any, fields: FieldInfo[]) {
-        //    if (error) {
-        //        console.log("check1")
-        //        let json = {
-        //            status: false,
-        //            message: 'there are some error with query'
-        //        }
-        //        return res.render('error', { json });
-        //    } else {
-        //        response.success = true;
-        //        response.data = results;
-        //        for (let i = 0; i < response.data.length; i++) {
-        //            response.data[i].question = "Тест №" + response.data[i].test_id;
-        //        }
-        //        //console.log(response)
-        //        res.json(response);
-        //    }
-        //})
-        return null;
     }
 }
