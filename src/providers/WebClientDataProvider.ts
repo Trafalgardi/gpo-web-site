@@ -68,6 +68,45 @@ export default class WebClientDataProvider extends DataProviderBase {
 
     }
 
-
+    async getAllTests(): Promise<[{id: number, name: string, questions: any[], category_id: number}]> | null{
+        const sql = "SELECT `id`, `name`, `questions`, `category_id` FROM `tests` WHERE 1";
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return null;
+            }
+            return rows;
+        } catch (error) {
+            console.log(error)
+            return null;
+        }   
+    }
+    async getIdBanTests(id: number): Promise<number[]> | null{
+        const sql = "SELECT `banTests` FROM `users` WHERE id = " + id;
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return null;
+            }
+            let banTests = JSON.parse(rows[0].banTests).ban;
+            return banTests;
+        } catch (error) {
+            console.log(error)
+            return null;
+        }   
+    }
+    async getTestCategorias(): Promise<[{id: number, parent_id: number}]> | null{
+        const sql = "SELECT * FROM test_categories WHERE 1"
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return null;
+            }
+            return rows;
+        } catch (error) {
+            console.log(error)
+            return null;
+        }   
+    }
 
 }

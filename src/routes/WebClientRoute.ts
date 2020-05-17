@@ -4,12 +4,14 @@ import AuthController from "../controllers/AuthController";
 import { Request, Response, NextFunction } from 'express'
 import AnketaController from "../controllers/AnketaController";
 import SecurityService from "../services/SecurityService";
+import TestController from "../controllers/TestController";
 const WebClientRoute: IAppRoute = {
     createRouter(router: any) {
         let app = App.Instance;
 
         const autCtrl = new AuthController(app);
         const anketaCtrl = new AnketaController(app);
+        const testCtrl = new TestController(app);
         return router()
             .get('/signin', (req: Request, res: Response) => {
                 res.render('signin');
@@ -49,9 +51,14 @@ const WebClientRoute: IAppRoute = {
             })
 
             .get('/page/opentests', (req: Request, res: Response) => {
-
+                let token = req.cookies.token;
+                let payload = SecurityService.verifyToken(token);
+                res.render('opentests', {email: payload.email})
             })
+            .get('/page/getOpenTests', (req: Request, res: Response) => {
 
+                testCtrl.getOpenTests(req, res);
+            })
             .post('/page/setAnketaData', (req: Request, res: Response) => {
                 anketaCtrl.setAnketaData(req, res);
             })
@@ -65,7 +72,6 @@ const WebClientRoute: IAppRoute = {
                 let payload = SecurityService.verifyToken(token);
                 res.render('questionnaire', {email: payload.email});
             })
-
         // .get('/test/:id', verifyTokenCookie, setTest);
         // .post('/getDataTest', getDataTest);
         // .post('/test/addDataTest', addDataTest);

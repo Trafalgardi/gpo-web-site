@@ -80,5 +80,54 @@ class WebClientDataProvider extends DataProviderBase_1.default {
             }
         });
     }
+    getAllTests() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = "SELECT `id`, `name`, `questions`, `category_id` FROM `tests` WHERE 1";
+            try {
+                const rows = yield this.query(sql);
+                if (rows == null || rows.length == 0) {
+                    return null;
+                }
+                return rows;
+            }
+            catch (error) {
+                console.log(error);
+                return null;
+            }
+        });
+    }
+    getIdBanTests(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = "SELECT `banTests` FROM `users` WHERE id = " + id;
+            try {
+                const rows = yield this.query(sql);
+                if (rows == null || rows.length == 0) {
+                    return null;
+                }
+                let banTests = JSON.parse(rows[0].banTests).ban;
+                return banTests;
+            }
+            catch (error) {
+                console.log(error);
+                return null;
+            }
+        });
+    }
+    getTestCategorias() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = "SELECT * FROM test_categories WHERE 1";
+            try {
+                const rows = yield this.query(sql);
+                if (rows == null || rows.length == 0) {
+                    return null;
+                }
+                return rows;
+            }
+            catch (error) {
+                console.log(error);
+                return null;
+            }
+        });
+    }
 }
 exports.default = WebClientDataProvider;
