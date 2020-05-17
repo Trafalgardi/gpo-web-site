@@ -29,7 +29,7 @@ export default class ApplicationDataProvider{
         return this.getInstanceProvider(RemoteClientDataProviders);
     }
 
-    get user(): WebClientDataProvider{
+    get webClient(): WebClientDataProvider{
         return this.getInstanceProvider(WebClientDataProvider);
     }
     

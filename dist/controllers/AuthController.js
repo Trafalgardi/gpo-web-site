@@ -16,7 +16,7 @@ const COOKIE_TOKEN = 'token';
 class AuthController {
     constructor(app) {
         this.app = app;
-        this.webClientDataProvider = this.app.providers.user;
+        this.webClientDataProvider = this.app.providers.webClient;
     }
     selectUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,14 +31,13 @@ class AuthController {
             let password = req.body.password;
             let token = yield this.webClientDataProvider.signUp(email, password);
             res.cookie(COOKIE_TOKEN, token);
-            res.json(token);
+            res.redirect('/page/homepage');
         });
     }
     signIn(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const login = req.body.email;
             const password = req.body.password;
-            let errorMsg = { msg: "Не верный логин или пароль", error: 401 };
             function throwError() {
                 res.redirect('/signin');
             }
@@ -62,8 +61,12 @@ class AuthController {
             };
             let token = SecurityService_1.default.generateToken(payload);
             res.cookie(COOKIE_TOKEN, token);
-            res.redirect('/homepage');
+            res.redirect('/page/homepage');
         });
+    }
+    signOut(req, res) {
+        res.clearCookie("token");
+        res.redirect('signin');
     }
     verification(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

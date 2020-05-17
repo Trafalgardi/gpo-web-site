@@ -4,7 +4,7 @@ import WebClientDataProvider from "../providers/WebClientDataProvider";
 export default class TestController{
     private userDataProvider: WebClientDataProvider;
     constructor(private app: App){
-        this.userDataProvider = this.app.providers.user;
+        this.userDataProvider = this.app.providers.webClient;
     }
 
     getTest(){// конкретный тест

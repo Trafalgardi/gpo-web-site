@@ -8,7 +8,7 @@ export default class AuthController {
 
     private webClientDataProvider: WebClientDataProvider;
     constructor(private app: App) {
-        this.webClientDataProvider = this.app.providers.user;
+        this.webClientDataProvider = this.app.providers.webClient;
     }
 
     async selectUser(req: Request, res: Response) {
@@ -17,22 +17,21 @@ export default class AuthController {
         
         res.json(result);
     }
+
     async signUp(req: Request, res: Response) {
         let email = req.body.email;
         let password = req.body.password;
         let token = await this.webClientDataProvider.signUp(email, password);
         res.cookie(COOKIE_TOKEN, token);
-        //res.redirect('/homepage') 
-        res.json(token);
+        res.redirect('/page/homepage') 
+       
     }
 
     async signIn(req: Request, res: Response){
         const login = req.body.email;
         const password = req.body.password;
-        let errorMsg = {msg:"Не верный логин или пароль", error: 401};
         
         function throwError(){
-            //res.json(errorMsg)
             res.redirect('/signin')
         }
         if (login == null || login == undefined){
@@ -59,16 +58,19 @@ export default class AuthController {
         }
         let token = SecurityService.generateToken(payload);
         res.cookie(COOKIE_TOKEN, token);
-        res.redirect('/homepage'); //TODO: homepage
+        res.redirect('/page/homepage'); //TODO: homepage
     }
 
+    signOut(req: Request, res: Response){
+        res.clearCookie("token");
+        res.redirect('signin');
+    }
     async verification(req: Request, res: Response, next: NextFunction){
         let cookies = req.cookies;
         if (cookies == null || cookies == undefined){
             res.redirect('/signin');
             return;
         }
-        //console.log(this.COOKIE_TOKEN) //TODO: COOKIE_TOKEN
 
         let token = cookies[COOKIE_TOKEN];
         let isTokenValid = SecurityService.verifyToken(token) != null;
@@ -82,6 +84,4 @@ export default class AuthController {
 
     }
     
-
-
 }

@@ -27,7 +27,7 @@ class ApplicationDataProvider {
     get remoteClient() {
         return this.getInstanceProvider(RemoteClientDataProviders_1.default);
     }
-    get user() {
+    get webClient() {
         return this.getInstanceProvider(WebClientDataProvider_1.default);
     }
     getProviders() {

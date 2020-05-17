@@ -31,6 +31,11 @@ class App {
         }));
         this.expApp.use(cookie_parser_1.default());
         this.expApp.use(express_1.default.static(path_1.default.join(__dirname, '../public')));
+        this.expApp.use('/js', express_1.default.static(path_1.default.join(__dirname, '../node_modules/bootstrap/dist/js')));
+        this.expApp.use('/js', express_1.default.static(path_1.default.join(__dirname, '../node_modules/jquery/dist')));
+        this.expApp.use('/js', express_1.default.static(path_1.default.join(__dirname, '../node_modules/popper.js/dist/umd')));
+        this.expApp.use('/js', express_1.default.static(path_1.default.join(__dirname, '../node_modules/holderjs')));
+        this.expApp.use('/css', express_1.default.static(path_1.default.join(__dirname, '../node_modules/bootstrap/dist/css')));
         this.dataProvireds = new ApplicationDataProvider_1.default();
         let appRouter = new AppRoutes_1.default();
         appRouter.mount(this.expApp);

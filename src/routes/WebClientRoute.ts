@@ -27,6 +27,10 @@ const WebClientRoute: IAppRoute = {
                 res.redirect('/page/homepage');
             })
 
+            .get('/sign-out', (req: Request, res: Response) => {
+               autCtrl.signOut(req, res);
+            })
+
             .use('/page', function timeLog(req, res, next) {
                 console.log('Time: ', Date.now());
                 next();
