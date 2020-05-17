@@ -9,7 +9,8 @@
     "express": "^4.16.4",
     "mysql": "^2.18.1",
     "node-datetime": "^2.1.2",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pug": "^2.0.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",

@@ -1,5 +1,5 @@
 import DataProviderBase from "./DataProviderBase";
-import UserDataProvider from "./UserDataProviders";
+import WebClientDataProvider from "./WebClientDataProvider";
 import DatabaseController from "../db/DatabaseController";
 import RemoteClientDataProviders from "./RemoteClientDataProviders";
 
@@ -29,14 +29,14 @@ export default class ApplicationDataProvider{
         return this.getInstanceProvider(RemoteClientDataProviders);
     }
 
-    get user(): UserDataProvider{
-        return this.getInstanceProvider(UserDataProvider);
+    get user(): WebClientDataProvider{
+        return this.getInstanceProvider(WebClientDataProvider);
     }
     
     private getProviders(): any[]{
         return [
             RemoteClientDataProviders,
-            UserDataProvider
+            WebClientDataProvider
         ]
     }
 }

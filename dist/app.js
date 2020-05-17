@@ -8,6 +8,7 @@ const ApplicationDataProvider_1 = __importDefault(require("./providers/Applicati
 const express_1 = __importDefault(require("express"));
 const AppRoutes_1 = __importDefault(require("./routes/AppRoutes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const path_1 = __importDefault(require("path"));
 class App {
     constructor(config) {
         this.config = config;
@@ -22,11 +23,14 @@ class App {
     }
     run() {
         this.expApp.set('port', process.env.port || this.config.port);
+        this.expApp.set('views', path_1.default.join(__dirname, '../views'));
+        this.expApp.set('view engine', 'pug');
         this.expApp.use(body_parser_1.default.json());
         this.expApp.use(body_parser_1.default.urlencoded({
             extended: true
         }));
         this.expApp.use(cookie_parser_1.default());
+        this.expApp.use(express_1.default.static(path_1.default.join(__dirname, '../public')));
         this.dataProvireds = new ApplicationDataProvider_1.default();
         let appRouter = new AppRoutes_1.default();
         appRouter.mount(this.expApp);

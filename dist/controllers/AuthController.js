@@ -7,27 +7,78 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const SecurityService_1 = __importDefault(require("../services/SecurityService"));
 class AuthController {
     constructor(app) {
         this.app = app;
-        this.userDataProvider = this.app.providers.user;
+        this.webClientDataProvider = this.app.providers.user;
+        this.COOKIE_TOKEN = 'token';
     }
     selectUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let email = req.body.email;
-            let result = yield this.userDataProvider.selectUser(email);
+            let result = yield this.webClientDataProvider.selectUser(email);
             res.json(result);
         });
     }
-    regUser(req, res) {
+    signUp(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let email = req.body.email;
             let password = req.body.password;
-            let token = yield this.userDataProvider.regUser(email, password);
-            res.cookie('token', token);
+            let token = yield this.webClientDataProvider.signUp(email, password);
+            res.cookie(this.COOKIE_TOKEN, token);
             res.json(token);
         });
+    }
+    signIn(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const login = req.body.email;
+            const password = req.body.password;
+            let errorMsg = { msg: "Не верный логин или пароль", error: 401 };
+            function throwError() {
+                res.redirect('/signin', 401);
+            }
+            if (login == null || login == undefined) {
+                throwError();
+                return;
+            }
+            let user = yield this.webClientDataProvider.selectUser(login);
+            if (user == null) {
+                throwError();
+                return;
+            }
+            let isValidPassword = SecurityService_1.default.validatePassword(password, user.passwordHash);
+            if (isValidPassword == false) {
+                throwError();
+                return;
+            }
+            let payload = {
+                id: user.id,
+                email: user.email
+            };
+            let token = SecurityService_1.default.generateToken(payload);
+            res.cookie(this.COOKIE_TOKEN, token);
+            res.redirect('/homepage');
+        });
+    }
+    verification(req, res, next) {
+        let cookies = req.cookies;
+        if (cookies == undefined) {
+            res.redirect('/signin');
+            return;
+        }
+        let token = cookies['token'];
+        let isTokenValid = SecurityService_1.default.verifyToken(token) != null;
+        if (isTokenValid) {
+            next();
+        }
+        else {
+            res.redirect('/signin');
+        }
     }
 }
 exports.default = AuthController;

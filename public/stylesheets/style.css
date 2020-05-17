@@ -1,0 +1,88 @@
+.label-inline label {
+  color: #999;
+  font-weight: normal;
+  padding: 7px 7px 7px 13px;
+  position: absolute;
+  z-index: 10;
+}
+.resume-block h3{
+  margin: 0 0 20px 0;
+  padding: 0 10px 10px 10px;
+  border-bottom: 1px solid #CCC;
+}
+.language-item{
+  margin: 15px 0px;
+}
+.academic-degree-item{
+  margin: 15px 0px;
+}
+.btn{
+  margin: 15px 0px;
+  position: relative;
+}
+.langInput{
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px
+}
+.puddingInput{
+  padding-left: 220px;
+}
+[tooltip]{
+  position: relative;
+}
+[tooltip]::before,
+[tooltip]::after{
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  display: none;
+
+  text-transform: none;
+  font-size: .9em;
+}
+[tooltip]::before{
+  content: "";
+  z-index: 1001;
+  border: 5px solid transparent;
+}
+[tooltip]::after{
+  content: attr(tooltip);
+  z-index: 1000;
+
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+
+  min-width: 3em;
+  max-width: 21em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding: 1ch 1.5ch;
+  border-radius: .3ch;
+  box-shadow: 0 1em 2em -.5em rgba(0, 0, 0, 0.35);
+  background: #333;
+  color: #fff;
+}
+.jst-hours {
+  float: left;
+}
+.jst-minutes {
+  float: left;
+}
+.jst-seconds {
+  float: left;
+}
+.jst-clearDiv {
+  clear: both;
+}
+.jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: #f8f9fa!important;
+}

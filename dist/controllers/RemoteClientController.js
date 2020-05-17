@@ -23,7 +23,7 @@ class RemouteClientController {
         let payload = SecurityService_1.default.verifyToken(token);
         let isValid = false;
         if (payload != null) {
-            let rulesString = payload.rules;
+            let rulesString = payload['rules'];
             let currentRules = ClientRules_1.ClientRules[rulesString];
             isValid = currentRules >= targetRules;
         }

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserDataProviders_1 = __importDefault(require("./UserDataProviders"));
+const WebClientDataProvider_1 = __importDefault(require("./WebClientDataProvider"));
 const DatabaseController_1 = __importDefault(require("../db/DatabaseController"));
 const RemoteClientDataProviders_1 = __importDefault(require("./RemoteClientDataProviders"));
 class ApplicationDataProvider {
@@ -28,12 +28,12 @@ class ApplicationDataProvider {
         return this.getInstanceProvider(RemoteClientDataProviders_1.default);
     }
     get user() {
-        return this.getInstanceProvider(UserDataProviders_1.default);
+        return this.getInstanceProvider(WebClientDataProvider_1.default);
     }
     getProviders() {
         return [
             RemoteClientDataProviders_1.default,
-            UserDataProviders_1.default
+            WebClientDataProvider_1.default
         ];
     }
 }

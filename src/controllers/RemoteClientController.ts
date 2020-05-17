@@ -15,7 +15,7 @@ export default class RemouteClientController {
         let payload = SecurityService.verifyToken(token);
         let isValid = false;
         if (payload != null) {
-            let rulesString: string = payload.rules;
+            let rulesString: string = payload['rules'];
             let currentRules: ClientRules = ClientRules[rulesString];
             isValid = currentRules >= targetRules;
         }
