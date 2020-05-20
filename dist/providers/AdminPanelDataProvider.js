@@ -26,7 +26,15 @@ class AdminPanelDataProvider extends DataProviderBase_1.default {
             }
             if (rows == null)
                 return null;
-            return rows;
+            let users = [];
+            rows.forEach(item => {
+                let user = {
+                    id: item.id,
+                    email: item.email
+                };
+                users.push(user);
+            });
+            return users;
         });
     }
     getTestResult(user) {
@@ -43,7 +51,12 @@ class AdminPanelDataProvider extends DataProviderBase_1.default {
                 return null;
             let users_tests = [];
             rows.forEach((item) => {
-                users_tests.push({ user: user, test: item });
+                let element = {
+                    id: item.id,
+                    name: item.name,
+                    result: item.result
+                };
+                users_tests.push(element);
             });
             return users_tests;
         });

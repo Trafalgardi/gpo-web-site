@@ -14,7 +14,7 @@ const AdminPanelRoute: IAppRoute = {
             })
             //query
             .post('/getResultsPDF', (req: Request, res: Response) => {
-                AdminPanelCtrl.getResults(req, res);
+                AdminPanelCtrl.getResultsPDF(req, res);
             })
     }
 }

@@ -9,7 +9,7 @@
     "sourceMap": false
   },
   "include": [
-    "src/**/*"
+    "src/**/*", "PdfTemplate.js"
   ],
   "lib": ["es2015"]
 }

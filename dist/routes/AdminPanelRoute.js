@@ -14,7 +14,7 @@ const AdminPanelRoute = {
             res.render('users_results_form', { email: "authData.user.email" });
         })
             .post('/getResultsPDF', (req, res) => {
-            AdminPanelCtrl.getResults(req, res);
+            AdminPanelCtrl.getResultsPDF(req, res);
         });
     }
 };

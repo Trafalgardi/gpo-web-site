@@ -7,13 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const html_pdf_1 = __importDefault(require("html-pdf"));
+const PdfTemplate_1 = __importDefault(require("../configs//PdfTemplate"));
 class AdminPanelController {
     constructor(app) {
         this.app = app;
         this.AdminPanelDataProvider = this.app.providers.adminPanel;
     }
-    getResults(req, res) {
+    getResultsPDF(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let emails = req.body.email_address.toString();
             let arr = emails.split(',');
@@ -24,11 +29,30 @@ class AdminPanelController {
                 }
             });
             let users = yield this.AdminPanelDataProvider.getUsers(email_list);
-            let testUsers = [];
-            users.forEach((user) => __awaiter(this, void 0, void 0, function* () {
-                let result = yield this.AdminPanelDataProvider.getTestResult(user);
-                testUsers.push(result);
-            }));
+            if (users.length == 0) {
+                res.redirect('./results');
+                return;
+            }
+            function getTestUsers(provider) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    let resultArr = [];
+                    for (let i = 0; i < users.length; i++) {
+                        const user = users[i];
+                        let result = yield provider.getTestResult(user);
+                        resultArr.push({ user: user, tests: result });
+                    }
+                    return resultArr;
+                });
+            }
+            let testUsers = yield getTestUsers(this.AdminPanelDataProvider);
+            let fileName = `${__dirname}/result.pdf`;
+            let pdfHtml = html_pdf_1.default.create(PdfTemplate_1.default(testUsers));
+            pdfHtml.toFile(fileName, (err, r) => {
+                if (err) {
+                    res.send(Promise.reject());
+                }
+                res.sendFile(`${__dirname}/result.pdf`);
+            });
         });
     }
 }
