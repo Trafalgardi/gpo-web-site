@@ -9,73 +9,50 @@ const WebClientRoute: IAppRoute = {
     createRouter(router: any) {
         let app = App.Instance;
 
-        const autCtrl = new AuthController(app);
         const anketaCtrl = new AnketaController(app);
         const testCtrl = new TestController(app);
         return router()
-            .get('/signin', (req: Request, res: Response) => {
-                res.render('signin');
+            .use('/', function timeLog(req, res, next) {
+                console.log('Time: ', Date.now());
+                next();
             })
-            .post('/signin', (req: Request, res: Response) => { 
-                autCtrl.signIn(req, res);
-            })
-
-            .get('/signup', (req: Request, res: Response) => {
-                res.render('signup');
-            })
-            .post('/signup', (req: Request, res: Response) => {
-                autCtrl.signUp(req, res);
-            })
-
+            .use('/', (req: Request, res: Response, next: NextFunction) => {
+                AuthController.verification(req, res, next);
+            }) // Проверка сессии
+            
             .get('/', (req: Request, res: Response) => {
                 res.redirect('/page/homepage');
             })
 
-            .get('/sign-out', (req: Request, res: Response) => {
-                autCtrl.signOut(req, res);
+            .get('/homepage', (req: Request, res: Response) => {
+                let current_user = AuthController.authCheck(req, res);
+                res.render('homepage', { email: current_user.email });
             })
 
-            .use('/page', function timeLog(req, res, next) {
-                console.log('Time: ', Date.now());
-                next();
+            .get('/opentests', (req: Request, res: Response) => {
+                let current_user = AuthController.authCheck(req, res);
+                res.render('opentests', { email: current_user.email })
             })
-
-            .use('/page', (req: Request, res: Response, next: NextFunction) => {
-                autCtrl.verification(req, res, next);
-            }) // Проверка сессии
-
-            .get('/page/homepage', (req: Request, res: Response) => {
-                let token = req.cookies.token;
-                let payload = SecurityService.verifyToken(token);
-                res.render('homepage', {email: payload.email});
-            })
-
-            .get('/page/opentests', (req: Request, res: Response) => {
-                let token = req.cookies.token;
-                let payload = SecurityService.verifyToken(token);
-                res.render('opentests', {email: payload.email})
-            })
-            .get('/page/getOpenTests', (req: Request, res: Response) => {
-
+            .get('/getOpenTests', (req: Request, res: Response) => {
+                console.log("WOW")
                 testCtrl.getOpenTests(req, res);
             })
-            .post('/page/setAnketaData', (req: Request, res: Response) => {
+            .post('/setAnketaData', (req: Request, res: Response) => {
                 anketaCtrl.setAnketaData(req, res);
             })
 
-            .post('/page/getAnketaData', (req: Request, res: Response) => {
+            .post('/getAnketaData', (req: Request, res: Response) => {
                 anketaCtrl.getAnketaData(req, res);
             })
 
-            .get('/page/questionnaire', (req: Request, res: Response) => {
-                let token = req.cookies.token;
-                let payload = SecurityService.verifyToken(token);
-                res.render('questionnaire', {email: payload.email});
+            .get('/questionnaire', (req: Request, res: Response) => {
+                let current_user = AuthController.authCheck(req, res);
+                res.render('questionnaire', { email: current_user.email });
             })
-            .get('/page/test/:id', (req: Request, res: Response) => {
+            .get('/test/:id', (req: Request, res: Response) => {
                 testCtrl.getTest(req, res);
             })
-            .post('/page/test/setDataTest', (req: Request, res: Response) => {
+            .post('/test/setDataTest', (req: Request, res: Response) => {
                 testCtrl.setDataTest(req, res);
             })
         // .post('/getDataTest', getDataTest);

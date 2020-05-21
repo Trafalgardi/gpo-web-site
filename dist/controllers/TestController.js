@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const SecurityService_1 = __importDefault(require("../services/SecurityService"));
 const TestProcessing_js_1 = require("../../TestProcessing/TestProcessing.js");
+const AuthController_1 = __importDefault(require("./AuthController"));
 class TestController {
     constructor(app) {
         this.app = app;
@@ -27,8 +28,8 @@ class TestController {
     }
     getOpenTests(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let token = req.cookies.token;
-            let payload = SecurityService_1.default.verifyToken(token);
+            let payload = AuthController_1.default.authCheck(req, res);
+            console.log(payload);
             let allTests = yield this.userDataProvider.getAllTests();
             let idBanTests = yield this.userDataProvider.getIdBanTests(payload.id);
             let tests = [];

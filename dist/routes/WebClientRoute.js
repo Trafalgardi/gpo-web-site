@@ -6,68 +6,49 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("../app"));
 const AuthController_1 = __importDefault(require("../controllers/AuthController"));
 const AnketaController_1 = __importDefault(require("../controllers/AnketaController"));
-const SecurityService_1 = __importDefault(require("../services/SecurityService"));
 const TestController_1 = __importDefault(require("../controllers/TestController"));
 const WebClientRoute = {
     createRouter(router) {
         let app = app_1.default.Instance;
-        const autCtrl = new AuthController_1.default(app);
         const anketaCtrl = new AnketaController_1.default(app);
         const testCtrl = new TestController_1.default(app);
         return router()
-            .get('/signin', (req, res) => {
-            res.render('signin');
+            .use('/', function timeLog(req, res, next) {
+            console.log('Time: ', Date.now());
+            next();
         })
-            .post('/signin', (req, res) => {
-            autCtrl.signIn(req, res);
-        })
-            .get('/signup', (req, res) => {
-            res.render('signup');
-        })
-            .post('/signup', (req, res) => {
-            autCtrl.signUp(req, res);
+            .use('/', (req, res, next) => {
+            AuthController_1.default.verification(req, res, next);
         })
             .get('/', (req, res) => {
             res.redirect('/page/homepage');
         })
-            .get('/sign-out', (req, res) => {
-            autCtrl.signOut(req, res);
+            .get('/homepage', (req, res) => {
+            let current_user = AuthController_1.default.authCheck(req, res);
+            res.render('homepage', { email: current_user.email });
         })
-            .use('/page', function timeLog(req, res, next) {
-            console.log('Time: ', Date.now());
-            next();
+            .get('/opentests', (req, res) => {
+            let current_user = AuthController_1.default.authCheck(req, res);
+            res.render('opentests', { email: current_user.email });
         })
-            .use('/page', (req, res, next) => {
-            autCtrl.verification(req, res, next);
-        })
-            .get('/page/homepage', (req, res) => {
-            let token = req.cookies.token;
-            let payload = SecurityService_1.default.verifyToken(token);
-            res.render('homepage', { email: payload.email });
-        })
-            .get('/page/opentests', (req, res) => {
-            let token = req.cookies.token;
-            let payload = SecurityService_1.default.verifyToken(token);
-            res.render('opentests', { email: payload.email });
-        })
-            .get('/page/getOpenTests', (req, res) => {
+            .get('/getOpenTests', (req, res) => {
+            console.log("WOW");
             testCtrl.getOpenTests(req, res);
         })
-            .post('/page/setAnketaData', (req, res) => {
+            .post('/setAnketaData', (req, res) => {
             anketaCtrl.setAnketaData(req, res);
         })
-            .post('/page/getAnketaData', (req, res) => {
+            .post('/getAnketaData', (req, res) => {
             anketaCtrl.getAnketaData(req, res);
         })
-            .get('/page/questionnaire', (req, res) => {
-            let token = req.cookies.token;
-            let payload = SecurityService_1.default.verifyToken(token);
-            res.render('questionnaire', { email: payload.email });
+            .get('/questionnaire', (req, res) => {
+            let current_user = AuthController_1.default.authCheck(req, res);
+            res.render('questionnaire', { email: current_user.email });
         })
-            .get('/page/test/:id', (req, res) => {
+            .get('/test/:id', (req, res) => {
             testCtrl.getTest(req, res);
         })
-            .post('/page/test/setDataTest', (req, res) => {
+            .post('/test/setDataTest', (req, res) => {
             testCtrl.setDataTest(req, res);
         });
     }

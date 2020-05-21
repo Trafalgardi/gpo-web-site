@@ -12,40 +12,64 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SecurityService_1 = __importDefault(require("../services/SecurityService"));
+const TokenAuthCkecker_1 = __importDefault(require("../services/TokenAuthCkecker"));
 const COOKIE_TOKEN = 'token';
 class AuthController {
     constructor(app) {
         this.app = app;
-        this.webClientDataProvider = this.app.providers.webClient;
+        this.authDataProvider = this.app.providers.auth;
     }
-    selectUser(req, res) {
+    static verification(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let email = req.body.email;
-            let result = yield this.webClientDataProvider.selectUser(email);
-            res.json(result);
+            let user_id = AuthController.authCheck(req, res);
+            if (user_id != null) {
+                next();
+            }
+            else {
+                res.redirect('/signin');
+            }
         });
     }
     signUp(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            function throwError() {
+                res.redirect('/singup');
+            }
+            if (AuthController.authCheck(req, res) != null) {
+                throwError();
+                return;
+            }
             let email = req.body.email;
             let password = req.body.password;
-            let token = yield this.webClientDataProvider.signUp(email, password);
-            res.cookie(COOKIE_TOKEN, token);
+            if (email == undefined || password == undefined) {
+                throwError();
+                return;
+            }
+            let token = yield this.authDataProvider.signUp(email, password);
+            if (token == null) {
+                throwError();
+                return;
+            }
+            AuthController.auth(req, res, { key: COOKIE_TOKEN, value: token });
             res.redirect('/page/homepage');
         });
     }
     signIn(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const login = req.body.email;
-            const password = req.body.password;
             function throwError() {
                 res.redirect('/signin');
             }
-            if (login == null || login == undefined) {
+            if (AuthController.authCheck(req, res) != null) {
                 throwError();
                 return;
             }
-            let user = yield this.webClientDataProvider.selectUser(login);
+            const login = req.body.email;
+            const password = req.body.password;
+            if (login == null || login == undefined || password == null || password == undefined) {
+                throwError();
+                return;
+            }
+            let user = yield this.authDataProvider.selectUser(login);
             if (user == null || user.password == '') {
                 throwError();
                 return;
@@ -60,30 +84,17 @@ class AuthController {
                 email: user.email
             };
             let token = SecurityService_1.default.generateToken(payload);
-            res.cookie(COOKIE_TOKEN, token);
+            AuthController.auth(req, res, { key: COOKIE_TOKEN, value: token });
             res.redirect('/page/homepage');
         });
     }
     signOut(req, res) {
-        res.clearCookie("token");
-        res.redirect('signin');
-    }
-    verification(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let cookies = req.cookies;
-            if (cookies == null || cookies == undefined) {
-                res.redirect('/signin');
-                return;
-            }
-            let token = cookies[COOKIE_TOKEN];
-            let isTokenValid = SecurityService_1.default.verifyToken(token) != null;
-            if (isTokenValid) {
-                next();
-            }
-            else {
-                res.redirect('/signin');
-            }
-        });
+        AuthController.logout(req, res, COOKIE_TOKEN);
+        res.redirect('/signin');
     }
 }
+AuthController.authCkecker = new TokenAuthCkecker_1.default();
+AuthController.authCheck = AuthController.authCkecker.authCheck;
+AuthController.auth = AuthController.authCkecker.auth;
+AuthController.logout = AuthController.authCkecker.logout;
 exports.default = AuthController;

@@ -3,6 +3,7 @@ import WebClientDataProvider from "../providers/WebClientDataProvider";
 import { Request, Response, NextFunction } from 'express'
 import SecurityService from "../services/SecurityService";
 import {TestExecution} from "../../TestProcessing/TestProcessing.js"
+import AuthController from "./AuthController";
 export default class TestController {
     private userDataProvider: WebClientDataProvider;
     constructor(private app: App) {
@@ -17,8 +18,8 @@ export default class TestController {
     }
 
     async getOpenTests(req: Request, res: Response) { // доступные тесты
-        let token = req.cookies.token;
-        let payload = SecurityService.verifyToken(token);
+        let payload = AuthController.authCheck(req, res);
+        console.log(payload)
         let allTests = await this.userDataProvider.getAllTests();
         let idBanTests = await this.userDataProvider.getIdBanTests(payload.id);
         let tests = [];

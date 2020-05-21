@@ -3,6 +3,7 @@ import WebClientDataProvider from "./WebClientDataProvider";
 import DatabaseController from "../db/DatabaseController";
 import RemoteClientDataProviders from "./RemoteClientDataProviders";
 import AdminPanelDataProvider from "./AdminPanelDataProvider";
+import AuthDataProvider from "./AuthDataProvider";
 
 export default class ApplicationDataProvider{
     private storage: DataProviderBase[];
@@ -37,11 +38,16 @@ export default class ApplicationDataProvider{
     get adminPanel(): AdminPanelDataProvider{
         return this.getInstanceProvider(AdminPanelDataProvider);
     }
+
+    get auth(): AuthDataProvider{
+        return this.getInstanceProvider(AuthDataProvider);
+    }
     private getProviders(): any[]{
         return [
             RemoteClientDataProviders,
             WebClientDataProvider,
             AdminPanelDataProvider,
+            AuthDataProvider
         ]
     }
 }

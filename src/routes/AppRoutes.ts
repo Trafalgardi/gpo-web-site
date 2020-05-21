@@ -3,12 +3,14 @@ import WebClientRoute from "./WebClientRoute";
 import RemoteClientRoute from "./RemoteClientRoute";
 import { Express, Router } from 'express'
 import AdminPanelRoute from "./AdminPanelRoute";
+import AuthRoute from "./AuthRoute";
 
 export default class AppRoutes {
     private routeList: IPathRoute[] = [
+        { path: '/', router: AuthRoute },
         { path: '/client', router: RemoteClientRoute },
-        { path: '/', router: WebClientRoute },
-        { path: '/adminPanel', router: AdminPanelRoute }
+        { path: '/adminPanel', router: AdminPanelRoute },
+        { path: '/page', router: WebClientRoute },
     ];
 
     mount(expApp: Express): void {

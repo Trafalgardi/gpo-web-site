@@ -7,6 +7,7 @@ const WebClientDataProvider_1 = __importDefault(require("./WebClientDataProvider
 const DatabaseController_1 = __importDefault(require("../db/DatabaseController"));
 const RemoteClientDataProviders_1 = __importDefault(require("./RemoteClientDataProviders"));
 const AdminPanelDataProvider_1 = __importDefault(require("./AdminPanelDataProvider"));
+const AuthDataProvider_1 = __importDefault(require("./AuthDataProvider"));
 class ApplicationDataProvider {
     constructor() {
         let host = 'localhost';
@@ -34,11 +35,15 @@ class ApplicationDataProvider {
     get adminPanel() {
         return this.getInstanceProvider(AdminPanelDataProvider_1.default);
     }
+    get auth() {
+        return this.getInstanceProvider(AuthDataProvider_1.default);
+    }
     getProviders() {
         return [
             RemoteClientDataProviders_1.default,
             WebClientDataProvider_1.default,
             AdminPanelDataProvider_1.default,
+            AuthDataProvider_1.default
         ];
     }
 }
