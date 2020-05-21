@@ -36,10 +36,9 @@ export default class App {
     }));
     this.expApp.use(cookieParser())
 
-    this.expApp.use('/js', express.static(path.join(__dirname, '../node_modules/jquery/dist'))); // redirect JS jQuery
-    this.expApp.use('/images', express.static(`${__dirname}../public/images`));
-    this.expApp.use(express.static(path.join(__dirname, '../public'))); // configure express to use public folder
 
+    this.expApp.use(express.static(path.join(__dirname, '../public'))); // configure express to use public folder
+    this.expApp.use('/js', express.static(path.join(__dirname, '../node_modules/jquery/dist'))); // redirect JS jQuery
     this.expApp.use('/js', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
     this.expApp.use('/js', express.static(path.join(__dirname, '../node_modules/popper.js/dist/umd'))); // redirect popper js 
     this.expApp.use('/js', express.static(path.join(__dirname, '../node_modules/holderjs'))); // redirect Holder js
