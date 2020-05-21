@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "target": "ES6",
+    "noImplicitAny": false,
+    "removeComments": true,
     "esModuleInterop": true,
-    "target": "es6",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist/",
+    "sourceMap": false
   },
+  "include": [
+    "src/**/*", "PdfTemplate.js"
+  ],
   "lib": ["es2015"]
 }

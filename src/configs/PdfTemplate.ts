@@ -1,4 +1,4 @@
-module.exports = ({ users_tests }) => {
+export default function pdfTemplate(users_tests) {
     var result = `
     <!doctype html>
     <html>
@@ -81,23 +81,23 @@ module.exports = ({ users_tests }) => {
         <body>
             <div class="invoice-box">
                 <table cellpadding="0" cellspacing="0">`;
-    users_tests.forEach(function (user_tests) {
+    users_tests.forEach(function (item) {
         result += `
                 <tr class="information">
                    <td colspan="2">
                       <table>
                          <tr>
                             <td>
-                               Пользователь: ${user_tests.user.email}
+                               Пользователь: ${item.user.email}
                             </td>
                             <td>
-                               ID: ${user_tests.user.id}
+                               ID: ${item.user.id}
                             </td>
                          </tr>
                       </table>
                    </td>
                 </tr>`;
-        user_tests.tests.forEach(function (test) {
+        item.tests.forEach(function (test) {
             result += `
                 <tr class="heading">
                     <td>ID</td>

@@ -1,0 +1,12 @@
+{
+	"Crete post": {
+		"scope": "typescript",
+		"prefix": ".post()",
+		"body": [
+			".post('/', (req: Request, res: Response) => {",
+			"",
+			"})"
+		],
+		"description": "Create .post('/')"
+	}
+}
