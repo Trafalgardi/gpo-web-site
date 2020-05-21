@@ -35,7 +35,7 @@ export default class AuthController {
         }
 
         if (AuthController.authCheck(req, res) != null ){
-            throwError();
+            res.redirect('/page/homepage')
             return;
         }
         let email = req.body.email;
@@ -59,7 +59,7 @@ export default class AuthController {
         }
 
         if (AuthController.authCheck(req, res) != null ){
-            throwError();
+            res.redirect('/page/homepage')
             return;
         }
 

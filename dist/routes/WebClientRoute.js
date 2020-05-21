@@ -32,7 +32,6 @@ const WebClientRoute = {
             res.render('opentests', { email: current_user.email });
         })
             .get('/getOpenTests', (req, res) => {
-            console.log("WOW");
             testCtrl.getOpenTests(req, res);
         })
             .post('/setAnketaData', (req, res) => {

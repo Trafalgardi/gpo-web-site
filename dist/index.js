@@ -7,7 +7,7 @@ const app_1 = __importDefault(require("./app"));
 try {
     new app_1.default({
         port: 3000,
-        applicationName: 'my system'
+        applicationName: 'RESS'
     }).run();
 }
 catch (e) {

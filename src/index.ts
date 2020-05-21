@@ -1,10 +1,10 @@
 import App from "./app";
 
-try{
+try {
   new App({
     port: 3000,
-    applicationName: 'my system'
+    applicationName: 'RESS'
   }).run();
-} catch (e){
+} catch (e) {
   console.error(e.message);
 }

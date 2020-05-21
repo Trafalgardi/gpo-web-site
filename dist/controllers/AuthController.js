@@ -36,7 +36,7 @@ class AuthController {
                 res.redirect('/singup');
             }
             if (AuthController.authCheck(req, res) != null) {
-                throwError();
+                res.redirect('/page/homepage');
                 return;
             }
             let email = req.body.email;
@@ -60,7 +60,7 @@ class AuthController {
                 res.redirect('/signin');
             }
             if (AuthController.authCheck(req, res) != null) {
-                throwError();
+                res.redirect('/page/homepage');
                 return;
             }
             const login = req.body.email;

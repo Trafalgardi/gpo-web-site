@@ -12,7 +12,7 @@ const WebClientRoute: IAppRoute = {
         const anketaCtrl = new AnketaController(app);
         const testCtrl = new TestController(app);
         return router()
-            .use('/', function timeLog(req, res, next) {
+            .use('/', function timeLog(req: Request, res: Response, next: NextFunction) {
                 console.log('Time: ', Date.now());
                 next();
             })
@@ -34,7 +34,6 @@ const WebClientRoute: IAppRoute = {
                 res.render('opentests', { email: current_user.email })
             })
             .get('/getOpenTests', (req: Request, res: Response) => {
-                console.log("WOW")
                 testCtrl.getOpenTests(req, res);
             })
             .post('/setAnketaData', (req: Request, res: Response) => {
