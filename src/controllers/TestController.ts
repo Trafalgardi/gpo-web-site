@@ -2,7 +2,7 @@ import App from "../app";
 import WebClientDataProvider from "../providers/WebClientDataProvider";
 import { Request, Response, NextFunction } from 'express'
 import SecurityService from "../services/SecurityService";
-import {TestExecution} from "../../TestProcessing/TestProcessing.js"
+import { TestExecution } from "../../TestProcessing/TestProcessing.js"
 import AuthController from "./AuthController";
 export default class TestController {
     private userDataProvider: WebClientDataProvider;
@@ -11,15 +11,18 @@ export default class TestController {
     }
 
     async getTest(req: Request, res: Response) {// конкретный тест
-        let test = await this.userDataProvider.getTest(Number.parseInt(req.params.id));
-        //console.log(test)
-        if(Number.parseInt(req.params.id) > 33)
-        {
-            console.log("DSds")
-            res.render('testReborn', { json: JSON.stringify(test[0].data), id: req.params.id })
-           return
+        let test_id = Number.parseInt(req.params.id);
+        if (isNaN(test_id)){
+            res.redirect("/page/opentests");
+            return;
         }
-        res.render('test', { json: JSON.stringify(test[0].data), id: req.params.id })
+        let testData = await this.userDataProvider.getTestData(test_id);
+        if (test_id > 33) {
+            console.log("Обработка теста нового образца!")
+            res.render('testReborn', { json: testData, id: test_id })
+            return
+        }
+        res.render('test', { json: JSON.stringify(testData), id: req.params.id })
 
     }
 

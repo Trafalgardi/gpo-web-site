@@ -62,14 +62,14 @@ export default class WebClientDataProvider extends DataProviderBase {
             return null;
         }   
     }
-    async getTest(id:number): Promise<any> | null{
+    async getTestData(id:number): Promise<{}> | null{
         const sql = 'SELECT `questions` as data FROM `tests` WHERE id=' + id;
         try {
             const rows = await this.query(sql);
             if (rows == null || rows.length == 0){
                 return null;
             }
-            return rows;
+            return rows[0].data;
         } catch (error) {
             console.log(error)
             return null;

@@ -20,7 +20,6 @@ function slideQuestions(params) {
         // we'll need a place to store the HTML output
         const output = [];
         myQuestions = type != 1 ? params.data : params.questions;
-        console.log(myQuestions);
         for (let q = 0; q < myQuestions.length; q++) {
             let answers = [];
             if (type == 0) { //Когда разные ответы для всех вопросов.

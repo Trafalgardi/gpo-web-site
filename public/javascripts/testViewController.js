@@ -1,32 +1,37 @@
 const quiz = document.getElementById("quiz")
 
+//#region const categories 
+const categories_timer = "categories_timer";
+const categories_name = "categories_name";
+const categories_content = "categories_content";
+//#endregion
+
+//#region const question
 const question_timer_to_remember = "question_timer_to_remember";
 const question_timer = "question_timer";
 const question_text = "question_text";
 const question_img_container = "question_img_container";
 const question_description = "question_description";
 const question_content = "question_content";
+//#endregion
 
+//#region const buttons
 const quiz_btn_container = document.getElementById("quiz-btn-container")
+const btn_skip_remember_time = "btn_skip_remember_time"
+//#endregion
+
 quiz_btn_container.innerHTML = `
 <button type="button" id="previous">Предыдущий вопрос</button>
 <button type="button" id="next">Следующий вопрос</button>
 <button type="submit" id="submitBtn">Отправить ответы</button>
 <button type="button" style="display:none" id="start">Начать</button>`;
-function checkType(parms, id) {
-    const previousButton = $('#previous');
-    const nextButton = $('#next');
-    let content = '';
 
-    console.log(JSON.parse(parms));
-    let json = JSON.parse(parms);
-    mainFunc(json, id)
-}
 function mainFunc(json, id) {
     quiz_btn_container.innerHTML = "";
+    quiz.innerHTML = "";
+
     setName(json.name, "testName")
-    let content = "";
-    quiz.innerHTML = content;
+    
     //Таймер на тест
     createTimer(json.time, "timer");
 
@@ -36,12 +41,7 @@ function mainFunc(json, id) {
     //Создание категорий
     createCategories(json.categories[0])
 
-
-    //Запись данных в html
-
 }
-
-
 
 function setName(name, elementId = "testName") {
     var element = document.getElementById(elementId);
@@ -73,8 +73,8 @@ function createQuestion(questions, id = 0) {
     <div id="${question_content}"></div>`;
     insertHtml(quiz, content)
     if (currentQuestion.can_skip_remember_time) {
-        quiz_btn_container.innerHTML = `<button type="button" id="btn_skip_remember_time">Продолжить</button>`
-        let btn = document.getElementById('btn_skip_remember_time').onclick = cancelTimerToRemember;
+        quiz_btn_container.innerHTML = `<button type="button" id="${btn_skip_remember_time}">Продолжить</button>`
+        let btn = document.getElementById(btn_skip_remember_time).onclick = cancelTimerToRemember;
     }
     createTimer(time_to_remember, question_timer_to_remember, () => timeToRemember(questions, id), () => createAnswers(questions, id))
 }
@@ -82,7 +82,7 @@ function createQuestion(questions, id = 0) {
 function cancelTimerToRemember() {
     $(`#timer_${question_timer_to_remember}`).trigger('complete');
     document.getElementById(question_timer_to_remember).innerHTML = ""
-    quiz_btn_container.removeChild(document.getElementById("btn_skip_remember_time"))
+    quiz_btn_container.removeChild(document.getElementById(btn_skip_remember_time))
 }
 
 function createAnswers(questions, id) {
@@ -103,15 +103,16 @@ function timeToRemember(questions, id) {
 }
 //#endregion
 //#region Создание категорий
+
 function createCategories(categories) {
     console.log(categories)
     let content = "";
     content += `
-    <div id="categories_timer"></div>
-    <div id="categories_name">${categories.name}</div>
-    <div id="categories_content"></div>`;
+    <div id="${categories_timer}"></div>
+    <div id="${categories_name}">${categories.name}</div>
+    <div id="${categories_content}"></div>`;
     insertHtml(quiz, content)
-    createTimer(categories.time, "categories_timer", () => categoriesTimer())
+    createTimer(categories.time, categories_timer, () => categoriesTimer())
     let isTutorial = setTutorial(categories.tutorial)
     if (isTutorial) {
         return
