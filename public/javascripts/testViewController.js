@@ -23,7 +23,7 @@ function mainFunc(json, id) {
 
 
     //Запись данных в html
-    
+
 }
 
 
@@ -44,7 +44,7 @@ function setTutorial(tutorial) {
 function createQuestion(questions, id = 0) {
     let currentQuestion = questions[id];
     let time_to_remember = currentQuestion.time_to_remember;
-    
+
     let img = ""
     currentQuestion.images.forEach(element => {
         img += `<img src="/images/${element}">`;
@@ -57,17 +57,31 @@ function createQuestion(questions, id = 0) {
     <div id="${question_description}">${currentQuestion.description}</div>
     <div id="${question_content}"></div>`;
     insertHtml(quiz, content)
+    if (currentQuestion.can_skip_remember_time) {
+        quiz_btn_container.innerHTML = `<button type="button" id="btn_skip_remember_time">Продолжить</button>`
+        let btn = document.getElementById('btn_skip_remember_time').onclick = () => cancelTimerToRemember(questions, id)
+    }
     createTimer(time_to_remember, question_timer_to_remember, () => timeToRemember(questions, id), () => createAnswers(questions, id))
 }
+
+function cancelTimerToRemember(questions, id) {
+    console.log("dsadsadss");
+    $(`#timer_${question_timer_to_remember}`).trigger('complete');
+    document.getElementById(question_timer_to_remember).innerHTML = ""
+    quiz_btn_container.removeChild(document.getElementById("btn_skip_remember_time"))
+}
+
 function createAnswers(questions, id) {
     let currentQuestion = questions[id];
     console.log("dsadsadss");
-    
+
 }
+
 function createImg(container_id, path) {
     let content = `<img src="${path}">`;
     insertHtml(document.getElementById(container_id), content)
 }
+
 function timeToRemember(questions, id) {
     document.getElementById(question_img_container).innerHTML = ""
     document.getElementById(question_description).innerHTML = ""
@@ -85,7 +99,7 @@ function createCategories(categories) {
     insertHtml(quiz, content)
     createTimer(categories.time, "categories_timer", () => categoriesTimer())
     let isTutorial = setTutorial(categories.tutorial)
-    if(isTutorial){
+    if (isTutorial) {
         return
     }
     createQuestion(categories.questions, 0)
@@ -110,36 +124,6 @@ function createTimer(time, elementId = "timer", callback = () => document.forms[
     })
 }
 
-function stopwatch() {
-    var $stopwatch, // Stopwatch element on the page
-        incrementTime = 70, // Timer speed in milliseconds
-        currentTime = 0, // Current time in hundredths of a second
-        updateTimer = function () {
-            $stopwatch.val(formatTime(currentTime));
-            currentTime += incrementTime / 10;
-        },
-        init = function () {
-            $stopwatch = $('#stopwatch');
-            stopwatch.Timer = $.timer(updateTimer, incrementTime, true);
-        };
-    $(init);
-}
-
-function pad(number, length) {
-    var str = '' + number;
-    while (str.length < length) {
-        str = '0' + str;
-    }
-    return str;
-}
-
-function formatTime(time) {
-    var min = parseInt(time / 6000),
-        sec = parseInt(time / 100) - (min * 60),
-        hundredths = pad(time - (sec * 100) - (min * 6000), 2);
-    return (min > 0 ? pad(min, 2) : "00") + ":" + pad(sec, 2) + ":" + hundredths;
-}
-
 function categoriesTimer() {
     console.log("Таймер категории")
 }
@@ -154,7 +138,7 @@ function categoriesTimer() {
  *  <!-- beforeend -->
  *  \</p>
  *  <!-- afterend -->
-*/
+ */
 function insertHtml(element, content, position = 'beforeend') {
     element.insertAdjacentHTML(position, content)
 }
