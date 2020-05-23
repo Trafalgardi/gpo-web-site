@@ -44,7 +44,9 @@ export default class App {
     this.expApp.use('/js', express.static(path.join(__dirname, '../node_modules/holderjs'))); // redirect Holder js
     this.expApp.use('/css', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap
 
-    this.dataProvireds = new ApplicationDataProvider();
+    
+
+    this.dataProvireds = new ApplicationDataProvider(this.config.host, this.config.database, this.config.user, this.config.password);
 
     let appRouter = new AppRoutes();
     appRouter.mount(this.expApp)
