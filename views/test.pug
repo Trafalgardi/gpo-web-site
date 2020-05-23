@@ -27,11 +27,8 @@ html(lang='en')
       .quiz-container
         #quiz
         
-      .quiz-btn-container.mt-5
-        button(type="button")#previous Предыдущий вопрос
-        button(type="button")#next Следующий вопрос
-        button(type="submit")#submitBtn Отправить ответы
-        button(type="button", style="display:none")#start Начать
+      .quiz-btn-container.mt-5#quiz-btn-container
+
       #results
       #info
     //
@@ -43,8 +40,9 @@ html(lang='en')
     script(src='/js/bootstrap.min.js')
     script(src='/js/popper.min.js')
     script(src='/js/holder.min.js')
-    script(src='/javascripts/test.js')
     script(src='/javascripts/testMain.js')
+    script(src='/javascripts/test.js')
+    script(src='/javascripts/testViewController.js')
     script(src='/javascripts/jquery.simple.timer.js')
     script(src='/javascripts/jquery.timer.js')
     script(src='/javascripts/jquery.mask.js')

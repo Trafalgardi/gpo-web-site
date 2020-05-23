@@ -1,11 +1,19 @@
+const quiz_btn_container = document.getElementById("quiz-btn-container")
 function checkType(parms, id) {
     const previousButton = $('#previous');
     const nextButton = $('#next');
     let content = '';
-
-    console.log(JSON.parse(parms));
     let json = JSON.parse(parms);
-
+    if(json.type == null || json.type == undefined)
+    {
+        mainFunc(json)
+        return
+    }
+    quiz_btn_container.innerHTML = `
+    <button type="button" id="previous">Предыдущий вопрос</button>
+    <button type="button" id="next">Следующий вопрос</button>
+    <button type="submit" id="submitBtn">Отправить ответы</button>
+    <button type="button" style="display:none" id="start">Начать</button>`;
     numberTestData = json;
     myQuestions = json.data;
 
