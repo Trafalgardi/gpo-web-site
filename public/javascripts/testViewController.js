@@ -1,5 +1,12 @@
 const quiz = document.getElementById("quiz")
 
+const question_timer_to_remember = "question_timer_to_remember";
+const question_timer = "question_timer";
+const question_text = "question_text";
+const question_img_container = "question_img_container";
+const question_description = "question_description";
+const question_content = "question_content";
+
 function mainFunc(json, id) {
     quiz_btn_container.innerHTML = "";
     setName(json.name, "testName")
@@ -43,19 +50,28 @@ function createQuestion(questions, id = 0) {
         img += `<img src="/images/${element}">`;
     });
     let content = `
-    <div id="question_timer_to_remember"></div>
-    <div id="question_timer"></div>
-    <div id="question_text">${currentQuestion.text}</div>
-    <div id="question_img_container">${img}</div>
-    <div id="question_description">${currentQuestion.description}</div>
-    <div id="question_content"></div>`;
-    insertHtml(document.getElementById("categories_content"), content)
-    createTimer(time_to_remember, "question_timer_to_remember", () => timeToRemember())
-
+    <div id="${question_timer_to_remember}"></div>
+    <div id="${question_timer}"></div>
+    <div id="${question_text}">${currentQuestion.text}</div>
+    <div id="${question_img_container}">${img}</div>
+    <div id="${question_description}">${currentQuestion.description}</div>
+    <div id="${question_content}"></div>`;
+    insertHtml(quiz, content)
+    createTimer(time_to_remember, question_timer_to_remember, () => timeToRemember(questions, id), () => createAnswers(questions, id))
+}
+function createAnswers(questions, id) {
+    let currentQuestion = questions[id];
+    console.log("dsadsadss");
+    
 }
 function createImg(container_id, path) {
     let content = `<img src="${path}">`;
     insertHtml(document.getElementById(container_id), content)
+}
+function timeToRemember(questions, id) {
+    document.getElementById(question_img_container).innerHTML = ""
+    document.getElementById(question_description).innerHTML = ""
+    createAnswers(questions, id)
 }
 //#endregion
 //#region Создание категорий
@@ -77,19 +93,19 @@ function createCategories(categories) {
 }
 //#endregion
 //#region Timer
-function createTimer(time, elementId = "timer", callback = () => document.forms[0].submit()) {
+function createTimer(time, elementId = "timer", callback = () => document.forms[0].submit(), callback_faild = () => console.log("Таймера нет")) {
     if (!(time !== undefined && time > 0)) {
-        console.log("Таймера нет");
+        callback_faild()
         return
     }
     //gryz
     let min = time / 60;
     let timer = '';
-    timer += "<h5 class='timer' data-minutes-left='" + min + "'></h5>";
+    timer += `<h5 id="timer_${elementId}" class='timer' data-minutes-left='${min}'></h5>`;
     timer += "<section class='actions'></section>";
     document.getElementById(elementId).innerHTML = timer;
 
-    $('.timer').startTimer({
+    $(`#timer_${elementId}`).startTimer({
         onComplete: callback
     })
 }
@@ -127,6 +143,7 @@ function formatTime(time) {
 function categoriesTimer() {
     console.log("Таймер категории")
 }
+
 //#endregion
 /**
  * @position {string} beforebegin | afterbegin | beforeend | afterend
