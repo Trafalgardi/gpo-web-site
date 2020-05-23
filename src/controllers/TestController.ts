@@ -12,7 +12,13 @@ export default class TestController {
 
     async getTest(req: Request, res: Response) {// конкретный тест
         let test = await this.userDataProvider.getTest(Number.parseInt(req.params.id));
-        console.log(test)
+        //console.log(test)
+        if(Number.parseInt(req.params.id) > 33)
+        {
+            console.log("DSds")
+            res.render('testReborn', { json: JSON.stringify(test[0].data), id: req.params.id })
+           return
+        }
         res.render('test', { json: JSON.stringify(test[0].data), id: req.params.id })
 
     }

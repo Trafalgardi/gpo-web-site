@@ -7,6 +7,21 @@ const question_img_container = "question_img_container";
 const question_description = "question_description";
 const question_content = "question_content";
 
+const quiz_btn_container = document.getElementById("quiz-btn-container")
+quiz_btn_container.innerHTML = `
+<button type="button" id="previous">Предыдущий вопрос</button>
+<button type="button" id="next">Следующий вопрос</button>
+<button type="submit" id="submitBtn">Отправить ответы</button>
+<button type="button" style="display:none" id="start">Начать</button>`;
+function checkType(parms, id) {
+    const previousButton = $('#previous');
+    const nextButton = $('#next');
+    let content = '';
+
+    console.log(JSON.parse(parms));
+    let json = JSON.parse(parms);
+    mainFunc(json, id)
+}
 function mainFunc(json, id) {
     quiz_btn_container.innerHTML = "";
     setName(json.name, "testName")
@@ -59,13 +74,12 @@ function createQuestion(questions, id = 0) {
     insertHtml(quiz, content)
     if (currentQuestion.can_skip_remember_time) {
         quiz_btn_container.innerHTML = `<button type="button" id="btn_skip_remember_time">Продолжить</button>`
-        let btn = document.getElementById('btn_skip_remember_time').onclick = () => cancelTimerToRemember(questions, id)
+        let btn = document.getElementById('btn_skip_remember_time').onclick = cancelTimerToRemember;
     }
     createTimer(time_to_remember, question_timer_to_remember, () => timeToRemember(questions, id), () => createAnswers(questions, id))
 }
 
-function cancelTimerToRemember(questions, id) {
-    console.log("dsadsadss");
+function cancelTimerToRemember() {
     $(`#timer_${question_timer_to_remember}`).trigger('complete');
     document.getElementById(question_timer_to_remember).innerHTML = ""
     quiz_btn_container.removeChild(document.getElementById("btn_skip_remember_time"))
