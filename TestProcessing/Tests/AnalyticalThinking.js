@@ -1,3 +1,4 @@
+const {Check} = require('../CheckString');
 module.exports = {
     AnalyticalThinking(answers) {
         var result = 0;

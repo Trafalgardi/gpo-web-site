@@ -51,7 +51,7 @@ function slideQuestions(params) {
                 output.push(
                     `<div class="slide">
                         <div class="question"> ${myQuestions[q].question} </div>
-                        <img src="../${myQuestions[q].img}" alt="тут должна быть кратинка :)">
+                        <img src="/images/${myQuestions[q].img}" alt="тут должна быть кратинка :)">
                         ${answers.join("")}
                     </div>`
                 );
@@ -310,7 +310,7 @@ function htmlOnline(data) {
             content += "<p>" + data[i].question[j] + "</p>";
         }
         if (data[i].type == 2) {
-            content += '<img src=" ' + data[i].img + '"><p></p>'
+            content += '<img src="/images/' + data[i].img + '"><p></p>'
         }
         if (data[i].type != 1) {
             content += '<input style="size: 50px;" name="inputField_' + i + '" type="text" />'
@@ -363,7 +363,7 @@ function slideQuestionsRememberImg(params) {
         for (let i = 0; i < params.length; i++) {
             output.push(
                 `<div class="slide" data-time="${params[i].time}">
-                    <img src="../${params[i].img}" alt="тут должна быть кратинка :)">
+                    <img src="/images/${params[i].img}" alt="тут должна быть кратинка :)">
                 </div>`
             );
             for (let q = 0; q < params[i].question.length; q++) {
@@ -548,214 +548,3 @@ function nextLevel(lvl, number) {
         imageAnswers(1, lvl + 1);
     }
 }
-
-/*
-let count = 0;
-
-function printTest(params, id) {
-    //let js = JSON.stringify(result[0].data);
-    console.log(params)
-    let temp = params.replace(/&quot;/g, '"');
-
-    let json = JSON.parse(temp.substring(1, temp.length - 1))
-    globalData = json;
-    console.log(json)
-    if (json.time !== undefined && json.time > 0) {
-        creatTimer(json.time)
-    } else {
-        console.log("Таймера нет")
-    }
-    if (json.html !== undefined) {
-        console.log(json.html)
-        let temp = json.html.replace(/&lt;/g, '<');
-        temp = temp.replace(/&gt;/g, '>');
-        console.log(temp)
-        document.getElementById('comment').innerHTML = temp;
-    } else {
-        console.log('Коментария нет')
-    }
-    //Определить ответ по умолчанию через условие (чтобы не выйти за рамки)
-    console.log(json)
-    let content = '';
-    switch (json.type) {
-        case 0: //Разные ответы на все тесты
-            content += allForAll(json.data, json.answerDefault)
-            break;
-        case 1:
-            content += oneForAll(json.questions, json.answers, json.answerDefault) // 0 - answerDefault или dif или значение по умолчанию.
-            break;
-        case 2:
-            content += justAnswers(json.data, json.answerDefault)
-            break;
-        case 3:
-            content += textAnswers(json.questions, json.mask, json.pattern)
-            break;
-        case 4:
-            content += oneTextAnswer()
-            break;
-        case 5:
-            content += noPatternText(json.data)
-            break;
-        case 6:
-            content += '<div id="noPattern"></div>'
-            break;
-        case 7:
-            content += '<div class="row" id="ImagePatter"></div>'
-            break;
-        case 8:
-            content += imgForAll(json.data, json.answerDefault)
-            break;
-        case 9:
-            content += chooseN()
-            break;
-        case 10:
-            content += htmlOnline(json.data)
-            break;
-        case 11:
-            content += custom(json.data)
-            break;
-        case 12:
-            content += checkBox(json)
-            break;
-        default:
-            break;
-    }
-    if (json.type != 5 && json.type != 6 && json.type != 7 && json.type != 12) {
-        content += '<div class="box-footer" style="text-align: center;">';
-        content += '    <input  type="submit" class="btn btn-primary" value="Отправить ответы"></input>';
-        content += '</div>';
-    }
-    if (json.type == 12) {
-        content += '<div id="btn" class="box-footer" style="text-align: center;">';
-        content += '    <input onclick="testController(0)"  type="button" class="btn btn-primary" value="Начать"></input>';
-        content += '</div>';
-    }
-    content += '<div class="box-footer">';
-    content += '    <input style="display:none" name="id" type="text" value="' + id + '"></input>';
-    content += '</div>';
-    document.getElementById('questions').innerHTML = content;
-
-    if (json.type == 12) {
-        $("#q_1").show();
-    }
-    //if(json.type == 3) $('.mask').mask(json.mask, {'translation': {0: {pattern: /d/}}});
-    document.getElementById('testName').innerHTML = '<h1>' + json.name + '</h1>';
-    if (json.type == 6) noPatternNumber(0);
-    if (json.type == 7) Image(1, 1, 1);
-}*/
-
-/*function oneForAll(questions, ans, def) { //Когда одинаковые ответы для всех вопросов.
-    let content = '';
-    for (let i = 0; i < questions.length; i++) {
-        content += '<div class="form-group">';
-        content += '    <label>' + (i + 1) + '. ' + questions[i] + '</label>';
-        content += radioAnswers(ans, i, def).join("");
-        content += '</div>';
-    }
-    return content;
-}
-
-function allForAll(data, def) { //Когда разные ответы для всех вопросов.
-    let content = '';
-    for (let i = 0; i < data.length; i++) {
-        content += '<div class="form-group">';
-        content += '    <label>' + (i + 1) + '. ' + data[i].question + '</label>';
-        content += radioAnswers(data[i].answers, i, def).join("");
-        content += '</div>';
-    }
-    return content;
-}
-
-function imgForAll(data, def) { //Когда разные ответы для всех вопросов в картинках.
-    let content = '';
-    for (let i = 0; i < data.length; i++) {
-        content += '<div class="form-group">';
-        content += '    <img src="../' + data[i].img + '" alt="тут должна быть кратинка:)">'; //<img src="URL" alt="альтернативный текст">
-        content += radioAnswers(data[i].answers, i, def).join("");
-        content += '</div>';
-    }
-    return content;
-}
-
-function custom(data) {
-    let content = "";
-    for (let i = 0; i < data.length; i++) {
-        content += '<div style="text-align: center;" class="form-group">';
-        content += '    <p> Внимательно посмотрите на картинку</p>';
-        content += '    <img  src="' + data[i].img + '".</label>';
-        content += CreatQuestionsAndAnswers(data[i].question, data[i].answer, 0, i);
-        content += '</div>';
-    }
-    return content;
-}
-
-function CreatQuestionsAndAnswers(question, answer, def, forRadio) {
-    let content = "";
-    console.log(question.length)
-    for (let i = 0; i < question.length; i++) {
-        content += '<div class="form-group">';
-        content += '    <label>' + question[i] + '.</label>';
-        def = def < 0 || def >= question.length ? 0 : def;
-        for (let x = 0; x < answer[i].length; x++) {
-            let checked = x == def ? 'checked' : '';
-            content += '    <div class="radio">'
-            content += '        <label>'
-            content += '            <input type="radio" name="optionsRadios_' + forRadio + '_' + i + '" value=\'' + answer[i][x][0] + '\' ' + checked + ' >' + answer[i][x] // добавить защиту от дурака
-            content += '        </label>'
-            content += '    </div>'
-        }
-        content += '</div>';
-    }
-    return content;
-}
-
-function testController() {
-    switch (count) {
-        case 0:
-            $("#q_1").hide();
-            $("#a_1").show();
-            count++;
-            document.getElementById("btn").innerHTML = '<input onclick="testController(' + count + ')"  type="button" class="btn btn-primary" value="Следующий этап"></input>';
-            break;
-        case 1:
-            $("#q_2").show();
-            $("#a_1").hide();
-            count++;
-            document.getElementById("btn").innerHTML = '<input onclick="testController(' + count + ')"  type="button" class="btn btn-primary" value="Начать"></input>';
-            break;
-        case 2:
-            $("#q_2").hide();
-            $("#a_2").show();
-            count++;
-            document.getElementById("btn").innerHTML = '<input onclick="testController(' + count + ')"  type="button" class="btn btn-primary" value="Следующий этап"></input>';
-            break;
-
-        case 3:
-            $("#q_3").show();
-            $("#a_2").hide();
-            count++;
-            document.getElementById("btn").innerHTML = '<input onclick="testController(' + count + ')"  type="button" class="btn btn-primary" value="Начать"></input>';
-            break;
-        case 4:
-            $("#q_3").hide();
-            $("#a_3").show();
-            count++;
-            document.getElementById("btn").innerHTML = '<input onclick="testController(' + count + ')"  type="button" class="btn btn-primary" value="Следующий этап"></input>';
-            break;
-        case 5:
-            $("#q_4").show();
-            $("#a_3").hide();
-            count++;
-            document.getElementById("btn").innerHTML = '<input onclick="testController(' + count + ')"  type="button" class="btn btn-primary" value="Начать"></input>';
-            break;
-        case 6:
-            $("#q_4").hide();
-            $("#a_4").show();
-            count++;
-            document.getElementById("btn").innerHTML = '<input  type="submit" class="btn btn-primary" value="Отправить ответы"></input>';
-            break;
-        default:
-            break;
-    }
-}
-*/
