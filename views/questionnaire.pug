@@ -760,12 +760,65 @@ html(lang='en')
                                     option(value='10') Более 10 лет
                               // <a class="academic-degree-item-delete" rel="1" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</a>
                               // Конец блока про стаж
-              .basis-block
-                .row
-                  .col-md-12.mb-3
-                    label(for='leaderID') Ссылка на ваш профиль в  Leader-ID
-                    input#leaderID.form-control(name='leader_id' type='text', placeholder='https://leader-id.ru/', value='', required='')
+              p
+                h3 Дополнительная информация
+              .row.additional-block
+                .col-md-12.mb-3
+                  label(for='agreePsychologicId') Согласны ли Вы, в случае необходимости, принять участие в психологической диагностике Ваших деловых и личностных качеств?
+                  select#agreePsychologicSelectId.custom-select.d-block.w-100(name='agreePsychologicSelect')
+                    option(value='Да', selected='selected') Да
+                    option(value='Нет') Нет
+                .col-md-12.mb-3
+                  label(for='adaptationSelectId') Приходилось ли Вам быстро адаптироваться к изменениям в процессе работы и за какой период?
+                  select#adaptationSelectId.form-control(name='adaptationSelect')
+                    option(value='Нет', selected='selected') Нет
+                    option(value='Да (более чем за 1 месяц)') Да (более чем за 1 месяц)
+                    option(value='Да (менее чем за 1 месяц)') Да (менее чем за 1 месяц)
+                .col-md-12.mb-3
+                  label(for='levelPCSelectId') Уровень навыков владения ПК:
+                  select#levelPCSelectId.custom-select.d-block.w-100(name='levelPCSelect')
+                    option(value='Не пользовался', selected='selected') Не пользовался
+                    option(value='Начинающий уровень') Начинающий уровень
+                    option(value='Средний уровень') Средний уровень
+                    option(value='Уверенный пользователь') Уверенный пользователь
+                    option(value='Продвинутый пользовател') Продвинутый пользователь
+                .col-md-12.mb-3
+                  label(for='uncertaintySelectId') Приходилось ли Вам принимать сложные решения в условиях неопределенности?
+                  select#uncertaintySelectId.form-control(name='uncertaintySelect')
+                    option(value='Нет', selected='selected') Нет
+                    option(value='Да (неудачно)') Да (неудачно)
+                    option(value='Да (удачно)') Да (удачно)
+                  hr.mb-2
+                .col-md-12.mb-3
+                  label(for='achievementsId') Победы/участие в различных по степени и значимости конкурсах, конференциях, олимпиадах, стажировках:
+                  input#achievementsId.form-control(name='achievements' type='text', placeholder='Ваш ответ', value='', required='')
+                .col-md-12.mb-3
+                  label(for='programsStudyId') Работа с какими программными продуктами была освоена в процессе обучения:
+                  input#programsStudyId.form-control(name='programs_study' type='text', placeholder='Ваш ответ', value='', required='')
+                .col-md-12.mb-3
+                  label(for='programsWorkId') Работа с какими программными продуктами была освоена в процессе работы:
+                  input#programsWorkId.form-control(name='programs_work' type='text', placeholder='Ваш ответ', value='', required='')
+                .col-md-12.mb-3
+                  label(for='specialtyId') В каких направлениях профессиональной деятельности Вы специализировались ранее (опишите опыт и навыки работы, полученные исходя из должностных обязанностей, выполняемых прежде, при наличии):
+                  input#specialtyId.form-control(name='specialty' type='text', placeholder='Ваш ответ', value='', required='')
+                .col-md-12.mb-3
+                  label(for='desireSpecialtyId') Какую новую специальность или дополнительные навыки к уже имеющимся Вы хо-тели бы освоить:
+                  input#desireSpecialtyId.form-control(name='desire_specialty' type='text', placeholder='Ваш ответ', value='', required='')
+                .col-md-12.mb-3
+                  label(for='future5Id') Кем Вы видите себя через 5 лет?
+                  input#future5Id.form-control(name='future5' type='text', placeholder='Ваш ответ', value='', required='')
+                .col-md-12.mb-3
+                  label(for='strengthsId') Ваши сильные стороны:
+                  input#strengthsId.form-control(name='strengths' type='text', placeholder='Ваш ответ', value='', required='')
+                .col-md-12.mb-3
+                  label(for='weaknessesId') Ваши слабые стороны:
+                  input#weaknessesId.form-control(name='weaknesses' type='text', placeholder='Ваш ответ', value='', required='')
+                  hr.mb-2
+                .col-md-12.mb-3
+                  label(for='leaderID') Ссылка на ваш профиль в  Leader-ID:
+                  input#leaderID.form-control(name='leader_id' type='text', placeholder='https://leader-id.ru/', value='', required='')
               hr.mb-4
+              // Конец доп блока
               button#submit.btn.btn-primary.btn-lg.btn-block(type='submit') Отправить данные
       
       footer.my-5.pt-5.text-muted.text-center.text-small

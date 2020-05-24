@@ -3,6 +3,7 @@ const dateTime = require('node-datetime');
 let bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pdf = require('html-pdf');
+const { AnketaCalculation } = require('./AnketaProcessing/AnketaProcessing.js')
 
 const pdfTemplate = require('./documents');
 
@@ -53,6 +54,7 @@ module.exports = {
             }
             return cause;
         }
+
         function education() {
             let education = {
                 //"Полное среднетехническое образование": "0",
@@ -67,8 +69,7 @@ module.exports = {
                     "Техническое": "false",
                     "Гуманитарное": "false"
                 },
-                "Ученая степень":
-                {
+                "Ученая степень": {
                     "Кандитат наук": "false",
                     "Доктор наук": "false",
                     "PhD": "false"
@@ -100,6 +101,7 @@ module.exports = {
             }
             return education;
         }
+
         function driveLicense() {
             let driveLicenseJSON = {
                 experience: 0,
@@ -114,6 +116,7 @@ module.exports = {
             }
             return driveLicenseJSON;
         }
+
         function militaryService() {
             let militaryServiceJSON = {
                 "Отношение к воинской обязанности": body['militarySelect'],
@@ -201,6 +204,22 @@ module.exports = {
                 'Управление проектами': body['experience_4'],
                 'Не по специальности': body['experience_5'],
                 'Рабочие специальности': body['experience_6']
+            },
+            additionalInfo: {
+                'agreePsychologic': body['agreePsychologicSelect'],
+                'adaptation': body['adaptationSelect'],
+                'levelPC': body['levelPCSelect'],
+                'uncertainty': body['uncertaintySelect'],
+                'openQuestions': {
+                    'achievements': body['achievements'],
+                    'programs_study': body['programs_study'],
+                    'programs_work': body['programs_work'],
+                    'specialty': body['specialty'],
+                    'desire_specialty': body['desire_specialty'],
+                    'future5': body['future5'],
+                    'strengths': body['strengths'],
+                    'weaknesses': body['weaknesses']
+                }
             }
 
         };
@@ -217,9 +236,12 @@ module.exports = {
             if (err) {
                 res.send(err);
             } else {
-                let sql = "UPDATE users SET anketaData='" + JSON.stringify(data) + "' WHERE id='" + authData.user.id + "'";
+                let anketaResult = AnketaCalculation(data);
+                console.log("anketa res: " + anketaResult)
+
+                let sql = "UPDATE users SET anketaData='" + JSON.stringify(data) + "', anketaResult='" + anketaResult + "' WHERE id='" + authData.user.id + "'";
                 console.log(sql)
-                connection.query(sql, function (err, result, fields) {
+                connection.query(sql, function(err, result, fields) {
                     if (err) throw err;
                     res.render('post');
                     //res.send("Данные записанны!\n" + JSON.stringify(data));
@@ -311,12 +333,12 @@ module.exports = {
             newTests: [] //где result = -1
         }
         let sql = "SELECT id, anketaData FROM users WHERE anketaResult = -1";
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             json.anketa = result;
-            sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`'
-                + 'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
-            connection.query(sql, function (error, results, fields) {
+            sql = 'SELECT `user_tests`.`id`, `user_tests`.`user_id`, `user_tests`.`test_id`, `user_tests`.`answers`' +
+                'FROM `tests` JOIN `user_tests` ON `user_tests`.`test_id` = `tests`.`id` AND `user_tests`.`result` = -1';
+            connection.query(sql, function(error, results, fields) {
                 if (error) {
                     console.log("check1")
                     let json = {
@@ -333,7 +355,7 @@ module.exports = {
     },
     getLastData: (req, res) => {
         let sql = "SELECT json FROM data WHERE 1 ORDER BY ID DESC LIMIT 1";
-        connection.query(sql, function (err, result, fields) {
+        connection.query(sql, function(err, result, fields) {
             if (err) throw err;
             //res.send("Данные из таблицы!\n" + JSON.stringify(result) + "\n");
             res.json(result);
@@ -350,12 +372,12 @@ module.exports = {
         //SELECT * FROM users WHERE email = 'theremandram@gmail.com' LIMIT 1
         const sql = "SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1";
         console.log(sql)
-        connection.query(sql, function (error, results, fields) {
+        connection.query(sql, function(error, results, fields) {
 
             if (error || results == "") {
                 return res.redirect('/signin');
             } else {
-                const passworFromBD = results[0].password;//если чо то result[0]....
+                const passworFromBD = results[0].password; //если чо то result[0]....
                 console.log(passworFromForm + '\n' + passworFromBD)
                 if (passworFromForm !== undefined && passworFromForm !== null && passworFromBD !== undefined && passworFromBD !== null) {
                     if (bcrypt.compareSync(passworFromForm, passworFromBD)) {
@@ -398,18 +420,18 @@ module.exports = {
         };
         let sql = 'SELECT `email` FROM `users` WHERE `email` = "' + req.body.email + "\""
         console.log(sql)
-        connection.query(sql, function (error, results, fields) {
+        connection.query(sql, function(error, results, fields) {
             if (results == '') {
                 console.log("check1")
 
-                connection.query("INSERT INTO users SET ?", user, function (error, results, fields) {
+                connection.query("INSERT INTO users SET ?", user, function(error, results, fields) {
                     if (error) {
                         res.json({
                             status: error,
                             message: "there is some error with query"
                         });
                     } else {
-                        connection.query("SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1", function (error, results, fields) {
+                        connection.query("SELECT * FROM users WHERE email = '" + req.body.email + "' LIMIT 1", function(error, results, fields) {
                             //Добавление данных пользователя в cookies start
                             console.log(results[0].id)
                             if (error) {
@@ -452,12 +474,12 @@ module.exports = {
                     sql = "SELECT banCases FROM users WHERE id = " + authData.user.id
                     console.log(sql);
                     connection.query(sql, function(err, results, fields) {
-                        
-                        
+
+
                         //console.log(JSON.parse(results[0].banTests))
 
                         let newJsonArray = []
-                       
+
                         let banCases = JSON.parse(results[0].banCases).ban;
 
                         //console.log(banTests)
@@ -486,10 +508,10 @@ module.exports = {
     getResults: (req, res) => {
         if (req.body.email_address != undefined) {
             let email_list = req.body.email_address.toString().split(',');
-            email_list = email_list.map(function (element) {
+            email_list = email_list.map(function(element) {
                 return "'" + element.trim() + "'";
             });
-            connection.query("SELECT * FROM users WHERE email IN (" + email_list.join(',') + ")", function (users_error, results, fields) {
+            connection.query("SELECT * FROM users WHERE email IN (" + email_list.join(',') + ")", function(users_error, results, fields) {
                 if (users_error) {
                     console.log(users_error);
                     throw users_error;
@@ -497,9 +519,9 @@ module.exports = {
                     if (results.length > 0) {
                         users_list = results;
                         var users_tests = [];
-                        Promise.all(users_list.map(function (user) {
+                        Promise.all(users_list.map(function(user) {
                             var promise = new Promise(function(resolve) {
-                                connection.query("SELECT tests.id, tests.name, user_tests.result FROM user_tests JOIN tests ON user_tests.test_id=tests.id WHERE user_id='" + user.id + "'",function(tests_error, tests_list) {
+                                connection.query("SELECT tests.id, tests.name, user_tests.result FROM user_tests JOIN tests ON user_tests.test_id=tests.id WHERE user_id='" + user.id + "'", function(tests_error, tests_list) {
                                     if (tests_error) {
                                         console.log(tests_error);
                                         throw tests_error;
@@ -517,11 +539,11 @@ module.exports = {
                                 }
                             });
                         })).then(function() {
-                            pdf.create(pdfTemplate({users_tests}), {}).toFile(`${__dirname}/result.pdf`, (err) => {
-                                if(err) {
+                            pdf.create(pdfTemplate({ users_tests }), {}).toFile(`${__dirname}/result.pdf`, (err) => {
+                                if (err) {
                                     res.send(Promise.reject());
                                 }
-                        
+
                                 res.sendFile(`${__dirname}/result.pdf`);
                             });
                         });
@@ -535,5 +557,3 @@ module.exports = {
         }
     },
 }
-
-
