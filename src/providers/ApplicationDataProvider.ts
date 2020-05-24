@@ -7,11 +7,7 @@ import AuthDataProvider from "./AuthDataProvider";
 
 export default class ApplicationDataProvider{
     private storage: DataProviderBase[];
-    constructor(){
-        let host = 'localhost';
-        let database = 'RecommendationSystem';
-        let user = 'usrgpo';
-        let password = 'PhyGyisHNs}{2DU'; //fkx8ZepaJEtS2xy //vMETuklX1HC4vX1g MySql auth  vMETuklX1HC4vX1g
+    constructor(host: string, database: string, user: string, password: string){
         let dbController = new DatabaseController(host, database, user, password);
         this.storage = this.getProviders()
             .map(provider => new provider(dbController));

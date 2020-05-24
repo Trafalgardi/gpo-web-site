@@ -2,8 +2,6 @@ function checkType(parms, id) {
     const previousButton = $('#previous');
     const nextButton = $('#next');
     let content = '';
-
-    console.log(JSON.parse(parms));
     let json = JSON.parse(parms);
 
     numberTestData = json;
@@ -16,10 +14,8 @@ function checkType(parms, id) {
     }
 
     if (json.html !== undefined) {
-        console.log(json.html);
         let temp = json.html.replace(/&lt;/g, '<');
         temp = temp.replace(/&gt;/g, '>');
-        console.log(temp);
         document.getElementById('comment').innerHTML = temp;
     } else {
         console.log('Комментария нет');

@@ -46,6 +46,7 @@ html(lang='en')
           | Регистрация
         //span.login100-form-title.p-b-48
         //  i.zmdi.zmdi-account-add
+        #error(style="color: red;font-size: .9rem;text-align: center;margin-bottom: 20px;")
         .wrap-input100.validate-input(data-validate='Valid email is: a@b.c')
           input#mail.input100(type='text', name='email')
           span.focus-input100(data-placeholder='Email')
@@ -93,3 +94,6 @@ html(lang='en')
     script(src='../vendor/countdowntime/countdowntime.js')
     // ===============================================================================================
     script(src='../js/main.js')
+    script(src='../javascripts/error.js')
+    script.
+      throwError('#{msg}');

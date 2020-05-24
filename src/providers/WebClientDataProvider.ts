@@ -7,8 +7,8 @@ import SecurityService from "../services/SecurityService";
 export default class WebClientDataProvider extends DataProviderBase {
 
    
-    async setAnketa(anketa: string, user_id: number): Promise<boolean>{
-        const sql = this.dbController.format("UPDATE users SET anketaData=? WHERE id=?", [anketa, user_id]);
+    async setAnketa(anketa: string, result: number, user_id: number): Promise<boolean>{
+        const sql = this.dbController.format("UPDATE users SET anketaData=?, anketaResult=? WHERE id=?", [anketa, result, user_id]);
         try {
             const rows = await this.query(sql);
             if (rows == null || rows.length == 0){
@@ -22,7 +22,7 @@ export default class WebClientDataProvider extends DataProviderBase {
 
     }
 
-    async getAllTests(): Promise<[{id: number, name: string, questions: any[], category_id: number}]> | null{
+    async getAllTests(): Promise<{id: number, name: string, questions: any[], category_id: number}[]> | null{
         const sql = "SELECT `id`, `name`, `questions`, `category_id` FROM `tests` WHERE 1";
         try {
             const rows = await this.query(sql);
@@ -42,14 +42,14 @@ export default class WebClientDataProvider extends DataProviderBase {
             if (rows == null || rows.length == 0){
                 return null;
             }
-            let banTests = JSON.parse(rows[0].banTests).ban;
+            let banTests = JSON.parse(rows[0].banTests);            
             return banTests;
         } catch (error) {
             console.log(error)
             return null;
         }   
     }
-    async getTestCategorias(): Promise<[{id: number, parent_id: number}]> | null{
+    async getTestCategorias(): Promise<{id: number, parent_id: number}[]> | null{
         const sql = "SELECT * FROM test_categories WHERE 1"
         try {
             const rows = await this.query(sql);
@@ -62,14 +62,14 @@ export default class WebClientDataProvider extends DataProviderBase {
             return null;
         }   
     }
-    async getTest(id:number): Promise<any> | null{
+    async getTestData(id:number): Promise<{}> | null{
         const sql = 'SELECT `questions` as data FROM `tests` WHERE id=' + id;
         try {
             const rows = await this.query(sql);
             if (rows == null || rows.length == 0){
                 return null;
             }
-            return rows;
+            return rows[0].data;
         } catch (error) {
             console.log(error)
             return null;
@@ -93,8 +93,8 @@ export default class WebClientDataProvider extends DataProviderBase {
             return null;
         } 
     }
-    async updateBanUserTest(user_id: number, banTests: string):Promise<boolean>{
-        const sql = "UPDATE `users` SET `banTests`= '" + banTests + "' WHERE `users`.`id` =" + user_id;
+    async updateBanUserTest(user_id: number, banTests: number[]):Promise<boolean>{
+        const sql = "UPDATE `users` SET `banTests`= '" + JSON.stringify(banTests) + "' WHERE `users`.`id` =" + user_id;
         try {
             const rows = await this.query(sql);
             if (rows == null || rows.length == 0){

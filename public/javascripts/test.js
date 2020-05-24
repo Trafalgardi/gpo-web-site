@@ -20,7 +20,6 @@ function slideQuestions(params) {
         // we'll need a place to store the HTML output
         const output = [];
         myQuestions = type != 1 ? params.data : params.questions;
-        console.log(myQuestions);
         for (let q = 0; q < myQuestions.length; q++) {
             let answers = [];
             if (type == 0) { //Когда разные ответы для всех вопросов.
@@ -52,7 +51,7 @@ function slideQuestions(params) {
                 output.push(
                     `<div class="slide">
                         <div class="question"> ${myQuestions[q].question} </div>
-                        <img src="../${myQuestions[q].img}" alt="тут должна быть кратинка :)">
+                        <img src="/images/${myQuestions[q].img}" alt="тут должна быть кратинка :)">
                         ${answers.join("")}
                     </div>`
                 );
@@ -311,7 +310,7 @@ function htmlOnline(data) {
             content += "<p>" + data[i].question[j] + "</p>";
         }
         if (data[i].type == 2) {
-            content += '<img src=" ' + data[i].img + '"><p></p>'
+            content += '<img src="/images/' + data[i].img + '"><p></p>'
         }
         if (data[i].type != 1) {
             content += '<input style="size: 50px;" name="inputField_' + i + '" type="text" />'
@@ -364,7 +363,7 @@ function slideQuestionsRememberImg(params) {
         for (let i = 0; i < params.length; i++) {
             output.push(
                 `<div class="slide" data-time="${params[i].time}">
-                    <img src="../${params[i].img}" alt="тут должна быть кратинка :)">
+                    <img src="/images/${params[i].img}" alt="тут должна быть кратинка :)">
                 </div>`
             );
             for (let q = 0; q < params[i].question.length; q++) {
@@ -509,7 +508,8 @@ function imageAnswers(page, lvl) {
         for (let i = 1; i <= imgCount; i++) {
             $('<img>').attr({
                 id: 'img',
-                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
+                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
+                onerror: "this.src='/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG'",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;cursor: pointer;",
                 onClick: "nextLevel(" + lvl + ", " + i + ")"
             }).appendTo('.row');
@@ -518,7 +518,8 @@ function imageAnswers(page, lvl) {
         for (let i = 1; i <= imgCount; i++) {
             $('<img>').attr({
                 id: 'img',
-                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
+                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
+                onerror: "this.src='/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;"
             }).appendTo('.row');
         }

@@ -13,7 +13,7 @@ const WebClientRoute: IAppRoute = {
         const testCtrl = new TestController(app);
         return router()
             .use('/', function timeLog(req: Request, res: Response, next: NextFunction) {
-                console.log('Time: ', Date.now());
+                console.log(req.url + ' == Time: ', Date.now());
                 next();
             })
             .use('/', (req: Request, res: Response, next: NextFunction) => {
@@ -54,6 +54,10 @@ const WebClientRoute: IAppRoute = {
             .post('/test/setDataTest', (req: Request, res: Response) => {
                 testCtrl.setDataTest(req, res);
             })
+            .post('/test/setDataTestNew', (req: Request, res: Response) => {
+                testCtrl.setDataTestNew(req, res);
+            })
+            
         // .post('/getDataTest', getDataTest);
         // .post('/test/addDataTest', addDataTest);
         // .post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)

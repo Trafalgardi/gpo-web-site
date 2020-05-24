@@ -30,8 +30,8 @@ export default class AuthController {
     }
 
     public async signUp(req: Request, res: Response) {
-        function throwError(){
-            res.redirect('/singup') 
+        function throwError(msg){
+            res.render('signup', {msg: msg})
         }
 
         if (AuthController.authCheck(req, res) != null ){
@@ -41,12 +41,12 @@ export default class AuthController {
         let email = req.body.email;
         let password = req.body.password;
         if (email == undefined || password == undefined){
-            throwError();
+            throwError("Не введен логин или пароль");
             return;
         }
         let token = await this.authDataProvider.signUp(email, password);
         if (token == null){
-            throwError();
+            throwError("Логин занят");
             return;
         }
         AuthController.auth(req, res, {key: COOKIE_TOKEN, value: token})
@@ -55,7 +55,7 @@ export default class AuthController {
 
     public async signIn(req: Request, res: Response){
         function throwError(){
-            res.redirect('/signin')
+            res.render('signin', {msg: "Не верный логин или пароль"})
         }
 
         if (AuthController.authCheck(req, res) != null ){
