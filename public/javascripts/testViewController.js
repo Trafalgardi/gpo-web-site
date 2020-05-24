@@ -31,25 +31,39 @@ const current_data = {
     test_id: -1,
     _question_id: 0,
     _category_id: 0,
-    get question_id(){
+    get question_id() {
         return this._question_id;
     },
-    set question_id(value){
-        if (value < 0 || value >= this.current_question.length){
-            console.error("Выход за пределы массива!")
+    set question_id(value) {
+        console.log("question_id: " + value)
+        if (value < 0) {
+            return
+        }
+        else if (value >= this.current_category.questions.length) {
+            console.log("next category")
+            this.category_id++;
             return;
         }
         this._question_id = value;
+        createQuestion();
     },
-    get category_id(){
+    get category_id() {
         return this._category_id;
     },
-    set category_id(value){
-        if (value < 0 || value >= this.current_category.length){
-            console.error("Выход за пределы массива!")
+    set category_id(value) {
+        console.log("category_id: " + value)
+        if (value < 0) {
+            return
+        }
+        else if (value >= this.data.categories.length) {
+            //submit
+            console.log("submit")
             return;
         }
+        console.log("set category: " + value)
         this._category_id = value;
+        createCategory();
+        this.question_id = 0;
     },
     get current_category() {
         return this.data.categories[this.category_id];
@@ -69,7 +83,7 @@ const current_data = {
     save_answers: [],
     addAnswer(ans) {
         this.save_answers[this.category_id][this.question_id] = ans;
-        console.log(this.save_answers);
+        //console.log(this.save_answers);
     }
 
 };
@@ -77,8 +91,6 @@ const current_data = {
 function mainFunc(json, id) {
     current_data.data = json;
     current_data.test_id = id;
-    current_data.question_id = 0;
-    current_data.category_id = 0;
     //let question_count = json.categories.map(v => v.questions.length).reduce((a, c) => a + c);
     current_data.save_answers = new Array(json.categories.length);
     for (let i = 0; i < current_data.save_answers.length; i++) {
@@ -95,7 +107,7 @@ function mainFunc(json, id) {
     setTutorial(current_data.test_tutorial)
 
     //Создание категорий
-    createCategory()
+    current_data.category_id = 0;
 
 }
 
@@ -124,7 +136,6 @@ function createCategory() {
     if (isTutorial) {
         return
     }
-    createQuestion()
 
 }
 
@@ -185,18 +196,27 @@ function createAnswers() {
 
 }
 
-
-
 function next() {
     current_data.question_id++;
-    console.log(current_data.question_id)
     if (current_data.current_category.questions.length > current_data.question_id) {
-        createQuestion()
+        
     } else {
         // next categories or end test
         setInnerHTML(quiz_btn_container, `<button type="button" id="submit">Завершить</button>`)
         addListenerOnClick("submit", submitTest);
     }
+}
+
+function nextQuestion() {
+
+}
+
+function previousQuestion() {
+
+}
+
+function nextCategory() {
+
 }
 //#region Answers template
 function answers_2() {
@@ -220,7 +240,7 @@ function answers_2() {
 }
 
 function answers_0() {
-    console.log("answers_0")
+    //console.log("answers_0")
     let data = current_data.current_question.answers.data
     let content = '';
     for (let i = 0; i < data.length; i++) {
@@ -291,7 +311,7 @@ function submitTest() {
             insertHtml("form", `<input type="text" name="answers[${i}][${j}]" value="${ans}"> `)
         }
     }
-    
+
     //for (let i = 0; i < answers.length; i++) {
     //    const ans = answers[i];
     //    insertHtml("form", `<input type="text" name=answers value="${ans}"> `)
