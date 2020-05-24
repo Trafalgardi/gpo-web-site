@@ -59,7 +59,8 @@ function setTutorial(tutorial) {
 function createQuestion(questions, id = 0) {
     let currentQuestion = questions[id];
     let time_to_remember = currentQuestion.time_to_remember;
-
+    quiz.innerHTML = "";
+    quiz_btn_container.innerHTML = "";
     let img = ""
     currentQuestion.images.forEach(element => {
         img += `<img src="/images/${element}">`;
@@ -88,17 +89,39 @@ function cancelTimerToRemember() {
 function createAnswers(questions, id) {
     let currentQuestion = questions[id];
     let answers = currentQuestion.answers
+    
     switch (answers.type) {
         case 0:
             answers_0(questions, id)
             break;
-
+        case 2:
+            answers_2(questions, id)
+            break;
         default:
             break;
     }
 
 }
 //#region Answers template
+function answers_2(questions, id) {
+    let data = questions[id].answers.data
+    let content = `<input type="text" id="form_answers_${id}" name="form_answers_${id}" value="" require>`
+    quiz_btn_container.innerHTML = `<button type="button" id="btn_next">Продолжить</button>`
+    let btn = document.getElementById("btn_next").onclick = function () {
+        var answer = document.getElementById(`form_answers_${id}`)
+        let isCheked = false;
+        console.log(answer);
+        
+        isCheked = answer.value != ""
+        if(isCheked==false){
+            alert("Впишите ответ")
+            return
+        }
+        addDataForm(id, answer.value)
+        next(questions, id)
+    };
+    document.getElementById(question_content).innerHTML = content;
+}
 function answers_0(questions, id) {
     let data = questions[id].answers.data
     let content = '';
@@ -115,10 +138,12 @@ function answers_0(questions, id) {
     let btn = document.getElementById("btn_next").onclick = function () {
         var answer = document.getElementsByName("answer")
         let isCheked = false;
+        let currentElement = ""
         for (let i = 0; i < answer.length; i++) {
             const element = answer[i];
             if(element.checked == true) {
                 isCheked = true;
+                currentElement = element
                 break
             }
         }
@@ -126,9 +151,10 @@ function answers_0(questions, id) {
             alert("Выберите ответ")
             return
         }
-        addDataForm(id, element.value)
+        addDataForm(id, currentElement.value)
+        next(questions, id)
+
     };
-    //btn.className = test ? "valid" : "invalid";
     document.getElementById(question_content).innerHTML = content;
 }
 function addDataForm(name, value) {
@@ -141,6 +167,16 @@ function addDataForm(name, value) {
     let content = `<input type="text" id="form_answers_${name}" name="form_answers_${name}" value="${value}">`
     var form = document.getElementById("form")
     insertHtml(form, content)
+    
+}
+function next(questions, id) {
+    let nextId = id+1;
+    console.log(questions[nextId])
+    if(questions.length > nextId){
+        createQuestion(questions, nextId)
+    }else{
+        alert("test off")
+    }
 }
 //#endregion
 
