@@ -50,6 +50,7 @@ const WebClientRoute: IAppRoute = {
             })
             //TODO: Добавить проверку на доступность теста
             .get('/test/:id', (req: Request, res: Response) => {
+                //Проверить, не находится ли тест в заблокированных
                 testCtrl.getTest(req, res);
             })
             .post('/test/setDataTest', (req: Request, res: Response) => {

@@ -57,6 +57,10 @@ export default class TestController {
         }
         let test_id: number = Number.parseInt(body.test_id);
         let result = answers;
+        console.log(result)
+
+        //Проверить, не находится ли тест в заблокированных
+
         //res.json(result)
         res.redirect('post')
     }

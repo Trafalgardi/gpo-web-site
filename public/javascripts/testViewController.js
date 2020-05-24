@@ -51,11 +51,9 @@ const current_data = {
         if (questionId < 0)
             return;
         else if (questionId >= this.save_answers.length)
-            this.save_answers.push(ans);
+            console.error(`Выход за пределы массива! Ответ ${ans} не записан`) //this.save_answers.push(ans);
         else
             this.save_answers[questionId] = ans;
-
-        //console.log(this.save_answers)
     }
 
 };
@@ -65,7 +63,9 @@ function mainFunc(json, id) {
     current_data.test_id = id;
     current_data.question_id = 0;
     current_data.category_id = 0;
-    console.log(current_data);
+    let question_count = json.categories.map(v => v.questions.length).reduce((a, c) => a + c);
+    current_data.save_answers = new Array(question_count);
+    console.log("question_count: " + question_count);
 
     setInnerHTML("testName", current_data.test_name)
 
