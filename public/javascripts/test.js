@@ -509,6 +509,7 @@ function imageAnswers(page, lvl) {
             $('<img>').attr({
                 id: 'img',
                 src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
+                onerror: "this.src='/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG'",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;cursor: pointer;",
                 onClick: "nextLevel(" + lvl + ", " + i + ")"
             }).appendTo('.row');
@@ -518,6 +519,7 @@ function imageAnswers(page, lvl) {
             $('<img>').attr({
                 id: 'img',
                 src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
+                onerror: "this.src='/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;"
             }).appendTo('.row');
         }
