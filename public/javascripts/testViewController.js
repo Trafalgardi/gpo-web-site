@@ -31,7 +31,7 @@ function mainFunc(json, id) {
     quiz.innerHTML = "";
 
     setName(json.name, "testName")
-    
+
     //Таймер на тест
     createTimer(json.time, "timer");
 
@@ -72,7 +72,7 @@ function createQuestion(questions, id = 0) {
     <div id="${question_description}">${currentQuestion.description}</div>
     <div id="${question_content}"></div>`;
     insertHtml(quiz, content)
-    if (currentQuestion.can_skip_remember_time) {
+    if (currentQuestion.can_skip_remember_time && currentQuestion.time_to_remember > 0) {
         quiz_btn_container.innerHTML = `<button type="button" id="${btn_skip_remember_time}">Продолжить</button>`
         let btn = document.getElementById(btn_skip_remember_time).onclick = cancelTimerToRemember;
     }
@@ -87,9 +87,62 @@ function cancelTimerToRemember() {
 
 function createAnswers(questions, id) {
     let currentQuestion = questions[id];
-    console.log("dsadsadss");
+    let answers = currentQuestion.answers
+    switch (answers.type) {
+        case 0:
+            answers_0(questions, id)
+            break;
+
+        default:
+            break;
+    }
 
 }
+//#region Answers template
+function answers_0(questions, id) {
+    let data = questions[id].answers.data
+    let content = '';
+    for (let i = 0; i < data.length; i++) { //json.questions[i]
+        content += `
+        <div class="radio">
+            <label>
+                <input id="answer_${data[i]}" type="radio" name="answer" value="${data[i]}">
+                ${data[i]}
+            </label>
+        </div>`
+    }
+    quiz_btn_container.innerHTML = `<button type="button" id="btn_next">Продолжить</button>`
+    let btn = document.getElementById("btn_next").onclick = function () {
+        var answer = document.getElementsByName("answer")
+        let isCheked = false;
+        for (let i = 0; i < answer.length; i++) {
+            const element = answer[i];
+            if(element.checked == true) {
+                isCheked = true;
+                break
+            }
+        }
+        if(isCheked==false){
+            alert("Выберите ответ")
+            return
+        }
+        addDataForm(id, element.value)
+    };
+    //btn.className = test ? "valid" : "invalid";
+    document.getElementById(question_content).innerHTML = content;
+}
+function addDataForm(name, value) {
+    let element_name = document.getElementById(`form_answers_${name}`)
+    
+    if(element_name){
+        element_name.value = value
+        return
+    }
+    let content = `<input type="text" id="form_answers_${name}" name="form_answers_${name}" value="${value}">`
+    var form = document.getElementById("form")
+    insertHtml(form, content)
+}
+//#endregion
 
 function createImg(container_id, path) {
     let content = `<img src="${path}">`;
