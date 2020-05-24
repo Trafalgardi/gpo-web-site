@@ -38,8 +38,7 @@ const current_data = {
         console.log("question_id: " + value)
         if (value < 0) {
             return
-        }
-        else if (value >= this.current_category.questions.length) {
+        } else if (value >= this.current_category.questions.length) {
             console.log("next category")
             this.category_id++;
             return;
@@ -54,8 +53,7 @@ const current_data = {
         console.log("category_id: " + value)
         if (value < 0) {
             return
-        }
-        else if (value >= this.data.categories.length) {
+        } else if (value >= this.data.categories.length) {
             //submit
             submitTest();
             return;
@@ -64,6 +62,9 @@ const current_data = {
         this._category_id = value;
         createCategory();
         this.question_id = 0;
+    },
+    get current_answer() {
+        return this.save_answers[this.category_id][this.question_id]
     },
     get current_category() {
         return this.data.categories[this.category_id];
@@ -195,14 +196,12 @@ function createAnswers() {
             //отправить
             button_id = "btn_submit";
             button_text = "Отправить";
-        }
-        else {
+        } else {
             //Следующий раздел
             button_id = "btn_next_category";
             button_text = "Следующий раздел";
         }
-    }
-    else {
+    } else {
         //вперёд
         button_id = "btn_next";
         button_text = "Продолжить";
@@ -215,6 +214,9 @@ function createAnswers() {
         case 0:
             answers_0(button_id)
             break;
+        case 1:
+            answers_1(button_id)
+            break;
         case 2:
             answers_2(button_id)
             break;
@@ -224,22 +226,44 @@ function createAnswers() {
 
 }
 
-function next() {
-    current_data.question_id++;
-    if (current_data.current_category.questions.length > current_data.question_id) {
-
-    } else {
-        // next categories or end test
-        setInnerHTML(quiz_btn_container, `<button type="button" id="submit">Завершить</button>`)
-        addListenerOnClick("submit", submitTest);
+//#region Answers template
+function answers_1(button_id) {
+    let id = current_data.question_id;
+    let current_answer = current_data.current_answer;
+    let data = current_data.current_question.answers.data.arr
+    let content = ''
+    for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        content += `
+        <input style="width: 3.5rem;" type="number" id="form_answers_${id}" name="form_answers_${id}" value="${current_answer != null && current_answer != undefined ? current_answer[i] : ""}"">
+        <label for=form_answers_${id}>${element}</label><br>`
     }
+    addListenerOnClick(button_id, function () {
+        var answers = document.getElementsByName(`form_answers_${id}`)
+
+        for (let i = 0; i < answers.length; i++) {
+            const element = answers[i];
+            if (element.value == "") {
+                alert("Впишите ответ")
+                return
+            }
+        }
+        let t = []
+        answers.forEach(element => {
+            t.push(element.value)
+        })
+        //TODO
+
+        current_data.addAnswer(t)
+        current_data.question_id++;
+    });
+    setInnerHTML(question_content, content)
 }
 
-//#region Answers template
 function answers_2(button_id) {
-    console.log("answers_2")
     let id = current_data.question_id;
-    let content = `<input type="text" id="form_answers_${id}" name="form_answers_${id}" value="" require>`
+    let current_answer = current_data.current_answer;
+    let content = `<input type="text" id="form_answers_${id}" name="form_answers_${id}" value="${current_answer != null && current_answer != undefined ? current_answer : ""}" require>`
 
     addListenerOnClick(button_id, function () {
         var answer = document.getElementById(`form_answers_${id}`)
@@ -257,21 +281,21 @@ function answers_2(button_id) {
 }
 
 function answers_0(button_id) {
-    //console.log("answers_0")
+    let current_answer = current_data.current_answer;
     let data = current_data.current_question.answers.data
     let content = '';
     for (let i = 0; i < data.length; i++) {
         content += `
         <div class="radio">
             <label>
-                <input id="answer_${data[i]}" type="radio" name="answer" value="${data[i]}">
-                ${data[i]}
+                <input id="answer_${data[i]}" type="radio" name="answer" value="${data[i]}" ${current_answer == data[i] ? "checked" : ""}> 
+                ${data[i]} 
             </label>
         </div>`
     }
     setInnerHTML(question_content, content)
-   
-    
+
+
     addListenerOnClick(button_id, function () {
         var answer = document.getElementsByName("answer")
         let isCheked = false;
