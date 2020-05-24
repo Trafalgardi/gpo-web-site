@@ -55,6 +55,10 @@ const WebClientRoute: IAppRoute = {
             .post('/test/setDataTest', (req: Request, res: Response) => {
                 testCtrl.setDataTest(req, res);
             })
+            .post('/test/setDataTestNew', (req: Request, res: Response) => {
+                testCtrl.setDataTestNew(req, res);
+            })
+            
         // .post('/getDataTest', getDataTest);
         // .post('/test/addDataTest', addDataTest);
         // .post('/test/updateTests', updateTests);//Проверка тестов в таблице user_tests(Коэф. пройденый тестов)

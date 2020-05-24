@@ -44,6 +44,16 @@ export default class TestController {
         });
     }
 
+    async setDataTestNew(req: Request, res: Response) { //Записать результаты теста
+        let body = req.body; // Our body from post request
+        let payload = AuthController.authCheck(req, res);
+        let answers = body.answers;
+
+        let result = answers;
+        //res.json(result)
+        res.redirect('post')
+    }
+
     async setDataTest(req: Request, res: Response) { //Записать результаты теста
         let body = req.body; // Our body from post request
         let token = req.cookies.token;

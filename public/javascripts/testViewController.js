@@ -46,13 +46,15 @@ const current_data = {
         return this.data.tutorial;
     },
     save_answers: [],
-    addAnswer: (ans) => {
-        this.save_answers.push(ans);
-    },
-    setAnswer(questionId, ans) {
-        if (questionId < 0 || questionId >= this.save_answers.length)
+    addAnswer(questionId, ans) {
+        if (questionId < 0)
             return;
-        this.save_answers[questionId] = ans;
+        else if (questionId >= this.save_answers.length)
+            this.save_answers.push(ans);
+        else
+            this.save_answers[questionId] = ans;
+
+        //console.log(this.save_answers)
     }
 
 };
@@ -115,7 +117,6 @@ function createQuestion() {
     setInnerHTML(categories_content, "")
     setInnerHTML(quiz_btn_container, "")
     let currentQuestion = current_data.current_question;
-    console.log(currentQuestion)
     let time_to_remember = currentQuestion.time_to_remember;
 
     let img = ""
@@ -163,17 +164,7 @@ function createAnswers() {
 
 }
 
-function addDataForm(name, value) {
-    let element_name = document.getElementById(`form_answers_${name}`)
 
-    if (element_name) {
-        element_name.value = value
-        return
-    }
-    let content = `<input type="text" id="form_answers_${name}" name="form_answers_${name}" value="${value}">`
-    insertHtml("form", content)
-
-}
 
 function next() {
     current_data.question_id++;
@@ -181,7 +172,8 @@ function next() {
         createQuestion()
     } else {
         // next categories or end test
-        alert("test off")
+        setInnerHTML(quiz_btn_container, `<button type="button" id="submit">Завершить</button>`)
+        addListenerOnClick("submit", submitTest);
     }
 }
 //#region Answers template
@@ -199,7 +191,7 @@ function answers_2() {
             alert("Впишите ответ")
             return
         }
-        //addDataForm(id, answer.value)
+        current_data.addAnswer(current_data.question_id, answer.value)
         next()
     });
     setInnerHTML(question_content, content)
@@ -218,6 +210,7 @@ function answers_0() {
             </label>
         </div>`
     }
+    setInnerHTML(question_content, content)
     setInnerHTML(quiz_btn_container, `<button type="button" id="btn_next">Продолжить</button>`)
     addListenerOnClick("btn_next", function () {
         var answer = document.getElementsByName("answer")
@@ -235,11 +228,11 @@ function answers_0() {
             alert("Выберите ответ")
             return
         }
-        //addDataForm(id, currentElement.value)
+        current_data.addAnswer(current_data.question_id, currentElement.value)
         next()
 
     });
-    setInnerHTML(question_content, content)
+
 }
 //#endregion
 
@@ -267,11 +260,29 @@ function createTimer(time, elementId, callback, callback_faild = () => console.l
 }
 
 function submitTest() {
+    let answers = current_data.save_answers;
+    for (let i = 0; i < answers.length; i++) {
+        const ans = answers[i];
+        insertHtml("form", `<input type="text" name=answers value="${ans}"> `)
+    }
     document.forms[0].submit()
 }
 //#endregion
 
 //#region HTML helper
+/*
+function addDataForm(name, value) {
+    let element_name = document.getElementById(`form_answers_${name}`)
+
+    if (element_name) {
+        element_name.value = value
+        return
+    }
+    let content = `<input type="text" id="form_answers_${name}" name="form_answers_${name}" value="${value}">`
+    insertHtml("form", content)
+
+}
+*/
 function setInnerHTML(elementId, value) {
     var element = document.getElementById(elementId);
     if (element)
