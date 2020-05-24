@@ -42,7 +42,7 @@ export default class WebClientDataProvider extends DataProviderBase {
             if (rows == null || rows.length == 0){
                 return null;
             }
-            let banTests = JSON.parse(rows[0].banTests).ban;
+            let banTests = JSON.parse(rows[0].banTests);            
             return banTests;
         } catch (error) {
             console.log(error)
@@ -93,8 +93,8 @@ export default class WebClientDataProvider extends DataProviderBase {
             return null;
         } 
     }
-    async updateBanUserTest(user_id: number, banTests: string):Promise<boolean>{
-        const sql = "UPDATE `users` SET `banTests`= '" + banTests + "' WHERE `users`.`id` =" + user_id;
+    async updateBanUserTest(user_id: number, banTests: number[]):Promise<boolean>{
+        const sql = "UPDATE `users` SET `banTests`= '" + JSON.stringify(banTests) + "' WHERE `users`.`id` =" + user_id;
         try {
             const rows = await this.query(sql);
             if (rows == null || rows.length == 0){

@@ -24,8 +24,9 @@ export default class AuthDataProvider extends DataProviderBase {
             email: email,
             password: passwordHash,
             date: date,
-            banTests: '{"ban":[7,10,14,17,18,19,21,22,23,26,32,33]}', //Закрытые тесты TODO: Добавить удалённые тесты
-            banCases: '{"ban": []}' //Закрытые кейсы
+            anketaData: '{}',
+            banTests: JSON.stringify([7,10,14,17,18,19,21,22,23,26,32,33, 34, 35, 36]), //Закрытые тесты TODO: Добавить удалённые тесты
+            banCases: JSON.stringify([]) //Закрытые кейсы
         };
         let user = await this.selectUser(email);
         if (user != null){

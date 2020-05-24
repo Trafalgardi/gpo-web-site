@@ -21,7 +21,7 @@ export default class TestController {
             res.redirect("/page/opentests");
             return;
         }
-        
+
         let testData = await this.webClientDataProvider.getTestData(test_id);
         if (test_id > 33) {
             console.log("Обработка теста нового образца!")
@@ -53,7 +53,7 @@ export default class TestController {
     async setDataTestNew(req: Request, res: Response) { //Записать результаты теста
         let body = req.body; // Our body from post request
         let payload = AuthController.authCheck(req, res);
-        
+
         let answers = body.answers;
         let str: string = body.test_id;
         if (!str.match(/^\d+$/)) {
@@ -132,18 +132,16 @@ export default class TestController {
 
         }
         let banTests = await this.webClientDataProvider.getIdBanTests(payload.id);
-        let tmp = {
-            ban: banTests,
-        }
-        tmp.ban.push(test_id)
-        await this.webClientDataProvider.updateBanUserTest(payload.id, JSON.stringify(tmp))
+
+        banTests.push(test_id)
+        await this.webClientDataProvider.updateBanUserTest(payload.id, banTests)
         let testResult = TestExecution(req.body.id, answers.data);
         await this.webClientDataProvider.insertUserTest(payload.id, req.body.id, JSON.stringify(answers), testResult)
         console.log("Данные ушли")
         res.render('post');
     }
 
-    async checkAccessTest(req: Request, res: Response, test_id: number) : Promise<boolean>{
+    async checkAccessTest(req: Request, res: Response, test_id: number): Promise<boolean> {
         let payload = AuthController.authCheck(req, res);
         let ban = await this.webClientDataProvider.getIdBanTests(payload.id);
         console.log(ban)

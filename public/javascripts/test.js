@@ -508,7 +508,7 @@ function imageAnswers(page, lvl) {
         for (let i = 1; i <= imgCount; i++) {
             $('<img>').attr({
                 id: 'img',
-                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
+                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;cursor: pointer;",
                 onClick: "nextLevel(" + lvl + ", " + i + ")"
             }).appendTo('.row');
@@ -517,7 +517,7 @@ function imageAnswers(page, lvl) {
         for (let i = 1; i <= imgCount; i++) {
             $('<img>').attr({
                 id: 'img',
-                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
+                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;"
             }).appendTo('.row');
         }
