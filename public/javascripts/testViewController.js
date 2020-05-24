@@ -34,7 +34,7 @@ const current_data = {
         return this.data.categories[this.category_id];
     },
     get current_question() {
-        return this.current_category.questions[question_id];
+        return this.current_category.questions[this.question_id];
     },
     get test_name() {
         return this.data.name;
@@ -44,13 +44,20 @@ const current_data = {
     },
     get test_tutorial() {
         return this.data.tutorial;
+    },
+    save_answers: [],
+    addAnswer: (ans) => {
+        this.save_answers.push(ans);
+    },
+    setAnswer(questionId, ans) {
+        if (questionId < 0 || questionId >= this.save_answers.length)
+            return;
+        this.save_answers[questionId] = ans;
     }
+
 };
 
 function mainFunc(json, id) {
-    setInnerHTML(quiz_btn_container, "")
-    setInnerHTML(quiz, "");
-
     current_data.data = json;
     current_data.question_id = 0;
     current_data.category_id = 0;
@@ -79,6 +86,7 @@ function setTutorial(tutorial) {
 //#region Создание категорий
 function createCategory() {
     setInnerHTML(quiz, "");
+    setInnerHTML(quiz_btn_container, "")
 
     let category = current_data.current_category;
     let content = "";
@@ -93,7 +101,7 @@ function createCategory() {
     if (isTutorial) {
         return
     }
-    createQuestion(category.questions, 0)
+    createQuestion()
 
 }
 
@@ -103,11 +111,11 @@ function categoriesTimer() {
 //#endregion
 
 //#region Создание вопроса
-function createQuestion(questions, id = 0) {
+function createQuestion() {
     setInnerHTML(categories_content, "")
     setInnerHTML(quiz_btn_container, "")
-
-    let currentQuestion = questions[id];
+    let currentQuestion = current_data.current_question;
+    console.log(currentQuestion)
     let time_to_remember = currentQuestion.time_to_remember;
 
     let img = ""
@@ -126,29 +134,28 @@ function createQuestion(questions, id = 0) {
         setInnerHTML(quiz_btn_container, `<button type="button" id="${btn_skip_remember_time}">Продолжить</button>`)
         addListenerOnClick(btn_skip_remember_time, () => $(`#timer_${question_timer_to_remember}`).trigger('complete'))
     }
-    createTimer(time_to_remember, question_timer_to_remember, () => endTimeToRemember(questions, id), () => createAnswers(questions, id))
+    createTimer(time_to_remember, question_timer_to_remember, endTimeToRemember, createAnswers);
 }
 
 
-function endTimeToRemember(questions, id) {
+function endTimeToRemember() {
     console.log("endTimeToRemember")
     setInnerHTML(question_img_container, "");
     setInnerHTML(question_description, "");
     setInnerHTML(question_timer_to_remember, "");
     removeChild(quiz_btn_container, btn_skip_remember_time)
-    createAnswers(questions, id)
+    createAnswers()
 }
 
-function createAnswers(questions, id) {
-    let currentQuestion = questions[id];
+function createAnswers() {
+    let currentQuestion = current_data.current_question;
     let answers = currentQuestion.answers
-
     switch (answers.type) {
         case 0:
-            answers_0(questions, id)
+            answers_0()
             break;
         case 2:
-            answers_2(questions, id)
+            answers_2()
             break;
         default:
             break;
@@ -168,40 +175,41 @@ function addDataForm(name, value) {
 
 }
 
-function next(questions, id) {
-    let nextId = id + 1;
-    console.log(questions[nextId])
-    if (questions.length > nextId) {
-        createQuestion(questions, nextId)
+function next() {
+    current_data.question_id++;
+    if (current_data.current_category.questions.length > current_data.question_id) {
+        createQuestion()
     } else {
+        // next categories or end test
         alert("test off")
     }
 }
 //#region Answers template
-function answers_2(questions, id) {
-    let data = questions[id].answers.data
+function answers_2() {
+    console.log("answers_2")
+    let id = current_data.question_id;
     let content = `<input type="text" id="form_answers_${id}" name="form_answers_${id}" value="" require>`
-    quiz_btn_container.innerHTML = `<button type="button" id="btn_next">Продолжить</button>`
+    setInnerHTML(quiz_btn_container, `<button type="button" id="btn_next">Продолжить</button>`)
     addListenerOnClick("btn_next", function () {
         var answer = document.getElementById(`form_answers_${id}`)
         let isCheked = false;
-        console.log(answer);
 
         isCheked = answer.value != ""
         if (isCheked == false) {
             alert("Впишите ответ")
             return
         }
-        addDataForm(id, answer.value)
-        next(questions, id)
+        //addDataForm(id, answer.value)
+        next()
     });
     setInnerHTML(question_content, content)
 }
 
-function answers_0(questions, id) {
-    let data = questions[id].answers.data
+function answers_0() {
+    console.log("answers_0")
+    let data = current_data.current_question.answers.data
     let content = '';
-    for (let i = 0; i < data.length; i++) { //json.questions[i]
+    for (let i = 0; i < data.length; i++) {
         content += `
         <div class="radio">
             <label>
@@ -227,8 +235,8 @@ function answers_0(questions, id) {
             alert("Выберите ответ")
             return
         }
-        addDataForm(id, currentElement.value)
-        next(questions, id)
+        //addDataForm(id, currentElement.value)
+        next()
 
     });
     setInnerHTML(question_content, content)
