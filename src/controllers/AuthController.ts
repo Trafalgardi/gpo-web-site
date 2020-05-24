@@ -31,7 +31,7 @@ export default class AuthController {
 
     public async signUp(req: Request, res: Response) {
         function throwError(){
-            res.redirect('/singup') 
+            res.redirect('/signup') 
         }
 
         if (AuthController.authCheck(req, res) != null ){
