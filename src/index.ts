@@ -8,8 +8,8 @@ import readline from 'readline'
 Крайне не рекомендуется включать в релизную сборку данные от БД
 */
 //Start program
-//InputDatabaseConfig(); // Либо InputDatabaseConfig, либо CreateApp !!! Необходимо оставить только одно
-CreateApp("localhost", "RecommendationSystem", "usrgpo", "PhyGyisHNs}{2DU") // Можно использовать только для дебага. Для релиза необходимо удалить данную строку
+InputDatabaseConfig(); // Либо InputDatabaseConfig, либо CreateApp !!! Необходимо оставить только одно
+// Можно использовать только для дебага. Для релиза необходимо удалить данную строку
 
 //functions
 function InputDatabaseConfig() {
