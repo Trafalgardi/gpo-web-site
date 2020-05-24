@@ -28,6 +28,7 @@ const btn_skip_remember_time = "btn_skip_remember_time"
 
 const current_data = {
     data: {},
+    test_id: -1,
     question_id: 0,
     category_id: 0,
     get current_category() {
@@ -61,6 +62,7 @@ const current_data = {
 
 function mainFunc(json, id) {
     current_data.data = json;
+    current_data.test_id = id;
     current_data.question_id = 0;
     current_data.category_id = 0;
     console.log(current_data);
@@ -260,6 +262,7 @@ function createTimer(time, elementId, callback, callback_faild = () => console.l
 }
 
 function submitTest() {
+    insertHtml("form", `<input type="text" name=test_id value="${current_data.test_id}"> `)
     let answers = current_data.save_answers;
     for (let i = 0; i < answers.length; i++) {
         const ans = answers[i];

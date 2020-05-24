@@ -12,7 +12,7 @@ export default class TestController {
 
     async getTest(req: Request, res: Response) {// конкретный тест
         let test_id = Number.parseInt(req.params.id);
-        if (isNaN(test_id)){
+        if (isNaN(test_id)) {
             res.redirect("/page/opentests");
             return;
         }
@@ -47,8 +47,15 @@ export default class TestController {
     async setDataTestNew(req: Request, res: Response) { //Записать результаты теста
         let body = req.body; // Our body from post request
         let payload = AuthController.authCheck(req, res);
+        
         let answers = body.answers;
-
+        let str: string = body.test_id;
+        
+        if (!str.match(/^\d+$/)) {
+            res.status(400).send("Syntax error")
+            return;
+        }
+        let test_id: number = Number.parseInt(body.test_id);
         let result = answers;
         //res.json(result)
         res.redirect('post')
