@@ -65,6 +65,9 @@ const current_data = {
         createCategory();
         this.question_id = 0;
     },
+    get current_answer() {
+        return this.save_answers[this.category_id][this.question_id]
+    },
     get current_category() {
         return this.data.categories[this.category_id];
     },
@@ -224,22 +227,11 @@ function createAnswers() {
 
 }
 
-function next() {
-    current_data.question_id++;
-    if (current_data.current_category.questions.length > current_data.question_id) {
-
-    } else {
-        // next categories or end test
-        setInnerHTML(quiz_btn_container, `<button type="button" id="submit">Завершить</button>`)
-        addListenerOnClick("submit", submitTest);
-    }
-}
-
 //#region Answers template
 function answers_2(button_id) {
-    console.log("answers_2")
     let id = current_data.question_id;
-    let content = `<input type="text" id="form_answers_${id}" name="form_answers_${id}" value="" require>`
+    let current_answer = current_data.current_answer;
+    let content = `<input type="text" id="form_answers_${id}" name="form_answers_${id}" value="${current_answer != null && current_answer != undefined ? current_answer : ""}" require>`
 
     addListenerOnClick(button_id, function () {
         var answer = document.getElementById(`form_answers_${id}`)
@@ -257,15 +249,15 @@ function answers_2(button_id) {
 }
 
 function answers_0(button_id) {
-    //console.log("answers_0")
+    let current_answer = current_data.current_answer;
     let data = current_data.current_question.answers.data
     let content = '';
     for (let i = 0; i < data.length; i++) {
         content += `
         <div class="radio">
             <label>
-                <input id="answer_${data[i]}" type="radio" name="answer" value="${data[i]}">
-                ${data[i]}
+                <input id="answer_${data[i]}" type="radio" name="answer" value="${data[i]}" ${current_answer == data[i] ? "checked" : ""}> 
+                ${data[i]} 
             </label>
         </div>`
     }
