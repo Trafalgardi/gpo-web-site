@@ -1,6 +1,7 @@
 import App from "../app";
 import WebClientDataProvider from "../providers/WebClientDataProvider";
 import { Request, Response, NextFunction } from 'express'
+import { AnketaCalculation } from "../../AnketaProcessing/AnketaProcessing.js"
 import SecurityService from "../services/SecurityService";
 
 export default class AnketaController {
@@ -195,8 +196,23 @@ export default class AnketaController {
                 'Управление проектами': body['experience_4'],
                 'Не по специальности': body['experience_5'],
                 'Рабочие специальности': body['experience_6']
+            },
+            additionalInfo: {
+                'agreePsychologic': body['agreePsychologicSelect'],
+                'adaptation': body['adaptationSelect'],
+                'levelPC': body['levelPCSelect'],
+                'uncertainty': body['uncertaintySelect'],
+                'openQuestions': {
+                    'achievements': body['achievements'],
+                    'programs_study': body['programs_study'],
+                    'programs_work': body['programs_work'],
+                    'specialty': body['specialty'],
+                    'desire_specialty': body['desire_specialty'],
+                    'future5': body['future5'],
+                    'strengths': body['strengths'],
+                    'weaknesses': body['weaknesses']
+                }
             }
-
         };
 
         data.academicDegree['Доктор наук'] = body['academic_degree_doc_1'];
@@ -206,7 +222,9 @@ export default class AnketaController {
         let payload = SecurityService.verifyToken(token);
         let user_id = payload.id;
         console.log(this.webClientDataProvider);
-        await this.webClientDataProvider.setAnketa(JSON.stringify(data), user_id);
+        let anketaResult = AnketaCalculation(data);
+        await this.webClientDataProvider.setAnketa(JSON.stringify(data), anketaResult, user_id);
+
 
         res.render('post');
     }
