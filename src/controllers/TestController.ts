@@ -5,9 +5,9 @@ import SecurityService from "../services/SecurityService";
 import { TestExecution } from "../../TestProcessing/TestProcessing.js"
 import AuthController from "./AuthController";
 export default class TestController {
-    private userDataProvider: WebClientDataProvider;
+    private webClientDataProvider: WebClientDataProvider;
     constructor(private app: App) {
-        this.userDataProvider = this.app.providers.webClient;
+        this.webClientDataProvider = this.app.providers.webClient;
     }
 
     async getTest(req: Request, res: Response) {// конкретный тест
@@ -16,7 +16,13 @@ export default class TestController {
             res.redirect("/page/opentests");
             return;
         }
-        let testData = await this.userDataProvider.getTestData(test_id);
+        let checkAccessTest = await this.checkAccessTest(req, res, test_id);
+        if (checkAccessTest == false) {
+            res.redirect("/page/opentests");
+            return;
+        }
+        
+        let testData = await this.webClientDataProvider.getTestData(test_id);
         if (test_id > 33) {
             console.log("Обработка теста нового образца!")
             res.render('testReborn', { json: testData, id: test_id })
@@ -29,15 +35,15 @@ export default class TestController {
     async getOpenTests(req: Request, res: Response) { // доступные тесты
         let payload = AuthController.authCheck(req, res);
         console.log(payload)
-        let allTests = await this.userDataProvider.getAllTests();
-        let idBanTests = await this.userDataProvider.getIdBanTests(payload.id);
+        let allTests = await this.webClientDataProvider.getAllTests();
+        let idBanTests = await this.webClientDataProvider.getIdBanTests(payload.id);
         let tests = [];
         for (let i = 0; i < allTests.length; i++) {
             if (idBanTests.indexOf(allTests[i].id) === -1) {
                 tests.push(allTests[i]);
             }
         }
-        let categories = await this.userDataProvider.getTestCategorias();
+        let categories = await this.webClientDataProvider.getTestCategorias();
         res.json({
             categories,
             tests
@@ -56,6 +62,14 @@ export default class TestController {
             return;
         }
         let test_id: number = Number.parseInt(body.test_id);
+
+        let checkAccessTest = await this.checkAccessTest(req, res, test_id);
+        if (checkAccessTest == false) {
+            //res.status(404).send("Test not found")
+            res.redirect("/page/opentests");
+            return;
+        }
+
         let result = answers;
         console.log(result)
 
@@ -75,6 +89,15 @@ export default class TestController {
         let answers = {
             data: []
         };
+        let test_id: number = Number.parseInt(body.id);
+        console.log(test_id)
+        let checkAccessTest = await this.checkAccessTest(req, res, test_id);
+        console.log(checkAccessTest)
+        if (checkAccessTest == false) {
+            //res.status(404).send("Test not found")
+            res.redirect("/page/opentests");
+            return;
+        }
         if (req.body.id != 25 && req.body.id != 26 && req.body.id != 33) {
 
             for (let index = 0; index < temp.length - 1; index++) {
@@ -107,16 +130,23 @@ export default class TestController {
             }
 
         }
-        let banTests = await this.userDataProvider.getIdBanTests(payload.id);
+        let banTests = await this.webClientDataProvider.getIdBanTests(payload.id);
         let tmp = {
             ban: banTests,
         }
-        tmp.ban.push(Number.parseInt(req.body.id))
-        await this.userDataProvider.updateBanUserTest(payload.id, JSON.stringify(tmp))
+        tmp.ban.push(test_id)
+        await this.webClientDataProvider.updateBanUserTest(payload.id, JSON.stringify(tmp))
         let testResult = TestExecution(req.body.id, answers.data);
-        await this.userDataProvider.insertUserTest(payload.id, req.body.id, JSON.stringify(answers), testResult)
+        await this.webClientDataProvider.insertUserTest(payload.id, req.body.id, JSON.stringify(answers), testResult)
         console.log("Данные ушли")
         res.render('post');
+    }
+
+    async checkAccessTest(req: Request, res: Response, test_id: number) : Promise<boolean>{
+        let payload = AuthController.authCheck(req, res);
+        let ban = await this.webClientDataProvider.getIdBanTests(payload.id);
+        console.log(ban)
+        return !ban.includes(test_id);
     }
 
     //Перенести в отдельный файл

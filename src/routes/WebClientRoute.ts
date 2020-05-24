@@ -48,9 +48,7 @@ const WebClientRoute: IAppRoute = {
                 let current_user = AuthController.authCheck(req, res);
                 res.render('questionnaire', { email: current_user.email });
             })
-            //TODO: Добавить проверку на доступность теста
             .get('/test/:id', (req: Request, res: Response) => {
-                //Проверить, не находится ли тест в заблокированных
                 testCtrl.getTest(req, res);
             })
             .post('/test/setDataTest', (req: Request, res: Response) => {

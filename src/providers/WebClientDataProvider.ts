@@ -22,7 +22,7 @@ export default class WebClientDataProvider extends DataProviderBase {
 
     }
 
-    async getAllTests(): Promise<[{id: number, name: string, questions: any[], category_id: number}]> | null{
+    async getAllTests(): Promise<{id: number, name: string, questions: any[], category_id: number}[]> | null{
         const sql = "SELECT `id`, `name`, `questions`, `category_id` FROM `tests` WHERE 1";
         try {
             const rows = await this.query(sql);
@@ -49,7 +49,7 @@ export default class WebClientDataProvider extends DataProviderBase {
             return null;
         }   
     }
-    async getTestCategorias(): Promise<[{id: number, parent_id: number}]> | null{
+    async getTestCategorias(): Promise<{id: number, parent_id: number}[]> | null{
         const sql = "SELECT * FROM test_categories WHERE 1"
         try {
             const rows = await this.query(sql);
