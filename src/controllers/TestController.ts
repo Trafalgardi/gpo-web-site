@@ -56,7 +56,6 @@ export default class TestController {
         
         let answers = body.answers;
         let str: string = body.test_id;
-        
         if (!str.match(/^\d+$/)) {
             res.status(400).send("Syntax error")
             return;
@@ -145,7 +144,6 @@ export default class TestController {
     async checkAccessTest(req: Request, res: Response, test_id: number) : Promise<boolean>{
         let payload = AuthController.authCheck(req, res);
         let ban = await this.webClientDataProvider.getIdBanTests(payload.id);
-        console.log(ban)
         return !ban.includes(test_id);
     }
 
