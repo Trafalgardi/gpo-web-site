@@ -20,7 +20,6 @@ function slideQuestions(params) {
         // we'll need a place to store the HTML output
         const output = [];
         myQuestions = type != 1 ? params.data : params.questions;
-        console.log(myQuestions);
         for (let q = 0; q < myQuestions.length; q++) {
             let answers = [];
             if (type == 0) { //Когда разные ответы для всех вопросов.
@@ -509,7 +508,7 @@ function imageAnswers(page, lvl) {
         for (let i = 1; i <= imgCount; i++) {
             $('<img>').attr({
                 id: 'img',
-                src: "/img/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
+                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;cursor: pointer;",
                 onClick: "nextLevel(" + lvl + ", " + i + ")"
             }).appendTo('.row');
@@ -518,7 +517,7 @@ function imageAnswers(page, lvl) {
         for (let i = 1; i <= imgCount; i++) {
             $('<img>').attr({
                 id: 'img',
-                src: "/img/lvl_" + lvl + "/page_" + page + "/" + i + ".png",
+                src: "/images/lvl_" + lvl + "/page_" + page + "/" + i + ".PNG",
                 style: "width: 700px; height: 430px; margin-left: auto; margin-right: auto;"
             }).appendTo('.row');
         }

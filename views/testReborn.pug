@@ -22,18 +22,12 @@ html(lang='en')
     h1#testName(style="text-align: center;")
     div#timer
     div#comment(style="width: 1280px; text-align: center; margin: 50px auto")
-    //form#questions(action='addDataTest', method='post' style="width: 1080px; margin: auto;")quiz
-    form(action='setDataTest', method='post' style="width: 1080px; margin: auto;")
-      .quiz-container
-        #quiz
-        
-      .quiz-btn-container.mt-5
-        button(type="button")#previous Предыдущий вопрос
-        button(type="button")#next Следующий вопрос
-        button(type="submit")#submitBtn Отправить ответы
-        button(type="button", style="display:none")#start Начать
-      #results
-      #info
+    .quiz-container
+      #quiz
+    .quiz-btn-container.mt-5#quiz-btn-container
+    #results
+    #info
+    form(id="form" action='setDataTestNew', method='post' style="display: none")
     //
       Bootstrap core JavaScript
       ==================================================
@@ -43,15 +37,14 @@ html(lang='en')
     script(src='/js/bootstrap.min.js')
     script(src='/js/popper.min.js')
     script(src='/js/holder.min.js')
-    script(src='/javascripts/test.js')
-    script(src='/javascripts/testMain.js')
+
+    script(src='/javascripts/testViewController.js')
     script(src='/javascripts/jquery.simple.timer.js')
     script(src='/javascripts/jquery.mask.js')
     
     script.
         //printTest('#{json}', '#{id}');
-        var qwe = !{json};
-        checkType(qwe, '#{id}');
+        mainFunc(!{json}, !{id});
         
         
 
