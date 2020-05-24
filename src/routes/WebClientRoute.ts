@@ -13,7 +13,7 @@ const WebClientRoute: IAppRoute = {
         const testCtrl = new TestController(app);
         return router()
             .use('/', function timeLog(req: Request, res: Response, next: NextFunction) {
-                console.log('Time: ', Date.now());
+                console.log(req.url + ' == Time: ', Date.now());
                 next();
             })
             .use('/', (req: Request, res: Response, next: NextFunction) => {

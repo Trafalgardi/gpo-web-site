@@ -63,8 +63,10 @@ export default class TestController {
         let test_id: number = Number.parseInt(body.test_id);
 
         let checkAccessTest = await this.checkAccessTest(req, res, test_id);
+        console.log("checkAccessTest: " + checkAccessTest)
         if (checkAccessTest == false) {
             //res.status(404).send("Test not found")
+            console.log("Попытка отправит заблокированный тест")
             res.redirect("/page/opentests");
             return;
         }
@@ -75,7 +77,7 @@ export default class TestController {
         //Проверить, не находится ли тест в заблокированных
 
         //res.json(result)
-        res.redirect('post')
+        res.render('post')
     }
 
     async setDataTest(req: Request, res: Response) { //Записать результаты теста
@@ -144,6 +146,7 @@ export default class TestController {
     async checkAccessTest(req: Request, res: Response, test_id: number) : Promise<boolean>{
         let payload = AuthController.authCheck(req, res);
         let ban = await this.webClientDataProvider.getIdBanTests(payload.id);
+        console.log(ban)
         return !ban.includes(test_id);
     }
 

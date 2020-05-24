@@ -57,7 +57,7 @@ const current_data = {
         }
         else if (value >= this.data.categories.length) {
             //submit
-            console.log("submit")
+            submitTest();
             return;
         }
         console.log("set category: " + value)
@@ -130,7 +130,7 @@ function createCategory() {
         <div id="${categories_name}">${category.name}</div>
         <div id="${categories_content}"></div>
     `;
-    insertHtml(quiz, content)
+    insertHTML(quiz, content)
     createTimer(category.time, categories_timer, () => categoriesTimer())
     let isTutorial = setTutorial(category.tutorial)
     if (isTutorial) {
@@ -162,10 +162,11 @@ function createQuestion() {
     <div id="${question_img_container}">${img}</div>
     <div id="${question_description}">${currentQuestion.description}</div>
     <div id="${question_content}"></div>`;
-    insertHtml(categories_content, content)
+    insertHTML(categories_content, content)
     if (currentQuestion.can_skip_remember_time && currentQuestion.time_to_remember > 0) {
         setInnerHTML(quiz_btn_container, `<button type="button" id="${btn_skip_remember_time}">Продолжить</button>`)
         addListenerOnClick(btn_skip_remember_time, () => $(`#timer_${question_timer_to_remember}`).trigger('complete'))
+        //TODO проверить создание кнопок ниже
     }
     createTimer(time_to_remember, question_timer_to_remember, endTimeToRemember, createAnswers);
 }
@@ -181,14 +182,41 @@ function endTimeToRemember() {
 }
 
 function createAnswers() {
+    if (current_data.question_id != 0) {
+        //кнопка назад
+        insertHTML(quiz_btn_container, `<button type="button" id="btn_back">Назад</button>`)
+        addListenerOnClick("btn_back", () => current_data.question_id--);
+    }
+    let button_id = "";
+    let button_text = "";
+    if (current_data.question_id + 1 >= current_data.current_category.questions.length) {
+
+        if (current_data.category_id + 1 >= current_data.data.categories.length) {
+            //отправить
+            button_id = "btn_submit";
+            button_text = "Отправить";
+        }
+        else {
+            //Следующий раздел
+            button_id = "btn_next_category";
+            button_text = "Следующий раздел";
+        }
+    }
+    else {
+        //вперёд
+        button_id = "btn_next";
+        button_text = "Продолжить";
+    }
+    insertHTML(quiz_btn_container, `<button type="button" id="${button_id}">${button_text}</button>`)
+
     let currentQuestion = current_data.current_question;
     let answers = currentQuestion.answers
     switch (answers.type) {
         case 0:
-            answers_0()
+            answers_0(button_id)
             break;
         case 2:
-            answers_2()
+            answers_2(button_id)
             break;
         default:
             break;
@@ -199,7 +227,7 @@ function createAnswers() {
 function next() {
     current_data.question_id++;
     if (current_data.current_category.questions.length > current_data.question_id) {
-        
+
     } else {
         // next categories or end test
         setInnerHTML(quiz_btn_container, `<button type="button" id="submit">Завершить</button>`)
@@ -207,24 +235,13 @@ function next() {
     }
 }
 
-function nextQuestion() {
-
-}
-
-function previousQuestion() {
-
-}
-
-function nextCategory() {
-
-}
 //#region Answers template
-function answers_2() {
+function answers_2(button_id) {
     console.log("answers_2")
     let id = current_data.question_id;
     let content = `<input type="text" id="form_answers_${id}" name="form_answers_${id}" value="" require>`
-    setInnerHTML(quiz_btn_container, `<button type="button" id="btn_next">Продолжить</button>`)
-    addListenerOnClick("btn_next", function () {
+
+    addListenerOnClick(button_id, function () {
         var answer = document.getElementById(`form_answers_${id}`)
         let isCheked = false;
 
@@ -234,12 +251,12 @@ function answers_2() {
             return
         }
         current_data.addAnswer(answer.value)
-        next()
+        current_data.question_id++;
     });
     setInnerHTML(question_content, content)
 }
 
-function answers_0() {
+function answers_0(button_id) {
     //console.log("answers_0")
     let data = current_data.current_question.answers.data
     let content = '';
@@ -253,8 +270,9 @@ function answers_0() {
         </div>`
     }
     setInnerHTML(question_content, content)
-    setInnerHTML(quiz_btn_container, `<button type="button" id="btn_next">Продолжить</button>`)
-    addListenerOnClick("btn_next", function () {
+   
+    
+    addListenerOnClick(button_id, function () {
         var answer = document.getElementsByName("answer")
         let isCheked = false;
         let currentElement = ""
@@ -271,7 +289,7 @@ function answers_0() {
             return
         }
         current_data.addAnswer(currentElement.value)
-        next()
+        current_data.question_id++;
 
     });
 
@@ -302,13 +320,13 @@ function createTimer(time, elementId, callback, callback_faild = () => console.l
 }
 
 function submitTest() {
-    insertHtml("form", `<input type="text" name=test_id value="${current_data.test_id}"> `)
+    insertHTML("form", `<input type="text" name=test_id value="${current_data.test_id}"> `)
     let answers = current_data.save_answers;
     for (let i = 0; i < answers.length; i++) {
         const category = answers[i];
         for (let j = 0; j < category.length; j++) {
             const ans = category[j];
-            insertHtml("form", `<input type="text" name="answers[${i}][${j}]" value="${ans}"> `)
+            insertHTML("form", `<input type="text" name="answers[${i}][${j}]" value="${ans}"> `)
         }
     }
 
@@ -351,7 +369,7 @@ function setInnerHTML(elementId, value) {
  *  \</p>
  *  <!-- afterend -->
  */
-function insertHtml(elementId, content, position = 'beforeend') {
+function insertHTML(elementId, content, position = 'beforeend') {
     let element = document.getElementById(elementId)
     if (element)
         element.insertAdjacentHTML(position, content)
