@@ -1,8 +1,8 @@
-const {Check} = require('../CheckString');
+const { Check } = require('../CheckString');
 module.exports = {
     HolmsRage(answers) {
         var result = 0;
-    
+
         var coef = [
             100,
             73,
@@ -48,7 +48,7 @@ module.exports = {
             12,
             11
         ];
-    
+
         let sum = 0;
         for (var i = 0; i < answers.length; i++) {
             var number = Number.parseInt(answers[i]);
@@ -60,11 +60,15 @@ module.exports = {
             if (number >= 1)
                 sum += coef[i];
         }
-    
+
         if (sum > 300)
             sum = 300;
-    
-        result = 1 - (sum - 11) / Math.min(300 - 11, sum);
+
+        if (sum == 0) {
+            result = 0
+        }
+        else
+            result = 1 - (sum - 11) / Math.min(300 - 11, sum);
         return result;
     }
 }

@@ -57,4 +57,26 @@ export default class AdminPanelDataProvider extends DataProviderBase {
 
         return users_tests;
     }
+
+    async getAllUserTests(): null | Promise<{ id: number, test_id: number, answers: string, result: number }[]> {
+        const sql = "SELECT `id`, `test_id`, `answers`, `result` FROM `user_tests` WHERE 1"
+        
+        let rows = await this.safeQuery<{ id: number, test_id: number, answers: string, result: number }[]>(sql);
+        
+        return rows;
+    }
+
+    async updateUserTests(results: {id: number, result: number}[]): null | Promise<any>{
+        const sql_template = "UPDATE `user_tests` SET `result`=? WHERE `id`=?;";
+  
+        results.forEach(async element => {
+            //console.log([element.id, element.result])
+            //sql += this.dbController.format(sql_template, [element.id, element.result]);
+            const sql = " UPDATE `user_tests` SET `result`=" + element.result + " WHERE `id`=" + element.id;
+            await this.safeQuery(sql);
+            
+        })
+
+        return true;
+    }
 }

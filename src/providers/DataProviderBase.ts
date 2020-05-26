@@ -3,6 +3,17 @@ import util from 'util';
 import DatabaseController from "../db/DatabaseController";
 export default abstract class DataProviderBase{
 
+    protected async safeQuery<T = any>(sql: string): null | Promise<T>{
+       
+        let rows: any = null;
+        try {
+            rows = await this.query(sql);
+        } catch (error) {
+            console.log(error);
+        }
+        return rows;
+    }
+    
     protected readonly query: any;
     
     constructor(protected dbController: DatabaseController){

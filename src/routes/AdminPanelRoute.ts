@@ -16,6 +16,9 @@ const AdminPanelRoute: IAppRoute = {
             .post('/getResultsPDF', (req: Request, res: Response) => {
                 AdminPanelCtrl.getResultsPDF(req, res);
             })
+            .get('/calculateAllTests', (req: Request, res: Response) => {
+                AdminPanelCtrl.calculateAllTests(req, res);
+            })
     }
 }
 
