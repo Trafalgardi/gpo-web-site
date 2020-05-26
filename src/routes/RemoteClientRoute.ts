@@ -1,6 +1,6 @@
 import IAppRoute from "../configs/IAppRoute";
 import App from "../app";
-import RemouteClientController from "../controllers/RemoteClientController";
+import RemoteClientController from "../controllers/RemoteClientController";
 import {Request, Response, NextFunction} from 'express'
 import { ClientRules } from "../Enums/ClientRules";
 
@@ -8,7 +8,7 @@ const RemoteClientRoute: IAppRoute = {
     createRouter(router: any){
         let app = App.Instance;
 
-        let clientController = new RemouteClientController(app);
+        let clientController = new RemoteClientController(app);
 
         return router()
             .post('/authorization', (req: Request, res: Response) =>{

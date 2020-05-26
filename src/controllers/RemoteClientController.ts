@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express'
 import SecurityService from "../services/SecurityService";
 import { ClientRules } from "../Enums/ClientRules";
 
-export default class RemouteClientController {
+export default class RemoteClientController {
     private clientDataProvider: RemoteClientDataProviders;
     constructor(private app: App) {
         this.clientDataProvider = this.app.providers.remoteClient;
