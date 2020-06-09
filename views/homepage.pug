@@ -29,7 +29,7 @@ html(lang='en')
         |       анкетирование. Вам необходимо пройти данные этапы. Для начала нажмите на кнопку под этапом.
     .container
       .card-deck.mb-3.text-center
-        .card.mb-4.shadow-sm
+        #showAnketa.card.mb-4.shadow-sm
           .card-header
             h4.my-0.font-weight-normal Анкетирование
           .card-body
@@ -37,7 +37,7 @@ html(lang='en')
               li Заполните все данные
 
             a.btn.btn-lg.btn-block.btn-outline-primary(href="/page/questionnaire") Начать
-        .card.mb-4.shadow-sm
+        #showTeasts.card.mb-4.shadow-sm
           .card-header
             h4.my-0.font-weight-normal Тестирование
           .card-body
@@ -64,3 +64,7 @@ html(lang='en')
     script(src='/js/popper.min.js')
     script(src='/js/holder.min.js')
     script(src="../javascripts/signout.js")
+
+    script.
+      document.getElementById("showTeasts").style.display = '#{showTeasts}'
+      document.getElementById("showAnketa").style.display = '#{showAnketa}'

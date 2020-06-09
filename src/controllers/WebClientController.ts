@@ -13,4 +13,9 @@ export default class WebClientController{
    logout(){
        
    }
+   public async showTeasts(user_id){
+        var rows = await this.userDataProvider.showTeasts(user_id);
+        var t = rows === 0 ? false : true
+        return t 
+   }
 }
