@@ -224,7 +224,7 @@ export default class AnketaController {
         console.log(this.webClientDataProvider);
         let anketaResult = AnketaCalculation(data);
         await this.webClientDataProvider.setAnketa(JSON.stringify(data), anketaResult, user_id);
-
+        await this.webClientDataProvider.setShowTeasts(user_id);
 
         res.render('post');
     }

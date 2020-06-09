@@ -21,6 +21,20 @@ export default class WebClientDataProvider extends DataProviderBase {
         }
 
     }
+    async setShowTeasts(user_id: number): Promise<boolean>{
+        const sql = this.dbController.format("UPDATE users SET showTeasts=1 WHERE id=?", [user_id]);
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return false;
+            }
+            return true;
+        } catch (error) {
+            console.log(error)
+            return false;
+        }
+
+    }
 
     async getAllTests(): Promise<{id: number, name: string, questions: any[], category_id: number}[]> | null{
         const sql = "SELECT `id`, `name`, `questions`, `category_id` FROM `tests` WHERE 1";

@@ -27,8 +27,8 @@ const WebClientRoute: IAppRoute = {
 
             .get('/homepage', (req: Request, res: Response) => {
                 let current_user = AuthController.authCheck(req, res);
-                var showTeasts = webClientCtrl.showTeasts(current_user.id) ? "none" : ""
-                var showAnketa = webClientCtrl.showTeasts(current_user.id) ? "" : "none"
+                var showTeasts = webClientCtrl.showTeasts(current_user.id) ? "" : "none"
+                var showAnketa = !webClientCtrl.showTeasts(current_user.id) ? "" : "none"
                 res.render('homepage', { email: current_user.email, showTeasts: showTeasts, showAnketa: showAnketa });
             })
 
