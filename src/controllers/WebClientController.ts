@@ -20,6 +20,8 @@ export default class WebClientController{
         var getShowTeasts = await this.userDataProvider.showTeasts(current_user.id);
         var showTeasts = ""
         var showAnketa = ""
+        console.log(getShowTeasts);
+        
         if(getShowTeasts === 0){
             showTeasts = "none"
             showAnketa = ""
