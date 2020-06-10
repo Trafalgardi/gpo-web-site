@@ -17,12 +17,17 @@ export default class WebClientController{
     async showTeasts(req: Request, res: Response){
         let current_user = AuthController.authCheck(req, res);
 
-        var rows = await this.userDataProvider.showTeasts(current_user.id);
-        var t = rows === 0 ? false : true
+        var getShowTeasts = await this.userDataProvider.showTeasts(current_user.id);
+        var showTeasts = ""
+        var showAnketa = ""
+        if(getShowTeasts === 0){
+            showTeasts = "none"
+            showAnketa = ""
+        }else if(getShowTeasts === 1){
+            showTeasts = ""
+            showAnketa = "none"
+        }
 
-        var showTeasts = t ? "" : "none"
-        var showAnketa = t ? "none" : ""
-        
-        res.render('homepage', { email: current_user.email, showTeasts: showTeasts, showAnketa: showAnketa });
+        res.render('homepage', { email: current_user.email, showTeasts, showAnketa });
    }
 }
