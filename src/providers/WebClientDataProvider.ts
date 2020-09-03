@@ -106,5 +106,20 @@ export default class WebClientDataProvider extends DataProviderBase {
             return false;
         }  
     }
+    async showTeasts(user_id: number):Promise<any> | null{
+        console.log(user_id);
+        
+        const sql = 'SELECT `showTeasts` FROM `users` WHERE id=' + user_id;
+        try {
+            const rows = await this.query(sql);
+            if (rows == null || rows.length == 0){
+                return null;
+            }
+            return rows[0].showTeasts;
+        } catch (error) {
+            console.log(error)
+            return null;
+        } 
+    }
 
 }

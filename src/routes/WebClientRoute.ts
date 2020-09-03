@@ -5,10 +5,11 @@ import { Request, Response, NextFunction } from 'express'
 import AnketaController from "../controllers/AnketaController";
 import SecurityService from "../services/SecurityService";
 import TestController from "../controllers/TestController";
+import WebClientController from "../controllers/WebClientController";
 const WebClientRoute: IAppRoute = {
     createRouter(router: any) {
         let app = App.Instance;
-
+        const webClientCtrl = new WebClientController(app);
         const anketaCtrl = new AnketaController(app);
         const testCtrl = new TestController(app);
         return router()
@@ -26,7 +27,9 @@ const WebClientRoute: IAppRoute = {
 
             .get('/homepage', (req: Request, res: Response) => {
                 let current_user = AuthController.authCheck(req, res);
-                res.render('homepage', { email: current_user.email });
+                var showTeasts = webClientCtrl.showTeasts(current_user.id) ? "none" : ""
+                var showAnketa = webClientCtrl.showTeasts(current_user.id) ? "" : "none"
+                res.render('homepage', { email: current_user.email, showTeasts: showTeasts, showAnketa: showAnketa });
             })
 
             .get('/opentests', (req: Request, res: Response) => {
